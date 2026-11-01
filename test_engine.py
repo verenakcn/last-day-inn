@@ -41,7 +41,7 @@ class Loop1(unittest.TestCase):
 
     def test_mira_narration_fits_the_room(self):
         _, texts = play(["examine:window", "move:lobby", "move:garden"])  # first meet her in the Garden
-        self.assertIn("You haven't tried the pie.", texts[-1])
+        self.assertIn("You're new here. Try the pie tonight; it's the best thing about this place.", texts[-1])
         self.assertNotIn("armchair", texts[-1])
 
     def test_no_show_to_place_options(self):
@@ -52,7 +52,7 @@ class Loop1(unittest.TestCase):
     def test_room_text_then_intros_once_per_game(self):
         g, texts = play(["move:lobby"])
         self.assertIn("(The heart of the inn", texts[0])
-        self.assertLess(texts[0].index("Mira: a fellow guest"), texts[0].index("You haven't tried the pie."))
+        self.assertLess(texts[0].index("Mira: a fellow guest"), texts[0].index("You're new here. Try the pie tonight; it's the best thing about this place."))
         g.act("move:garden")
         g.act("move:lobby")
         self.assertNotIn("Mira: a fellow guest", g.act("move:garden") + g.act("move:lobby"))

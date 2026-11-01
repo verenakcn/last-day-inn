@@ -264,7 +264,7 @@
       ],
       "first_meeting_line": {
         "note": "Her first line in each loop, the first time the player meets her (normally the Lobby, Morning).",
-        "default": { "lines": ["You haven't tried the pie."], "locked_text": true, "narration": { "conditions": { "location": "lobby" }, "draft": true, "text": "Mira looks up from her armchair and smiles." } }
+        "default": { "lines": ["You're new here. Try the pie tonight; it's the best thing about this place."], "locked_text": true, "narration": { "conditions": { "location": "lobby" }, "draft": true, "text": "Mira looks up from her armchair and smiles." } }
       },
       "ambient": [
         {
@@ -448,7 +448,7 @@
     "loop_2_opening": {
       "npcs_repeat_loop_1_lines": true,
       "mira_first_meeting_line": [
-        { "conditions": { "mira_near_clock_last_midnight": false }, "lines": ["You haven't tried the pie."], "locked_text": true },
+        { "conditions": { "mira_near_clock_last_midnight": false }, "lines": ["You're new here. Try the pie tonight; it's the best thing about this place."], "locked_text": true },
         { "conditions": { "mira_near_clock_last_midnight": true, "flag_last_loop_not": "tried_pie" }, "lines": ["Morning…", "(pause)", "You still haven't tried the pie."], "locked_text": true, "is_anomaly": true, "journal_fact": "Mira remembered that you hadn't tried the pie." },
         { "conditions": { "mira_near_clock_last_midnight": true, "flag_last_loop": "tried_pie" }, "lines": ["Morning…", "(pause)", "You liked the pie, didn't you? Same recipe as always."], "draft": true, "is_anomaly": true, "intent": "She remembers the player tried the pie; \"same recipe as always\" hints she knew the inn as a child (decision Q7).", "journal_fact": "Mira remembered that you tried the pie." }
       ]

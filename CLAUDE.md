@@ -93,7 +93,7 @@ Draft reactions (tone and wording are tunable; intent is locked):
 **Loop 1 (target 2–4 minutes):** wake, find the note → explore and meet NPCs → learn of the back gate and key → escape through the garden. **Midnight:** while walking away, the clock's chime sounds as if right beside the player; the inn is ahead again. Reset.
 
 **Loop 2 opening:** wake in the same bed. NPCs repeat Loop 1 lines exactly.
-- If Mira was **not** near the clock at midnight: "You haven't tried the pie."
+- If Mira was **not** near the clock at midnight, she repeats her Loop 1 line: "You're new here. Try the pie tonight; it's the best thing about this place."
 - If Mira **was** near the clock: "Morning…" *(pause)* "You still haven't tried the pie." **← MVP reveal moment.**
 
 **MVP ends** when the player sees the memory anomaly, or at the end of Loop 3. End screen asks: *"What do you think is happening?"* (captured for playtests).
@@ -158,7 +158,7 @@ Resolved gaps in this brief. Full log with reasons: the "Dev Status" doc.
 - **Back gate:** always locked; the gate key opens it. Escaping skips straight to midnight.
 - **Near the clock:** being in the Lobby at midnight.
 - **Mira:** her photo-triggered Night move resets every loop. Examining the back gate while she is in the Garden makes her mention the key. She senses the loop but barely recalls it; in Loop 2+, after being near the clock, she may mention a vague myth about the clock.
-- **Pie:** served in the Lobby in the Evening; the player can try it. "You haven't tried the pie." is also Mira's Loop 1 line on first meeting. If the player tried the pie and Mira was near the clock, her Loop 2 line changes and hints at her past.
+- **Pie:** served in the Lobby in the Evening; the player can try it. Mira's Loop 1 line on first meeting sets it up: "You're new here. Try the pie tonight; it's the best thing about this place." (changed 2026-11-01 from "You haven't tried the pie.", which referred to a pie the player had never heard of). If the player tried the pie and Mira was near the clock, her Loop 2 line changes and hints at her past.
 - **Reactions:** no location reactions in the MVP beyond one default line; one fallback line per NPC for uncovered combinations.
 - **Journal:** every evidence found and every listed reaction adds one brief factual line; it carries across loops, tagged by loop.
 - **Player:** an unnamed guest ("you") on a last stay before the inn closes. The player does not know who the girl in the photo is.
