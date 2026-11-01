@@ -49,6 +49,23 @@ class Loop1(unittest.TestCase):
         shows = [a for a in g.actions() if a.startswith("present:")]
         self.assertEqual(shows, ["present:note>mira", "present:old_photo>mira"])
 
+    def test_room_text_then_intros_once_per_game(self):
+        g, texts = play(["move:lobby"])
+        self.assertIn("(The heart of the inn", texts[0])
+        self.assertLess(texts[0].index("Mira: a fellow guest"), texts[0].index("You haven't tried the pie."))
+        g.act("move:garden")
+        g.act("move:lobby")
+        self.assertNotIn("Mira: a fellow guest", g.act("move:garden") + g.act("move:lobby"))
+
+    def test_done_mark_clears_at_reset(self):
+        g, _ = play(["examine:window"])
+        self.assertTrue(g.describe_action("examine:window").startswith("✓ "))
+        self.assertFalse(g.describe_action("examine:drawer").startswith("✓ "))
+        for _ in range(7):
+            g.act("examine:window")
+        self.assertEqual(g.loop, 2)
+        self.assertFalse(g.describe_action("examine:window").startswith("✓ "))
+
     def test_note_cannot_be_dropped(self):
         self.assertFalse(any(a.startswith("drop") for a in Game().actions()))
 

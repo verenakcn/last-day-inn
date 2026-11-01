@@ -30,6 +30,7 @@ class Game:
         self.end_answer = None
         self.mira_near_clock_last = False
         self.last_loop_flags = set()
+        self.introduced = set()  # NPCs the player has met; their one-line intro shows once per game
         self.log = {"seed": seed, "journal": journal, "world_version": self.w["meta"]["schema_version"], "events": []}
         self.log_path = None
         if log_dir:
@@ -46,8 +47,7 @@ class Game:
         lines = [
             self.ui["status"].format(loop=self.loop, phase=self._phase_name(),
                                      action=self.actions_done + 1, per_phase=self._per_phase()),
-            loc["name"],
-            loc["description"]["text"],
+            loc["name"],  # the description shows on arrival, not every turn
         ]
         people = [self._presence(n) for n in self._npcs_here()]
         lines.append(" ".join([self.ui["here"]] + people) if people else self.ui["nobody_here"])
@@ -78,22 +78,25 @@ class Game:
         return acts
 
     def describe_action(self, action):
+        """Menu label; actions already taken this loop get a mark (cleared at each reset)."""
+        mark = self.ui["done_mark"] if action in self.done else ""
         verb, _, rest = action.partition(":")
         if verb == "move":
-            return self.ui["action_move"].format(place=self.w["locations"][rest]["name"])
+            return mark + self.ui["action_move"].format(place=self.w["locations"][rest]["name"])
         if verb == "examine":
-            return self.ui["action_examine"].format(thing=self._feature(rest)["name"])
+            return mark + self.ui["action_examine"].format(thing=self._feature(rest)["name"])
         item, _, target = rest.partition(">")
-        return self.ui["action_present"].format(item=self._name(item), target=self._target_name(target))
+        return mark + self.ui["action_present"].format(item=self._name(item), target=self._target_name(target))
 
     def act(self, action):
         if action not in self.actions():
             raise ValueError("Not a valid action now: %s" % action)
         before = self._snapshot()
         verb, _, rest = action.partition(":")
+        self.done.add(action)
         if verb == "move":
-            out = [self.ui["move"].format(place=self.w["locations"][rest]["name"])]
             self.location = rest
+            out = [self.ui["move"].format(place=self.w["locations"][rest]["name"]), self._room_text()]
         elif verb == "examine":
             out = self._examine(rest)
         else:
@@ -104,6 +107,7 @@ class Game:
             out += self._midnight()
         else:
             out += self._spend_action()
+        out += self._introductions()
         out += self._check_meeting()
         text = "\n\n".join(t for t in out if t)
         self._log({"type": "action", "action": action, "text": text, "before": before, "after": self._snapshot()})
@@ -121,6 +125,7 @@ class Game:
         self.actions_done = 0
         self.flags = set()
         self.taken = set()
+        self.done = set()  # actions taken this loop, for the menu mark
         self.mira_trigger = False
         self.mira_met = False
         self.escaped = False
@@ -132,7 +137,18 @@ class Game:
             self._add_fact(note["journal_fact"])
         wake = self._first_match(self.w["loops"]["wake"])
         self._log({"type": "loop_start", "loop": self.loop})
-        return wake["text"]
+        return wake["text"] + "\n\n" + self._room_text()
+
+    def _room_text(self):
+        return self.ui["room_on_enter"].format(text=self.w["locations"][self.location]["description"]["text"])
+
+    def _introductions(self):
+        """One line per NPC the first time the player is in the same place as them."""
+        if self.ended:
+            return []
+        new = [n for n in self._npcs_here() if n not in self.introduced]
+        self.introduced.update(new)
+        return [self.w["npcs"][n]["intro"]["text"] for n in new]
 
     def _per_phase(self):
         return self.w["time"][PER_PHASE_KEY]

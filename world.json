@@ -22,6 +22,8 @@
     "read_text": "It reads: \"{text}\"",
     "pause": "(A pause.)",
     "move": "You go to the {place}.",
+    "room_on_enter": "({text})",
+    "done_mark": "✓ ",
     "action_move": "Go to {place}",
     "action_examine": "Examine {thing}",
     "action_present": "Show {item} to {target}"
@@ -216,6 +218,7 @@
     "innkeeper": {
       "name": "Innkeeper",
       "personal_name": { "draft": true, "text": "Walter" },
+      "intro": { "draft": true, "text": "The innkeeper: a kind, tired man in a cardigan, who looks at his inn the way some people look at old friends." },
       "traits": ["warm", "a little tired", "proud of his inn"],
       "knows": [
         "The inn closes tomorrow.",
@@ -236,6 +239,7 @@
 
     "mira": {
       "name": "Mira",
+      "intro": { "draft": true, "text": "Mira: a fellow guest in a bright scarf, who moves around the inn as if she knows every creaky board." },
       "traits": ["friendly", "playful", "knows the inn suspiciously well"],
       "knows": [
         "She is the girl from the photo.",
