@@ -41,9 +41,9 @@ The "Why" lines are the designer's own words. Decisions with full reasons live i
 ## 2026-11-01 · Playtest interview
 - **Built:** `--interview` asks a finished run's player follow-up questions; reports now save the full conversation so interviews replay it exactly.
 - **Learned:** the first live player guessed Mira was the girl in the photo but never showed it to her, because nothing hinted that would matter; it only learned what the photo shows from the journal (with the journal off, the clue never appears); the clock's little door and the old pie line both read as false promises.
-- **Why:** _(waiting for designer's words)_
+- **Why:** Some of the player's choices had unclear motives. For example, the photo led it to the Lobby even though the game never said what the photo showed. Asking follow-up questions explains the "why" behind the move log.
 
 ## 2026-11-01 · Bug fix: picked-up items show their content
 - **Built:** picking up an item now shows what it says or depicts (the photo and the closing notice were silent); one engine rule covers every item.
 - **Learned:** the agent interview exposed it: with the journal off, the game's central clue (the girl with the blue ribbon) never appeared.
-- **Why:** _(waiting for designer's words)_
+- **Why:** Making players check the journal for key details adds friction to solving the mystery. Showing an item's content when you pick it up gives immediate feedback and helps players piece the story together.
