@@ -44,6 +44,11 @@ class Loop1(unittest.TestCase):
         self.assertIn("You haven't tried the pie.", texts[-1])
         self.assertNotIn("armchair", texts[-1])
 
+    def test_no_show_to_place_options(self):
+        g, _ = play(["examine:drawer", "move:lobby", "move:garden"])
+        shows = [a for a in g.actions() if a.startswith("present:")]
+        self.assertEqual(shows, ["present:note>mira", "present:old_photo>mira"])
+
     def test_note_cannot_be_dropped(self):
         self.assertFalse(any(a.startswith("drop") for a in Game().actions()))
 

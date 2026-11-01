@@ -71,7 +71,7 @@ class Game:
         loc = self.w["locations"][self.location]
         acts = ["move:" + c for c in loc["connections"]]
         acts += ["examine:" + f for f in loc["features"]]
-        targets = self._npcs_here() + list(loc["features"])
+        targets = self._npcs_here()  # MVP: no "show to a place" options (decision E1)
         for item in self.inventory:
             if self._presentable(item):
                 acts += ["present:%s>%s" % (item, t) for t in targets]
