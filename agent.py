@@ -2,12 +2,16 @@
 
     pip install anthropic
     echo "ANTHROPIC_API_KEY=..." > .env
-    python3 agent.py                      # curious explorer, journal on
+    python3 agent.py                      # one run: curious explorer, journal on
     python3 agent.py --persona escape --no-journal
-    python3 agent.py --all                # both personas x journal on/off + aggregate report
+    python3 agent.py --dry-run            # fake model, no API calls: tests the pipeline for free
+    python3 agent.py --all                # opt-in: both personas x journal on/off + aggregate report
 
 Gemini instead of Claude: pip install google-genai, put GEMINI_API_KEY=... in .env,
 then add --provider gemini to any command above.
+
+Limits: one run per command unless --all; each run stops after MAX_ACTIONS actions.
+Every report records how many API calls the run made.
 
 The report's facts (escaped, evidence found/used, trigger, anomaly, turns) are computed from the
 game log, not from the model. The model only plays and states hypotheses.
@@ -16,12 +20,14 @@ game log, not from the model. The model only plays and states hypotheses.
 import datetime
 import json
 import os
+import random
 import re
 import sys
 
 from engine import Game
 
 MODEL = "claude-opus-5-5"
+MAX_ACTIONS = 40
 
 PERSONAS = {
     "curious": "You are a curious explorer. You examine everything, show evidence to everyone, "
@@ -95,20 +101,43 @@ def gemini_model():
     return ask
 
 
-def play(game, ask, persona="curious"):
-    """Plays one session. Returns the run record used for the report."""
+def fake_model(seed=0):
+    """Returns ask(system, messages) -> text with no API calls: picks a random listed action (seeded)."""
+    rng = random.Random(seed)
+
+    def ask(system, messages):
+        text = messages[-1]["content"]
+        if "HYPOTHESIS" in text:
+            return "HYPOTHESIS: (dry run) The day seems to repeat."
+        if "The game is over" in text:
+            return "(dry run) No real answer: this run used a fake model."
+        count = len(re.findall(r"^\d+\. ", text, re.M))
+        return "NOTE: (dry run) random pick\nCHOICE: %d" % rng.randint(1, max(count, 1))
+
+    ask.fake = True  # not counted as an API call
+    return ask
+
+
+def play(game, ask, persona="curious", max_actions=MAX_ACTIONS):
+    """Plays one session, at most max_actions actions. Returns the run record used for the report."""
     system = RULES + "\n\n" + PERSONAS[persona]
     messages = []
-    run = {"persona": persona, "journal": game.journal_on, "turns": [], "hypotheses": [], "final_answer": None}
+    run = {"persona": persona, "journal": game.journal_on, "turns": [], "hypotheses": [], "final_answer": None,
+           "api_calls": 0, "capped": False}
 
     def say(text):
         messages.append({"role": "user", "content": text})
+        if not getattr(ask, "fake", False):
+            run["api_calls"] += 1
         reply = ask(system, messages)
         messages.append({"role": "assistant", "content": reply})
         return reply
 
     screen = game.opening
     while not game.ended:
+        if len(run["turns"]) >= max_actions:
+            run["capped"] = True
+            break
         acts = game.actions()
         menu = "\n".join("%d. %s" % (i, game.describe_action(a)) for i, a in enumerate(acts, 1))
         reply = say("%s\n\n%s\n\nActions:\n%s" % (screen, game.observe(), menu))
@@ -126,6 +155,8 @@ def play(game, ask, persona="curious"):
                     "theory of what is happening, in one or two sentences. Start with HYPOTHESIS:")
             run["hypotheses"].append({"after_loop": loop_before, "text": h.replace("HYPOTHESIS:", "").strip()})
             screen = ""
+    if run["capped"]:
+        screen += "\n\n(The playtest stopped after %d actions.)" % max_actions
     run["final_answer"] = say(screen + "\n\nThe game is over. It asks you: " +
                               game.w["loops"]["end_screen"]["prompt"] + " Answer in two or three sentences.")
     game.answer_end_prompt(run["final_answer"])
@@ -161,6 +192,8 @@ def facts(game, run):
         "total_turns": len(actions),
         "wasted_turns": wasted,
         "unparsed_replies": sum(1 for t in run["turns"] if not t["parsed"]),
+        "api_calls": run["api_calls"],
+        "capped_at_max_actions": run["capped"],
     }
 
 
@@ -168,6 +201,8 @@ def report_md(run, f):
     yes = lambda b: "yes" if b else "no"
     lines = [
         "# Playtest report: %s, journal %s" % (run["persona"], "on" if run["journal"] else "off"),
+        "",
+        "Model: %s" % run.get("model", "unknown"),
         "",
         "| Question | Result |",
         "| --- | --- |",
@@ -180,6 +215,8 @@ def report_md(run, f):
         "| Loops played | %d |" % f["loops_played"],
         "| Total turns | %d |" % f["total_turns"],
         "| Wasted turns | %s |" % (len(f["wasted_turns"])),
+        "| Stopped at the %d-action cap? | %s |" % (MAX_ACTIONS, yes(f["capped_at_max_actions"])),
+        "| API calls | %d |" % f["api_calls"],
         "",
         "## Did the player notice the anomaly?",
         "",
@@ -197,13 +234,24 @@ def report_md(run, f):
     return "\n".join(lines) + "\n"
 
 
-def save_report(run, f, out_dir="reports"):
+def new_base(out_dir, name):
+    """reports/<name>, with -2, -3... added if that name is taken: old reports are never overwritten."""
     os.makedirs(out_dir, exist_ok=True)
+    base, n = os.path.join(out_dir, name), 2
+    while any(os.path.exists(base + ext) for ext in (".md", ".json")):
+        base, n = os.path.join(out_dir, "%s-%d" % (name, n)), n + 1
+    return base
+
+
+def save_report(run, f, out_dir="reports"):
+    """Saves <date-time>-<persona>-journal-<on|off>[-dry-run].md and .json. Returns the .md path."""
     stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-    base = os.path.join(out_dir, "%s-%s-journal-%s" % (stamp, run["persona"], "on" if run["journal"] else "off"))
-    with open(base + ".md", "w", encoding="utf-8") as fh:
+    name = "%s-%s-journal-%s%s" % (stamp, run["persona"], "on" if run["journal"] else "off",
+                                   "-dry-run" if run.get("model") == "dry-run" else "")
+    base = new_base(out_dir, name)
+    with open(base + ".md", "x", encoding="utf-8") as fh:  # "x": fail rather than overwrite
         fh.write(report_md(run, f))
-    with open(base + ".json", "w", encoding="utf-8") as fh:
+    with open(base + ".json", "x", encoding="utf-8") as fh:
         json.dump({"facts": f, "run": run}, fh, indent=2, ensure_ascii=False)
     return base + ".md"
 
@@ -229,10 +277,15 @@ def aggregate_md(results):
 
 
 def main():
-    """python3 agent.py [--provider claude|gemini] [--persona curious|escape] [--no-journal] [--all]"""
+    """python3 agent.py [--provider claude|gemini] [--persona curious|escape] [--no-journal] [--all] [--dry-run]"""
     load_env()
     provider = sys.argv[sys.argv.index("--provider") + 1] if "--provider" in sys.argv else "claude"
-    ask = gemini_model() if provider == "gemini" else claude_model()
+    if "--dry-run" in sys.argv:
+        ask, model = fake_model(), "dry-run"
+    elif provider == "gemini":
+        ask, model = gemini_model(), "gemini: " + os.environ.get("GEMINI_MODEL", "gemini-3.5-flash")
+    else:
+        ask, model = claude_model(), "claude: " + MODEL
     if "--all" in sys.argv:
         combos = [(p, j) for p in PERSONAS for j in (True, False)]
     else:
@@ -242,14 +295,15 @@ def main():
     for persona, journal in combos:
         game = Game(journal=journal, log_dir="logs")
         run = play(game, ask, persona)
+        run["model"] = model
         f = facts(game, run)
         results.append((run, f))
-        print("Report: %s" % save_report(run, f))
+        print("Report: %s  (%d API calls)" % (save_report(run, f), run["api_calls"]))
     if len(results) > 1:
-        path = os.path.join("reports", datetime.datetime.now().strftime("%Y%m%d-%H%M%S") + "-aggregate.md")
-        with open(path, "w", encoding="utf-8") as fh:
+        base = new_base("reports", datetime.datetime.now().strftime("%Y%m%d-%H%M%S") + "-aggregate")
+        with open(base + ".md", "x", encoding="utf-8") as fh:
             fh.write(aggregate_md(results))
-        print("Aggregate: %s" % path)
+        print("Aggregate: %s.md" % base)
 
 
 if __name__ == "__main__":

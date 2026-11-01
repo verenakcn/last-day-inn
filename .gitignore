@@ -15,3 +15,6 @@ __pycache__/
 
 # macOS
 .DS_Store
+
+# Dry-run playtest reports (fake model, no API)
+reports/*dry-run*

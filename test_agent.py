@@ -2,7 +2,10 @@
 
 import unittest
 
-from agent import aggregate_md, facts, play, report_md, to_gemini
+import os
+import tempfile
+
+from agent import aggregate_md, facts, fake_model, play, report_md, save_report, to_gemini
 from engine import Game
 
 
@@ -64,6 +67,31 @@ class AgentRun(unittest.TestCase):
         self.assertIn("| curious | on | yes | yes | yes | 7 |", md)
         self.assertIn("| escape | off | yes | no |", md)
         self.assertIn("**Evidence no run found:** blue_ribbon, clock_inscription, closing_notice", md)
+
+    def test_dry_run_makes_no_api_calls_and_finishes(self):
+        game = Game()
+        run = play(game, fake_model(seed=1))
+        self.assertTrue(game.ended)
+        self.assertEqual(run["api_calls"], 0)
+
+    def test_api_calls_counted_and_actions_capped(self):
+        state, ask = scripted([])  # always picks action 1
+        game = state["game"] = Game()
+        run = play(game, ask, max_actions=5)
+        self.assertTrue(run["capped"])
+        self.assertEqual(len(run["turns"]), 5)
+        self.assertEqual(run["api_calls"], 6)  # 5 actions + final answer (no reset reached)
+
+    def test_reports_never_overwrite(self):
+        game = Game()
+        run = play(game, fake_model())
+        run["model"] = "dry-run"
+        f = facts(game, run)
+        with tempfile.TemporaryDirectory() as d:
+            first, second = save_report(run, f, d), save_report(run, f, d)
+            self.assertNotEqual(first, second)
+            self.assertTrue(first.endswith("-curious-journal-on-dry-run.md"))
+            self.assertEqual(len(os.listdir(d)), 4)  # two .md + two .json
 
     def test_gemini_message_format(self):
         msgs = [{"role": "user", "content": "hi"}, {"role": "assistant", "content": "CHOICE: 1"}]
