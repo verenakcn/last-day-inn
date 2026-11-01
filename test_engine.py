@@ -80,6 +80,16 @@ class Loop1(unittest.TestCase):
         self.assertIn("little door in the case", texts[1])
         self.assertIn("The little door won't open.", texts[2])
 
+    def test_pie_only_offered_in_the_evening(self):
+        g, _ = play(["move:lobby"])
+        self.assertNotIn("examine:pie", g.actions())
+        self.assertNotIn("Pie", g.observe())
+        g.act("examine:front_door")  # -> Afternoon
+        g.act("examine:front_door")
+        g.act("examine:front_door")  # -> Evening
+        self.assertIn("examine:pie", g.actions())
+        self.assertIn("still warm", g.act("examine:pie"))
+
     def test_note_cannot_be_dropped(self):
         self.assertFalse(any(a.startswith("drop") for a in Game().actions()))
 

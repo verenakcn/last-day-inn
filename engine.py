@@ -51,7 +51,9 @@ class Game:
         ]
         people = [self._presence(n) for n in self._npcs_here()]
         lines.append(" ".join([self.ui["here"]] + people) if people else self.ui["nobody_here"])
-        lines.append(self.ui["examine_list"].format(list=", ".join(f["name"] for f in loc["features"].values())))
+        here = [f["name"] for f in loc["features"].values()
+                if self._phase_id() in f.get("available_phases", [self._phase_id()])]
+        lines.append(self.ui["examine_list"].format(list=", ".join(here)))
         lines.append(self.ui["exits"].format(list=", ".join(self.w["locations"][c]["name"] for c in loc["connections"])))
         if self.inventory:
             lines.append(self.ui["inventory"].format(list=", ".join(self._name(i) for i in self.inventory)))
@@ -70,7 +72,9 @@ class Game:
             return []
         loc = self.w["locations"][self.location]
         acts = ["move:" + c for c in loc["connections"]]
-        acts += ["examine:" + f for f in loc["features"]]
+        # A feature that only exists at some times of day (the pie) is only offered then.
+        acts += ["examine:" + f for f, feat in loc["features"].items()
+                 if self._phase_id() in feat.get("available_phases", [self._phase_id()])]
         targets = self._npcs_here()  # MVP: no "show to a place" options (decision E1)
         for item in self.inventory:
             if self._presentable(item):
