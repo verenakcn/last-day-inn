@@ -255,8 +255,12 @@ class Game:
             self.taken.add(gives)
             self.inventory.append(gives)
             thing = self._thing(gives)
-            if thing.get("acquired_by") == "examine":
+            # Show what a picked-up item says or depicts, so the clue doesn't depend on the journal.
+            if isinstance(thing.get("text"), dict):
                 out.append(self.ui["read_text"].format(text=thing["text"]["text"]))
+            elif isinstance(thing.get("description"), dict):
+                d = thing["description"]["text"]
+                out.append(self.ui["shows_text"].format(text=d[0].lower() + d[1:]))
             fact = thing.get("journal_fact")
             if fact:
                 self._add_fact(fact.replace("{inscription}", thing.get("text", {}).get("text", "")))

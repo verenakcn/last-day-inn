@@ -66,6 +66,15 @@ class Loop1(unittest.TestCase):
         self.assertEqual(g.loop, 2)
         self.assertFalse(g.describe_action("examine:window").startswith("✓ "))
 
+    def test_picked_up_items_show_their_content_with_journal_off(self):
+        g = Game(journal=False)
+        photo = g.act("examine:drawer")
+        self.assertIn("It shows the innkeeper and a little girl with a blue ribbon, beside the clock.", photo)
+        g.act("move:lobby")
+        notice = g.act("examine:reception_desk")
+        self.assertIn('It reads: "After many happy years, the inn closes its doors for good tomorrow.', notice)
+        self.assertNotIn("Journal", g.observe())
+
     def test_note_cannot_be_dropped(self):
         self.assertFalse(any(a.startswith("drop") for a in Game().actions()))
 

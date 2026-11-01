@@ -20,6 +20,7 @@
     "journal_empty": "Journal: nothing confirmed yet.",
     "journal_entry": "[Loop {loop}] {fact}",
     "read_text": "It reads: \"{text}\"",
+    "shows_text": "It shows {text}",
     "pause": "(A pause.)",
     "move": "You go to the {place}.",
     "room_on_enter": "({text})",
