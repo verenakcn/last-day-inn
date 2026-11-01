@@ -80,14 +80,17 @@ def gemini_model():
     Needs GEMINI_API_KEY in .env; GEMINI_MODEL overrides the model name."""
     from google import genai
     from google.genai import types
-    client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
-    model = os.environ.get("GEMINI_MODEL", "gemini-3.8-flash")
+    # 60 s per request, 2 tries: a stuck request fails loudly instead of hanging.
+    client = genai.Client(api_key=os.environ["GEMINI_API_KEY"], http_options=types.HttpOptions(
+        timeout=60000, retry_options=types.HttpRetryOptions(attempts=2)))
+    # gemini-3.8-flash is listed but never answered with our free-tier key (2026-11-01).
+    model = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash")
 
     def ask(system, messages):
         response = client.models.generate_content(
             model=model, contents=to_gemini(messages),
             config=types.GenerateContentConfig(system_instruction=system))
-        return response.text or ""
+        return "".join(p.text for p in response.candidates[0].content.parts if p.text)
 
     return ask
 
