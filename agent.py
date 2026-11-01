@@ -6,6 +6,7 @@
     python3 agent.py --persona escape --no-journal
     python3 agent.py --dry-run            # fake model, no API calls: tests the pipeline for free
     python3 agent.py --all                # opt-in: both personas x journal on/off + aggregate report
+    python3 agent.py --interview reports/<run>.json questions.txt   # ask that run's player questions
 
 Gemini instead of Claude: pip install google-genai, put GEMINI_API_KEY=... in .env,
 then add --provider gemini to any command above.
@@ -137,7 +138,8 @@ def play(game, ask, persona="curious", max_actions=MAX_ACTIONS):
     system = RULES + "\n\n" + PERSONAS[persona]
     messages = []
     run = {"persona": persona, "journal": game.journal_on, "turns": [], "hypotheses": [], "final_answer": None,
-           "api_calls": 0, "capped": False, "error": None}
+           "api_calls": 0, "capped": False, "error": None,
+           "transcript": messages}  # exact conversation, so --interview can replay it word for word
     try:
         _play(game, ask, system, messages, run, max_actions)
     except Exception as e:  # keep what was played: the report is saved, marked incomplete
@@ -301,6 +303,48 @@ def aggregate_md(results):
     return "\n".join(lines) + "\n"
 
 
+INTERVIEW = """You just finished playtesting a short text mystery game as the player described below.
+A designer is interviewing you about your playthrough. Answer each question honestly, in character,
+in 2-4 sentences, based only on what the game showed you. If you don't remember or didn't notice
+something, say so."""
+
+
+def interview(report_path, questions, ask):
+    """Asks a finished run's player questions about its playthrough. Returns [(question, answer)]."""
+    data = json.load(open(report_path, encoding="utf-8"))
+    run = data["run"]
+    history = run.get("transcript")
+    if not history:  # older reports: rebuild from the saved moves, notes and results
+        lines = ["Here is your playthrough, move by move:"]
+        for t in run["turns"]:
+            lines.append("Loop %d. You chose %s. Your note: %s\nThe game said: %s"
+                         % (t["loop"], t["action"], t["note"], t["result"]))
+        lines += ["Your theory after loop %d: %s" % (h["after_loop"], h["text"]) for h in run["hypotheses"]]
+        lines.append("Your final answer: %s" % run["final_answer"])
+        history = [{"role": "user", "content": "\n\n".join(lines)},
+                   {"role": "assistant", "content": "Understood. I remember my playthrough."}]
+    system = INTERVIEW + "\n\nThe player: " + PERSONAS[run["persona"]]
+    messages, qa = list(history), []
+    for q in questions:
+        messages.append({"role": "user", "content": "Interview question: " + q})
+        a = ask(system, messages)
+        messages.append({"role": "assistant", "content": a})
+        qa.append((q, a))
+    return qa
+
+
+def save_interview(report_path, qa, model):
+    base = new_base(os.path.dirname(report_path), os.path.basename(report_path)[:-len(".json")] + "-interview"
+                    + ("-dry-run" if model == "dry-run" else ""))
+    lines = ["# Interview: %s" % os.path.basename(report_path), "", "Model: %s" % model, "",
+             "Answers are the player's own explanation after the fact: useful hints, not proof.", ""]
+    for i, (q, a) in enumerate(qa, 1):
+        lines += ["## %d. %s" % (i, q), "", a.strip(), ""]
+    with open(base + ".md", "x", encoding="utf-8") as fh:
+        fh.write("\n".join(lines))
+    return base + ".md"
+
+
 def main():
     """python3 agent.py [--provider claude|gemini] [--persona curious|escape] [--no-journal] [--all] [--dry-run]"""
     load_env()
@@ -311,6 +355,13 @@ def main():
         ask, model = gemini_model(), "gemini: " + os.environ.get("GEMINI_MODEL", "gemini-3.5-flash")
     else:
         ask, model = claude_model(), "claude: " + MODEL
+    if "--interview" in sys.argv:  # --interview reports/<run>.json questions.txt (one question per line)
+        i = sys.argv.index("--interview")
+        report, qfile = sys.argv[i + 1], sys.argv[i + 2]
+        questions = [q.strip() for q in open(qfile, encoding="utf-8") if q.strip()]
+        print("Interview: %s  (%d API calls)" % (save_interview(report, interview(report, questions, ask), model),
+                                                  0 if model == "dry-run" else len(questions)))
+        return
     if "--all" in sys.argv:
         combos = [(p, j) for p in PERSONAS for j in (True, False)]
     else:

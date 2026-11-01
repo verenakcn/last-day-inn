@@ -5,7 +5,9 @@ import unittest
 import os
 import tempfile
 
-from agent import aggregate_md, facts, fake_model, play, report_md, save_report, to_gemini
+import json
+
+from agent import aggregate_md, facts, fake_model, interview, play, report_md, save_report, to_gemini
 from engine import Game
 
 
@@ -108,6 +110,26 @@ class AgentRun(unittest.TestCase):
             self.assertNotEqual(first, second)
             self.assertTrue(first.endswith("-curious-journal-on-dry-run.md"))
             self.assertEqual(len(os.listdir(d)), 4)  # two .md + two .json
+
+    def test_interview_uses_saved_transcript_or_rebuilds_it(self):
+        game = Game()
+        run = play(game, fake_model())
+        seen = []
+
+        def ask(system, messages):
+            seen.append(list(messages))  # copy: the list keeps growing after this call
+            return "Because of the clock."
+
+        with tempfile.TemporaryDirectory() as d:
+            path = os.path.join(d, "r.json")
+            json.dump({"run": run}, open(path, "w"))
+            qa = interview(path, ["Why?", "And then?"], ask)
+            self.assertEqual([q for q, _ in qa], ["Why?", "And then?"])
+            self.assertEqual(len(seen[0]), len(run["transcript"]) + 1)  # full conversation + the question
+            del run["transcript"]
+            json.dump({"run": run}, open(path, "w"))
+            interview(path, ["Why?"], ask)
+            self.assertIn("Here is your playthrough", seen[-1][0]["content"])
 
     def test_gemini_message_format(self):
         msgs = [{"role": "user", "content": "hi"}, {"role": "assistant", "content": "CHOICE: 1"}]
