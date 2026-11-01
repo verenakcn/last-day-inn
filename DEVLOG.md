@@ -37,3 +37,8 @@ The "Why" lines are the designer's own words. Decisions with full reasons live i
 - **Built:** room text shows on arrival in (parentheses), then a one-line intro the first time you meet each character; ✓ marks actions taken this loop; Mira's Loop 1 line now sets up the pie: "You're new here. Try the pie tonight; it's the best thing about this place."
 - **Learned:** playing it ourselves caught what the tests couldn't: Mira's old line referred to a pie the player had never heard of, so the Loop 2 "still" line had nothing to contrast with.
 - **Why:** Playing it myself showed readability problems: the room and characters should come first, and Mira's pie line made no sense to a new player. The ✓ reminds players what they've already done so they don't waste actions; later we may hide repeated options or let them cost no action.
+
+## 2026-11-01 · Playtest interview
+- **Built:** `--interview` asks a finished run's player follow-up questions; reports now save the full conversation so interviews replay it exactly.
+- **Learned:** the first live player guessed Mira was the girl in the photo but never showed it to her, because nothing hinted that would matter; it only learned what the photo shows from the journal (with the journal off, the clue never appears); the clock's little door and the old pie line both read as false promises.
+- **Why:** _(waiting for designer's words)_
