@@ -107,7 +107,8 @@ def gemini_model():
                 return "".join(p.text for p in response.candidates[0].content.parts if p.text)
             except (genai.errors.ClientError, genai.errors.ServerError) as e:
                 # 429 = over the free-tier rate, 503 = Google overloaded: both are temporary.
-                if e.code not in (429, 503) or attempt == 4:
+                # A per-day quota is not: waiting a minute won't help, so stop at once.
+                if e.code not in (429, 503) or attempt == 4 or "per day" in str(e):
                     raise
                 time.sleep(60)
 
@@ -136,7 +137,16 @@ def play(game, ask, persona="curious", max_actions=MAX_ACTIONS):
     system = RULES + "\n\n" + PERSONAS[persona]
     messages = []
     run = {"persona": persona, "journal": game.journal_on, "turns": [], "hypotheses": [], "final_answer": None,
-           "api_calls": 0, "capped": False}
+           "api_calls": 0, "capped": False, "error": None}
+    try:
+        _play(game, ask, system, messages, run, max_actions)
+    except Exception as e:  # keep what was played: the report is saved, marked incomplete
+        run["error"] = "%s: %s" % (type(e).__name__, str(e)[:300])
+    run["ended"] = game.ended
+    return run
+
+
+def _play(game, ask, system, messages, run, max_actions):
 
     def say(text):
         messages.append({"role": "user", "content": text})
@@ -173,8 +183,6 @@ def play(game, ask, persona="curious", max_actions=MAX_ACTIONS):
     run["final_answer"] = say(screen + "\n\nThe game is over. It asks you: " +
                               game.w["loops"]["end_screen"]["prompt"] + " Answer in two or three sentences.")
     game.answer_end_prompt(run["final_answer"])
-    run["ended"] = game.ended
-    return run
 
 
 def facts(game, run):
@@ -207,6 +215,7 @@ def facts(game, run):
         "unparsed_replies": sum(1 for t in run["turns"] if not t["parsed"]),
         "api_calls": run["api_calls"],
         "capped_at_max_actions": run["capped"],
+        "stopped_by_error": run.get("error"),
     }
 
 
@@ -217,6 +226,7 @@ def report_md(run, f):
         "",
         "Model: %s" % run.get("model", "unknown"),
         "",
+    ] + (["**INCOMPLETE: the run stopped early.** %s" % f["stopped_by_error"], ""] if f["stopped_by_error"] else []) + [
         "| Question | Result |",
         "| --- | --- |",
         "| Escaped in Loop 1? | %s |" % yes(f["escaped_loop_1"]),
@@ -259,8 +269,9 @@ def new_base(out_dir, name):
 def save_report(run, f, out_dir="reports"):
     """Saves <date-time>-<persona>-journal-<on|off>[-dry-run].md and .json. Returns the .md path."""
     stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-    name = "%s-%s-journal-%s%s" % (stamp, run["persona"], "on" if run["journal"] else "off",
-                                   "-dry-run" if run.get("model") == "dry-run" else "")
+    name = "%s-%s-journal-%s%s%s" % (stamp, run["persona"], "on" if run["journal"] else "off",
+                                     "-dry-run" if run.get("model") == "dry-run" else "",
+                                     "-INCOMPLETE" if run.get("error") else "")
     base = new_base(out_dir, name)
     with open(base + ".md", "x", encoding="utf-8") as fh:  # "x": fail rather than overwrite
         fh.write(report_md(run, f))

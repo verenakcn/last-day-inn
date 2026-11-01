@@ -82,6 +82,22 @@ class AgentRun(unittest.TestCase):
         self.assertEqual(len(run["turns"]), 5)
         self.assertEqual(run["api_calls"], 6)  # 5 actions + final answer (no reset reached)
 
+    def test_error_mid_run_keeps_a_partial_report(self):
+        calls = {"n": 0}
+
+        def ask(system, messages):
+            calls["n"] += 1
+            if calls["n"] == 3:
+                raise RuntimeError("quota per day exceeded")
+            return "NOTE: go\nCHOICE: 1"
+
+        game = Game()
+        run = play(game, ask)
+        f = facts(game, run)
+        self.assertEqual(len(run["turns"]), 2)
+        self.assertIn("quota per day", f["stopped_by_error"])
+        self.assertIn("INCOMPLETE", report_md(run, f))
+
     def test_reports_never_overwrite(self):
         game = Game()
         run = play(game, fake_model())
