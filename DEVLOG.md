@@ -47,3 +47,8 @@ The "Why" lines are the designer's own words. Decisions with full reasons live i
 - **Built:** picking up an item now shows what it says or depicts (the photo and the closing notice were silent); one engine rule covers every item.
 - **Learned:** the agent interview exposed it: with the journal off, the game's central clue (the girl with the blue ribbon) never appeared.
 - **Why:** Making players check the journal for key details adds friction to solving the mystery. Showing an item's content when you pick it up gives immediate feedback and helps players piece the story together.
+
+## 2026-11-01 · M2.2 Report-driven fix: the clock's little door
+- **Built:** first full run → read report → one world.json change → re-run → compare (commits `2f7f4e6` before, `5b09935` after). A second look at the clock now says "The little door won't open."
+- **Learned:** repeat door attempts in one loop went 2 → 1, and the player later wrote "since the door wouldn't open before"; the reveal can still be missed when the photo reaches Mira only in Loop 3. One run per side is a hint, not proof.
+- **Why:** _(waiting for designer's words)_
