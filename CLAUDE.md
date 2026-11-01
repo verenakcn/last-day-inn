@@ -34,7 +34,7 @@ A small, playable time-loop cozy mystery: an experiment in player-driven investi
 
 **The irony.** The innkeeper wished for today to last because he believes tomorrow holds nothing. But tomorrow holds Mira coming home to save the inn.
 
-**The handwritten note.** In an earlier loop the player (who does not remember it) hid a note reading *"Leave before midnight."* inside the clock. The note became anchored. Each morning the innkeeper finds it while winding the clock, assumes a guest dropped it, and slides it under the player's door. The player remembers loops from Loop 1 onward because they carry the anchored note at midnight. In the MVP the note cannot be dropped (prevents soft-lock). After Loop 1 the note stays in the player's inventory.
+**The handwritten note.** In an earlier loop the player (who does not remember it) hid a note reading *"Leave before midnight."* inside the clock, sealed in an envelope with the player's name on it. The note became anchored. Each morning the innkeeper finds it while winding the clock, does not open it, and because it bears the player's name, slides it under the player's door. The player remembers loops from Loop 1 onward because they carry the anchored note at midnight. In the MVP the note cannot be dropped (prevents soft-lock). After Loop 1 the note stays in the player's inventory.
 
 ## 4. World
 
@@ -48,7 +48,7 @@ A small, playable time-loop cozy mystery: an experiment in player-driven investi
 
 ### Time
 
-Each loop has four turns: **Morning → Afternoon → Evening → Night**, then the **Midnight** event. Each action (move, present, examine) costs one turn. Tunable.
+Each loop has four phases: **Morning → Afternoon → Evening → Night**, then the **Midnight** event. Each phase allows two actions (8 per loop). Each action (move, present, examine) costs one action, including fallback reactions. Tunable.
 
 ### NPCs
 
@@ -148,6 +148,22 @@ An LLM agent plays the game through the shared interface, keeps notes, and state
 3. README case study: goal, design pillars, why data-driven, what the agent found, what changed, next steps
 
 **Milestone 3 (later):** polish the memory anomaly and Loop 2–3, run human playtests, then start the AI experiment below.
+
+## 9a. Settled design decisions (2026-11-01)
+
+Resolved gaps in this brief. Full log with reasons: the "Dev Status" doc.
+
+- **Map:** Guest Room ↔ Lobby ↔ Garden; the Lobby is the hub. The Guest Room window shows the garden but cannot be used.
+- **Note:** picked up automatically on waking in Loop 1. In Loop 2+ nothing is under the door (the player carries the note), and the innkeeper says he has never seen it. A pile of notes is a Milestone 3 idea.
+- **Back gate:** always locked; the gate key opens it. Escaping skips straight to midnight.
+- **Near the clock:** being in the Lobby at midnight.
+- **Mira:** her photo-triggered Night move resets every loop. Examining the back gate while she is in the Garden makes her mention the key. She senses the loop but barely recalls it; in Loop 2+, after being near the clock, she may mention a vague myth about the clock.
+- **Pie:** served in the Lobby in the Evening; the player can try it. "You haven't tried the pie." is also Mira's Loop 1 line on first meeting. If the player tried the pie and Mira was near the clock, her Loop 2 line changes and hints at her past.
+- **Reactions:** no location reactions in the MVP beyond one default line; one fallback line per NPC for uncovered combinations.
+- **Journal:** every evidence found and every listed reaction adds one brief factual line; it carries across loops, tagged by loop.
+- **Player:** an unnamed guest ("you") on a last stay before the inn closes. The player does not know who the girl in the photo is.
+- **Midnight:** the chime is loud in the Lobby, faint elsewhere. Past-you's motive for the note stays unexplained.
+- **Text:** Claude writes first drafts of all lines (marked as drafts in `world.json`); the designer reviews.
 
 ## 10. Out of scope for the MVP
 

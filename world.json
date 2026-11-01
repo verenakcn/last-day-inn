@@ -1,94 +1,132 @@
 {
   "meta": {
     "title": "The Last Day Inn",
-    "schema_version": "0.1.0",
-    "source": "CLAUDE.md (Phase 2 brief). docs/design-doc.md is NOT a source.",
-    "todo_convention": "Any value starting with \"TODO\" is missing from the brief. The tag (Q1, Q2, ...) points to the open-questions list. The engine must not ship with TODOs on the critical path."
+    "schema_version": "0.2.0",
+    "source": "CLAUDE.md (brief + §9a settled decisions). docs/design-doc.md is NOT a source.",
+    "text_convention": "\"draft\": true = Claude's first-pass wording, for designer review. \"locked_text\": true = quoted verbatim from the brief; don't change without updating CLAUDE.md. Intent fields are locked (brief §5).",
+    "template_vars": "{item} = display name of the presented thing, {place} = display name of the feature or location."
   },
 
   "time": {
     "phases": ["morning", "afternoon", "evening", "night"],
+    "phase_names": { "morning": "Morning", "afternoon": "Afternoon", "evening": "Evening", "night": "Night" },
+    "actions_per_phase": 2,
     "after_last_phase": "midnight",
     "action_cost": { "move": 1, "present": 1, "examine": 1 },
-    "action_cost_note": "Tunable (brief §4).",
-    "max_loops": 3
+    "fallback_reactions_cost_action": true,
+    "max_loops": 3,
+    "tuning_note": "8 actions per loop is a first test value (decision Q3). Shortest Loop 1 escape is 5 actions."
   },
 
   "player": {
+    "name": null,
+    "addressed_as": "you",
+    "background": { "draft": true, "text": "You booked one last stay before the inn closes for good.", "use": "Only if a scene needs a reason for you being here." },
     "start_location": "guest_room",
     "start_inventory": [],
-    "start_inventory_note": "TODO Q2: is the note picked up automatically at the start, or does the player have to take it from under the door?"
+    "knows_girl_in_photo": false
   },
 
   "locations": {
     "guest_room": {
       "name": "Guest Room",
-      "description": "TODO Q13",
-      "connections": "TODO Q1",
+      "connections": ["lobby"],
+      "description": { "draft": true, "text": "A small room under the eaves. The radiator ticks, the quilt is heavy, and the frosted window looks down on a snowy garden." },
       "features": {
         "door": {
           "name": "Door",
-          "contains": ["note"],
-          "examine_text": "TODO Q13"
+          "examine": [
+            { "conditions": { "loop": 1 }, "draft": true, "text": "A plain wooden door. This is where the envelope was waiting this morning." },
+            { "conditions": { "loop_min": 2 }, "draft": true, "text": "A plain wooden door. The floor in front of it is bare this morning." }
+          ]
         },
         "drawer": {
-          "name": "Drawer",
-          "contains": ["old_photo"],
-          "examine_text": "TODO Q13"
+          "name": "Bedside drawer",
+          "gives": "old_photo",
+          "examine": [
+            { "conditions": { "has_not": "old_photo" }, "draft": true, "text": "Under a folded spare blanket you find an old photograph, its corners soft with age." },
+            { "conditions": { "has": "old_photo" }, "draft": true, "text": "Just the spare blanket now." }
+          ]
+        },
+        "window": {
+          "name": "Window",
+          "look_only": true,
+          "examine": [
+            { "draft": true, "text": "Snow blankets the garden below. You can make out a back gate in the hedge. It's a long drop, though. The stairs would be wiser." }
+          ]
         }
       }
     },
+
     "lobby": {
       "name": "Lobby",
-      "description": "TODO Q13",
-      "connections": "TODO Q1",
+      "connections": ["guest_room", "garden"],
+      "description": { "draft": true, "text": "The heart of the inn: worn armchairs, a crackling fire, and a tall grandfather clock that ticks a little louder than it should." },
       "features": {
         "grandfather_clock": {
           "name": "Grandfather clock",
-          "provides_evidence": ["clock_inscription"],
           "is_memory_anchor": true,
-          "examine_text": "TODO Q13"
+          "gives": "clock_inscription",
+          "examine": [
+            { "draft": true, "text": "Polished walnut and a slow brass pendulum. There's a little door in the case, just big enough for a child. Words are carved into the base." }
+          ]
         },
         "reception_desk": {
           "name": "Reception desk",
-          "contains": ["closing_notice"],
-          "examine_text": "TODO Q13"
+          "gives": "closing_notice",
+          "examine": [
+            { "conditions": { "has_not": "closing_notice" }, "draft": true, "text": "A brass bell, the guest book, and a neatly printed notice. You take the notice." },
+            { "conditions": { "has": "closing_notice" }, "draft": true, "text": "The bell and the guest book. The bell gleams; someone polishes it every day." }
+          ]
         },
         "front_door": {
           "name": "Front door",
           "blocked": true,
-          "blocked_reason": "Snowed in until tomorrow.",
-          "examine_text": "TODO Q13"
+          "examine": [
+            { "draft": true, "text": "Snow is banked halfway up the glass. Nobody is leaving this way until tomorrow." }
+          ]
         },
         "pie": {
           "name": "Pie",
-          "served_by": "innkeeper",
-          "available_phase": "evening",
-          "interaction": "TODO Q7",
-          "examine_text": "TODO Q13"
+          "available_phases": ["evening"],
+          "examine": [
+            { "conditions": { "flag_not": "tried_pie" }, "draft": true, "text": "The innkeeper cuts you a slice, still warm. Buttery crust, a little too much cinnamon in exactly the right way.", "set_flags": ["tried_pie"], "journal_fact": "You tried the innkeeper's pie." },
+            { "conditions": { "flag": "tried_pie" }, "draft": true, "text": "You've already had a slice. You consider a second. You're only human." }
+          ],
+          "unavailable_text": { "draft": true, "text": "No pie yet. The innkeeper serves it in the evening." }
         }
       }
     },
+
     "garden": {
       "name": "Garden",
-      "description": "TODO Q13",
-      "connections": "TODO Q1",
+      "connections": ["lobby"],
+      "description": { "draft": true, "text": "A walled garden asleep under snow: a hedge, a few stubborn bushes, terracotta flowerpots, and an iron back gate." },
       "features": {
         "back_gate": {
           "name": "Back gate",
           "is_loop_1_escape": true,
-          "requires_item": "TODO Q3 (presumably gate_key, but the brief doesn't say)",
-          "examine_text": "TODO Q13"
+          "examine": [
+            { "conditions": { "has": "gate_key" }, "effect": "escape", "draft": true, "text": "The key turns with a stiff click. The gate swings open onto a lane that winds away into the snow." },
+            { "conditions": { "has_not": "gate_key", "npc_present": "mira" }, "trigger_ambient": "mira_gate_key_hint", "draft": true, "text": "An iron gate in the hedge, locked tight." },
+            { "conditions": { "has_not": "gate_key" }, "draft": true, "text": "An iron gate in the hedge, locked tight. Beyond it, a lane winds away from the inn." }
+          ]
         },
         "bush": {
           "name": "Bush",
-          "contains": ["blue_ribbon"],
-          "examine_text": "TODO Q13"
+          "gives": "blue_ribbon",
+          "examine": [
+            { "conditions": { "has_not": "blue_ribbon" }, "draft": true, "text": "A torn scrap of blue ribbon is caught on the thorns, faded by many winters. You work it free." },
+            { "conditions": { "has": "blue_ribbon" }, "draft": true, "text": "Thorns and snow." }
+          ]
         },
         "flowerpot": {
           "name": "Flowerpot",
-          "contains": ["gate_key"],
-          "examine_text": "TODO Q13"
+          "gives": "gate_key",
+          "examine": [
+            { "conditions": { "has_not": "gate_key" }, "draft": true, "text": "You tip the flowerpot. Underneath, pressed into the frozen soil, is a small iron key." },
+            { "conditions": { "has": "gate_key" }, "draft": true, "text": "Just a flowerpot now." }
+          ]
         }
       }
     }
@@ -100,7 +138,8 @@
       "is_evidence": false,
       "found_in": { "location": "garden", "feature": "flowerpot" },
       "portable": true,
-      "presentable": "TODO Q11"
+      "presentable": true,
+      "journal_fact": "The gate key was under the flowerpot."
     }
   },
 
@@ -108,63 +147,73 @@
     "note": {
       "name": "Handwritten note",
       "text": "Leave before midnight.",
+      "locked_text": true,
+      "description": { "draft": true, "text": "A sealed envelope with your name on the front. Inside, one line: \"Leave before midnight.\"" },
       "found_in": { "location": "guest_room", "feature": "door" },
+      "auto_pickup_on_wake": true,
       "portable": true,
       "droppable": false,
-      "droppable_reason": "Prevents soft-lock (brief §3).",
       "anchored": true,
-      "stays_in_inventory_after_loop": 1
+      "stays_in_inventory_after_loop": 1,
+      "journal_fact": "A note in an envelope with your name on it says: \"Leave before midnight.\""
     },
     "closing_notice": {
       "name": "Closing notice",
       "found_in": { "location": "lobby", "feature": "reception_desk" },
       "portable": true,
-      "text": "TODO Q13"
+      "text": { "draft": true, "text": "After many happy years, the inn closes its doors for good tomorrow. Thank you for staying with us." },
+      "journal_fact": "The inn closes for good tomorrow."
     },
     "blue_ribbon": {
       "name": "Torn blue ribbon",
       "found_in": { "location": "garden", "feature": "bush" },
-      "portable": true
+      "portable": true,
+      "journal_fact": "A torn blue ribbon was caught on a garden bush."
     },
     "old_photo": {
       "name": "Old photo",
-      "description": "The innkeeper and a little girl with a blue ribbon, beside the clock.",
+      "description": { "text": "The innkeeper and a little girl with a blue ribbon, beside the clock.", "locked_text": true },
       "found_in": { "location": "guest_room", "feature": "drawer" },
-      "portable": true
+      "portable": true,
+      "journal_fact": "The old photo shows the innkeeper and a little girl with a blue ribbon, beside the clock."
     },
     "clock_inscription": {
       "name": "Clock inscription",
       "found_in": { "location": "lobby", "feature": "grandfather_clock" },
       "portable": false,
       "acquired_by": "examine",
-      "text": "TODO Q13"
+      "text": { "draft": true, "text": "Mind the hours you wish away." },
+      "text_options_for_designer": [
+        "Mind the hours you wish away.",
+        "Every hour I keep, I keep for you.",
+        "Wind me gently. I am listening."
+      ],
+      "journal_fact": "The clock's base reads: \"{inscription}\""
     }
   },
 
   "npcs": {
     "innkeeper": {
       "name": "Innkeeper",
-      "personal_name": "TODO Q13",
+      "personal_name": { "draft": true, "text": "Walter" },
       "traits": ["warm", "a little tired", "proud of his inn"],
       "knows": [
         "The inn closes tomorrow.",
         "He made a \"silly wish\" at the clock last night.",
         "A little girl once lived here long ago."
       ],
-      "does_not_know": [
-        "The loop.",
-        "That Mira is that girl."
-      ],
+      "does_not_know": ["The loop.", "That Mira is that girl."],
       "schedule": {
-        "morning":   { "location": "lobby", "activity": "winds clock" },
-        "afternoon": { "location": "lobby" },
-        "evening":   { "location": "lobby", "activity": "serves pie" },
+        "morning":   { "location": "lobby",   "activity": "winds clock",  "presence": { "draft": true, "text": "The innkeeper is winding the grandfather clock, humming to himself." } },
+        "afternoon": { "location": "lobby",                               "presence": { "draft": true, "text": "The innkeeper is behind the reception desk, polishing the bell." } },
+        "evening":   { "location": "lobby",   "activity": "serves pie",   "presence": { "draft": true, "text": "The innkeeper is cutting slices of pie by the fire." } },
         "night":     { "location": "off_map", "activity": "leaves to his room" }
       },
       "schedule_triggers": [],
       "near_clock_at_midnight": false,
-      "near_clock_note": "Always leaves the lobby for bed before midnight, so he never remembers."
+      "fallback": { "draft": true, "text": "He turns it over, smiles kindly, and hands it back. \"Can't say I know what to make of that, I'm afraid.\"" }
     },
+
     "mira": {
       "name": "Mira",
       "traits": ["friendly", "playful", "knows the inn suspiciously well"],
@@ -172,59 +221,86 @@
         "She is the girl from the photo.",
         "Her plan for tomorrow: reveal who she is and take over the inn."
       ],
-      "senses": ["Déjà vu she cannot explain."],
-      "does_not_know": "TODO Q15 (the brief doesn't list this explicitly; implied: the loop)",
+      "senses": ["Déjà vu she cannot explain: she senses the loop but barely recalls anything."],
+      "does_not_know": ["The loop (she only senses it)."],
       "schedule": {
-        "morning":   { "location": "lobby" },
-        "afternoon": { "location": "garden" },
-        "evening":   { "location": "lobby" },
-        "night":     { "location": "garden" }
+        "morning":   { "location": "lobby",  "presence": { "draft": true, "text": "Mira is curled up in an armchair by the fire." } },
+        "afternoon": { "location": "garden", "presence": { "draft": true, "text": "Mira is wandering the garden, brushing snow off the hedge." } },
+        "evening":   { "location": "lobby",  "presence": { "draft": true, "text": "Mira sits by the fire with a cup of tea." } },
+        "night":     { "location": "garden", "presence": { "draft": true, "text": "Mira stands in the snowy garden, looking up at the lit windows." } }
       },
       "schedule_triggers": [
         {
           "id": "mira_waits_for_innkeeper",
           "on": { "action": "present", "evidence": "old_photo", "target": "mira" },
-          "effect": { "schedule": { "night": { "location": "lobby", "activity": "waits to tell the innkeeper who she is" } } },
+          "effect": { "schedule": { "night": { "location": "lobby", "activity": "waits to tell the innkeeper who she is", "presence": { "draft": true, "text": "Mira sits beside the grandfather clock, waiting for someone who doesn't come." } } } },
           "purpose": "Puts Mira near the clock at midnight (memory trigger).",
-          "persists_across_reset": "TODO Q6"
+          "persists_across_reset": false
         }
       ],
+      "first_meeting_line": {
+        "note": "Her first line in each loop, the first time the player meets her (normally the Lobby, Morning).",
+        "default": { "lines": ["You haven't tried the pie."], "locked_text": true, "narration": { "draft": true, "text": "Mira looks up from her armchair and smiles." } }
+      },
       "ambient": [
         {
           "id": "mira_gate_key_hint",
           "where": { "location": "garden" },
+          "trigger": "Player examines back_gate without the key while Mira is present.",
           "intent": "Mira mentions the key is under the flowerpot (another hint that she knows the inn too well).",
-          "trigger": "TODO Q9",
-          "text": "TODO Q13"
+          "draft": true,
+          "text": "Mira glances over. \"Locked? The key's under the flowerpot. Always has been.\" She blinks, as if surprised she knew that.",
+          "journal_fact": "Mira knew the gate key was under the flowerpot."
+        },
+        {
+          "id": "mira_clock_myth",
+          "where": { "location": "lobby" },
+          "trigger": "Loop 2+, after Mira was near the clock at the previous midnight; player examines the grandfather clock while Mira is present.",
+          "intent": "A vague myth about the clock. Must not state the rule (pillar 2).",
+          "draft": true,
+          "text": "\"There was a story about this clock, when I was small,\" Mira says. \"Something about being careful what you tell it.\" She shrugs. \"I don't remember the rest.\"",
+          "journal_fact": "Mira remembers a story about being careful what you tell the clock."
         }
-      ]
+      ],
+      "fallback": { "draft": true, "text": "Mira tilts her head. \"Hm. Should that mean something to me?\"" }
     }
   },
 
   "reactions": [
     {
-      "id": "note__innkeeper",
-      "evidence": "note", "target": "innkeeper", "conditions": {},
+      "id": "note__innkeeper__loop1",
+      "evidence": "note", "target": "innkeeper", "conditions": { "loop": 1 },
       "intent": "Found it in the clock this morning while winding it. Points at the clock.",
-      "text": "TODO Q13",
+      "draft": true,
+      "text": "\"Ah, that! It was tucked inside the clock when I wound it this morning. Had your name on it, so I slipped it under your door.\" He nods at the grandfather clock.",
       "journal_fact": "The innkeeper found the note in the clock.",
-      "effects": [],
-      "open_issue": "TODO Q5: in Loop 2+ the player already carries the note, so he couldn't have found it this morning."
+      "effects": []
+    },
+    {
+      "id": "note__innkeeper__loop2plus",
+      "evidence": "note", "target": "innkeeper", "conditions": { "loop_min": 2 },
+      "intent": "He has never seen it (the player carried it through midnight, so it wasn't in the clock). Decision Q5.",
+      "draft": true,
+      "text": "He squints at the envelope. \"Your name, but I've never seen it before. Did someone leave it for you?\"",
+      "journal_fact": "The innkeeper says he has never seen the note.",
+      "effects": []
     },
     {
       "id": "note__mira",
       "evidence": "note", "target": "mira", "conditions": {},
       "intent": "Puzzled; mild déjà vu about midnight.",
-      "text": "TODO Q13",
-      "journal_fact": "TODO Q12",
+      "draft": true,
+      "text": "Mira reads the line twice. \"Midnight…\" She laughs, a little uncertain. \"Funny. For a second that felt familiar.\"",
+      "journal_fact": "Mira said the note felt familiar.",
       "effects": []
     },
     {
       "id": "closing_notice__innkeeper",
       "evidence": "closing_notice", "target": "innkeeper", "conditions": {},
       "intent": "Sad; wishes today would never end. (Hint of the wish.)",
-      "text": "TODO Q13",
-      "journal_fact": "TODO Q12",
+      "draft": true,
+      "text": "He sighs. \"All these years. Sometimes I think, if today could just… not end.\" He shakes his head. \"Listen to me.\"",
+      "journal_fact": "The innkeeper wishes today would never end.",
       "effects": []
     },
     {
@@ -232,127 +308,141 @@
       "evidence": "closing_notice", "target": "mira", "conditions": {},
       "intent": "Mystery.",
       "text": "Tomorrow might surprise you.",
-      "journal_fact": "TODO Q12",
+      "locked_text": true,
+      "narration": { "draft": true, "text": "Mira taps the notice and smiles." },
+      "journal_fact": "Mira says tomorrow might surprise you.",
       "effects": []
     },
     {
       "id": "blue_ribbon__innkeeper",
       "evidence": "blue_ribbon", "target": "innkeeper", "conditions": {},
       "intent": "Reminds him of a little girl who stayed here long ago.",
-      "text": "TODO Q13",
-      "journal_fact": "TODO Q12",
+      "draft": true,
+      "text": "\"Blue ribbon… There was a little girl here once, long ago. Wore one just like it, every single day.\" He smiles at nothing for a moment.",
+      "journal_fact": "A little girl with a blue ribbon once lived at the inn.",
       "effects": []
     },
     {
       "id": "blue_ribbon__mira",
       "evidence": "blue_ribbon", "target": "mira", "conditions": {},
       "intent": "Hesitates, changes the subject.",
-      "text": "TODO Q13",
-      "journal_fact": "TODO Q12",
+      "draft": true,
+      "text": "Mira's hand drifts toward it, then stops. She looks away. \"Is it me, or is the snow getting heavier?\"",
+      "journal_fact": "Mira changed the subject when shown the ribbon.",
       "effects": []
     },
     {
       "id": "old_photo__innkeeper",
       "evidence": "old_photo", "target": "innkeeper", "conditions": {},
       "intent": "Nostalgic about the girl; does not connect her to Mira.",
-      "text": "TODO Q13",
-      "journal_fact": "TODO Q12",
+      "draft": true,
+      "text": "\"Where did you find this? That's me, believe it or not. And that's the little girl who lived here.\" He runs a thumb over the edge. \"I wonder what became of her.\"",
+      "journal_fact": "The innkeeper doesn't know what became of the girl in the photo.",
       "effects": []
     },
     {
       "id": "old_photo__mira",
       "evidence": "old_photo", "target": "mira", "conditions": {},
       "intent": "TRIGGER: goes quiet, decides it is time to tell him.",
-      "text": "TODO Q13",
-      "journal_fact": "TODO Q12",
+      "draft": true,
+      "text": "Mira goes very quiet. She looks at the photo for a long time. \"I think,\" she says softly, \"it's time I told him something.\"",
+      "journal_fact": "Mira wants to tell the innkeeper something.",
       "effects": [{ "type": "fire_schedule_trigger", "npc": "mira", "trigger": "mira_waits_for_innkeeper" }]
     },
     {
       "id": "clock_inscription__innkeeper",
       "evidence": "clock_inscription", "target": "innkeeper", "conditions": {},
-      "intent": "Deflects; admits he said something silly to that clock last night.",
-      "text": "TODO Q13 (brief quotes the fragment: \"said something silly to that clock last night\")",
-      "journal_fact": "TODO Q12",
+      "intent": "Deflects; admits he \"said something silly to that clock last night\".",
+      "draft": true,
+      "text": "He chuckles, a little pink. \"Oh, that old thing. I said something silly to that clock last night. Don't tell anyone.\"",
+      "locked_fragment": "said something silly to that clock last night",
+      "journal_fact": "The innkeeper said something to the clock last night.",
       "effects": []
     },
     {
       "id": "clock_inscription__mira",
       "evidence": "clock_inscription", "target": "mira", "conditions": {},
       "intent": "Says she used to hide inside its case as a child.",
-      "text": "TODO Q13",
-      "journal_fact": "TODO Q12",
+      "draft": true,
+      "text": "\"I used to hide in there, you know. Right inside the case, with the pendulum going tick, tick above my head.\" She stops. \"When I was little.\"",
+      "journal_fact": "Mira used to hide inside the clock's case as a child.",
       "effects": []
     }
   ],
 
   "reaction_fallbacks": {
-    "uncovered_combination": "TODO Q11",
-    "target_not_present": "TODO Q11",
-    "present_to_location": "TODO Q10"
+    "uncovered_combination": "Use the target NPC's fallback line.",
+    "target_not_present": "Cannot happen: actions() only lists NPCs in the player's location.",
+    "present_to_location": { "draft": true, "text": "You hold up the {item}. The {place} keeps its thoughts to itself." },
+    "journal_fact": null
   },
 
   "rules": {
     "reset": {
       "when": "midnight",
-      "effect": "Everything resets to the morning of the same day.",
-      "except": ["anchored objects", "memory of memory-keepers"]
+      "effect": "Everything resets to the morning of the same day: locations, NPC schedules (including triggers), items, flags.",
+      "except": ["anchored objects", "memory of memory-keepers", "journal"]
     },
     "memory": {
       "keepers": [
-        "Anyone touching or near the clock at the moment of midnight.",
+        "Anyone in the Lobby (near the clock) at the moment of midnight.",
         "Anyone carrying an anchored object at midnight."
       ],
       "what_is_kept": "A fragment of memory.",
-      "near_clock_definition": "TODO Q4 (in the lobby at midnight?)"
+      "near_clock_definition": "In the lobby at midnight."
     },
     "anchoring": {
       "rule": "Objects inside or touching the clock at midnight persist through the reset.",
       "anchored_at_start": ["note"]
     },
     "note_lifecycle": {
-      "each_morning": "The innkeeper finds the note while winding the clock, assumes a guest dropped it, and slides it under the player's door.",
-      "applies_until": "The player carries it through a midnight (Loop 1). After that it stays in the player's inventory.",
-      "loop_2_plus_innkeeper_behaviour": "TODO Q5"
+      "loop_1": "The innkeeper found the sealed envelope in the clock while winding it, didn't open it, saw the player's name and slid it under the player's door. Auto-picked up on waking.",
+      "loop_2_plus": "The player carried the note through midnight, so it stays in their inventory. Nothing is under the door and the clock is empty."
     },
-    "loop_cannot_end": "The wisher does not know the wish came true, so the loop never ends (MVP: no ending, see end_conditions)."
+    "escape": "Opening the back gate with the key ends the loop immediately and plays the escape midnight scene.",
+    "loop_cannot_end": "The wisher does not know the wish came true, so the loop never ends (MVP: no ending; see end_conditions)."
   },
 
   "loops": {
+    "wake": [
+      { "conditions": { "loop": 1 }, "draft": true, "text": "You wake under a heavy quilt. Grey winter light, the smell of coffee from downstairs. On the floor inside the door lies an envelope with your name on it. You open it. One line: \"Leave before midnight.\"" },
+      { "conditions": { "loop_min": 2 }, "draft": true, "text": "You wake under the same heavy quilt. Grey winter light. The smell of coffee. The floor by the door is bare, but the envelope is still in your pocket." }
+    ],
+    "midnight_scenes": {
+      "escaped": { "intent": "While walking away, the clock's chime sounds as if right beside the player; the inn is ahead again.", "draft": true, "text": "You follow the lane into the snow. The inn's lights shrink behind you. Then, close enough to touch, a clock begins to chime. Twelve. You look up. The inn is ahead of you again, every window glowing." },
+      "in_lobby": { "draft": true, "text": "The grandfather clock strikes twelve. The sound fills the room, fills your chest, fills everything." },
+      "elsewhere": { "draft": true, "text": "Somewhere below, faint and far away, a clock strikes twelve. The edges of the room go soft." }
+    },
     "loop_1": {
       "target_duration_minutes": [2, 4],
       "intended_path": ["wake, find the note", "explore and meet NPCs", "learn of the back gate and key", "escape through the garden"],
-      "escape": {
-        "via": "back_gate",
-        "ends_loop_immediately": "TODO Q3",
-        "midnight_scene_intent": "While walking away, the clock's chime sounds as if right beside the player; the inn is ahead again. Reset.",
-        "midnight_scene_text": "TODO Q13"
-      },
+      "shortest_escape": ["move lobby (morning)", "move garden (morning)", "examine back_gate with Mira present (afternoon)", "examine flowerpot (afternoon)", "examine back_gate with key (evening)"],
       "player_memory": "The player remembers from Loop 1 onward because they carry the anchored note at midnight."
     },
     "loop_2_opening": {
-      "wake_location": "guest_room",
       "npcs_repeat_loop_1_lines": true,
-      "mira_first_line": {
-        "if_mira_not_near_clock_last_midnight": ["You haven't tried the pie."],
-        "if_mira_near_clock_last_midnight": ["Morning…", "(pause)", "You still haven't tried the pie."],
-        "reveal_moment": "if_mira_near_clock_last_midnight",
-        "when_and_where": "TODO Q8"
-      }
+      "mira_first_meeting_line": [
+        { "conditions": { "mira_near_clock_last_midnight": false }, "lines": ["You haven't tried the pie."], "locked_text": true },
+        { "conditions": { "mira_near_clock_last_midnight": true, "flag_last_loop_not": "tried_pie" }, "lines": ["Morning…", "(pause)", "You still haven't tried the pie."], "locked_text": true, "is_anomaly": true, "journal_fact": "Mira remembered that you hadn't tried the pie." },
+        { "conditions": { "mira_near_clock_last_midnight": true, "flag_last_loop": "tried_pie" }, "lines": ["Morning…", "(pause)", "You liked the pie, didn't you? Same recipe as always."], "draft": true, "is_anomaly": true, "intent": "She remembers the player tried the pie; \"same recipe as always\" hints she knew the inn as a child (decision Q7).", "journal_fact": "Mira remembered that you tried the pie." }
+      ]
     },
     "end_conditions": [
-      { "type": "anomaly_seen", "description": "The player sees the memory anomaly (Mira's \"still\" line)." },
+      { "type": "anomaly_seen", "description": "The player sees a Mira line marked is_anomaly." },
       { "type": "loop_limit", "description": "End of Loop 3." }
     ],
     "end_screen": {
       "prompt": "What do you think is happening?",
+      "locked_text": true,
       "capture_answer": true
     }
   },
 
   "journal": {
     "toggleable": true,
-    "records": "Confirmed facts only. Never conclusions or hypotheses.",
-    "example_fact": "The innkeeper found the note in the clock.",
-    "persists_across_loops": "TODO Q14"
+    "records": "Confirmed facts only, brief and factual. Never conclusions or hypotheses.",
+    "sources": "Every journal_fact in this file: evidence found, reactions, ambient lines, anomaly lines.",
+    "persists_across_loops": true,
+    "tag_with_loop": true
   }
 }
