@@ -6,7 +6,7 @@ The "Why" lines are the designer's own words. Decisions with full reasons live i
 ## 2026-11-01 · Setup
 - **Built:** git repo with `.gitignore` (excludes `.env` and session logs), connected to the private GitHub repo `last-day-inn`.
 - **Learned:** pushing needs a fine-grained token with Contents read/write; a token pasted at the shell prompt counts as leaked.
-- **Why:** _(waiting for designer's words)_
+- **Why:** Least access: the token only reaches this test project, so if it leaks, nothing else is exposed.
 
 ## 2026-11-01 · M1.1 world.json from the brief
 - **Built:** `world.json` from CLAUDE.md only; gaps marked TODO, then filled from designer answers (Q1–Q15, D1–D7), with all Claude-written text marked draft.
