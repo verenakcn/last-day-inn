@@ -106,9 +106,9 @@ def gemini_model():
                     config=types.GenerateContentConfig(system_instruction=system))
                 return "".join(p.text for p in response.candidates[0].content.parts if p.text)
             except (genai.errors.ClientError, genai.errors.ServerError) as e:
-                # 429 = over the free-tier rate, 503 = Google overloaded: both are temporary.
+                # 429 = over the free-tier rate, 503/504 = Google overloaded or timed out: all temporary.
                 # A per-day quota is not: waiting a minute won't help, so stop at once.
-                if e.code not in (429, 503) or attempt == 4 or "per day" in str(e):
+                if e.code not in (429, 503, 504) or attempt == 4 or "per day" in str(e):
                     raise
                 time.sleep(60)
 
@@ -191,6 +191,7 @@ def facts(game, run):
     actions = [e for e in events if e["type"] == "action"]
     evidence = set(game.w["evidence"])
     found = {i for e in actions for i in e["after"]["inventory"] if i in evidence}
+    found |= {i for i in game.inventory if i in evidence}  # the note is held from the start
     used = {e["action"].split(":")[1].split(">")[0] for e in actions if e["action"].startswith("present:")}
     resets = [e for e in events if e["type"] == "reset"]
     fallbacks = {n["fallback"]["text"] for n in game.w["npcs"].values()}

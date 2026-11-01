@@ -1,0 +1,35 @@
+{
+  "facts": {
+    "escaped_loop_1": false,
+    "evidence_found": [],
+    "evidence_never_found": [
+      "blue_ribbon",
+      "clock_inscription",
+      "closing_notice",
+      "note",
+      "old_photo"
+    ],
+    "evidence_found_but_never_shown": [],
+    "memory_trigger_hit": false,
+    "anomaly_shown": false,
+    "loops_played": 1,
+    "total_turns": 0,
+    "wasted_turns": [],
+    "unparsed_replies": 0,
+    "api_calls": 1,
+    "capped_at_max_actions": false,
+    "stopped_by_error": "ServerError: 504 DEADLINE_EXCEEDED. {'error': {'code': 504, 'message': 'Deadline expired before operation could complete.', 'status': 'DEADLINE_EXCEEDED'}}"
+  },
+  "run": {
+    "persona": "curious",
+    "journal": true,
+    "turns": [],
+    "hypotheses": [],
+    "final_answer": null,
+    "api_calls": 1,
+    "capped": false,
+    "error": "ServerError: 504 DEADLINE_EXCEEDED. {'error': {'code': 504, 'message': 'Deadline expired before operation could complete.', 'status': 'DEADLINE_EXCEEDED'}}",
+    "ended": null,
+    "model": "gemini: gemini-3.1-flash-lite"
+  }
+}
