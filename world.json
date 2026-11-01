@@ -7,6 +7,26 @@
     "template_vars": "{item} = display name of the presented thing, {place} = display name of the feature or location."
   },
 
+  "ui": {
+    "draft": true,
+    "status": "Loop {loop} · {phase} · action {action} of {per_phase}",
+    "here": "Here:",
+    "nobody_here": "Nobody else is here.",
+    "examine_list": "You could examine: {list}",
+    "exits": "Exits: {list}",
+    "inventory": "You carry: {list}",
+    "inventory_empty": "You carry nothing.",
+    "journal_header": "Journal:",
+    "journal_empty": "Journal: nothing confirmed yet.",
+    "journal_entry": "[Loop {loop}] {fact}",
+    "read_text": "It reads: \"{text}\"",
+    "pause": "(A pause.)",
+    "move": "You go to the {place}.",
+    "action_move": "Go to {place}",
+    "action_examine": "Examine {thing}",
+    "action_present": "Show {item} to {target}"
+  },
+
   "time": {
     "phases": ["morning", "afternoon", "evening", "night"],
     "phase_names": { "morning": "Morning", "afternoon": "Afternoon", "evening": "Evening", "night": "Night" },
@@ -108,7 +128,7 @@
           "is_loop_1_escape": true,
           "examine": [
             { "conditions": { "has": "gate_key" }, "effect": "escape", "draft": true, "text": "The key turns with a stiff click. The gate swings open onto a lane that winds away into the snow." },
-            { "conditions": { "has_not": "gate_key", "npc_present": "mira" }, "trigger_ambient": "mira_gate_key_hint", "draft": true, "text": "An iron gate in the hedge, locked tight." },
+            { "conditions": { "has_not": "gate_key", "npc_present": "mira" }, "draft": true, "text": "An iron gate in the hedge, locked tight." },
             { "conditions": { "has_not": "gate_key" }, "draft": true, "text": "An iron gate in the hedge, locked tight. Beyond it, a lane winds away from the inn." }
           ]
         },
@@ -240,13 +260,14 @@
       ],
       "first_meeting_line": {
         "note": "Her first line in each loop, the first time the player meets her (normally the Lobby, Morning).",
-        "default": { "lines": ["You haven't tried the pie."], "locked_text": true, "narration": { "draft": true, "text": "Mira looks up from her armchair and smiles." } }
+        "default": { "lines": ["You haven't tried the pie."], "locked_text": true, "narration": { "conditions": { "location": "lobby" }, "draft": true, "text": "Mira looks up from her armchair and smiles." } }
       },
       "ambient": [
         {
           "id": "mira_gate_key_hint",
           "where": { "location": "garden" },
           "trigger": "Player examines back_gate without the key while Mira is present.",
+          "on": { "examine": "back_gate", "conditions": { "has_not": "gate_key", "npc_present": "mira" } },
           "intent": "Mira mentions the key is under the flowerpot (another hint that she knows the inn too well).",
           "draft": true,
           "text": "Mira glances over. \"Locked? The key's under the flowerpot. Always has been.\" She blinks, as if surprised she knew that.",
@@ -256,6 +277,7 @@
           "id": "mira_clock_myth",
           "where": { "location": "lobby" },
           "trigger": "Loop 2+, after Mira was near the clock at the previous midnight; player examines the grandfather clock while Mira is present.",
+          "on": { "examine": "grandfather_clock", "conditions": { "loop_min": 2, "npc_present": "mira", "mira_near_clock_last_midnight": true } },
           "intent": "A vague myth about the clock. Must not state the rule (pillar 2).",
           "draft": true,
           "text": "\"There was a story about this clock, when I was small,\" Mira says. \"Something about being careful what you tell it.\" She shrugs. \"I don't remember the rest.\"",
