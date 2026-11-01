@@ -27,3 +27,8 @@ The "Why" lines are the designer's own words. Decisions with full reasons live i
 - **Built:** `agent.py` plays through the same interface as a human; curious and escape personas, journal on/off, per-run and aggregate reports; Claude or Gemini.
 - **Learned:** report facts must come from the game log, not the AI; `gemini-3.8-flash` was listed for our key but never answered, `gemini-3.5-flash` does.
 - **Why:** Gemini's free tier lets us run playtests without paying; Claude stays available as an option.
+
+## 2026-11-01 · Playtest agent limits
+- **Built:** one run per command (`--all` is opt-in), a 40-action cap, `--dry-run` with a fake model, API-call count in every report, reports that never overwrite, partial reports when a run fails.
+- **Learned:** Gemini's free tier allows 5 requests a minute and 20 a day per model; a full run needs about 15–27, so a free-tier run may not fit in one day.
+- **Why:** _(waiting for designer's words)_
