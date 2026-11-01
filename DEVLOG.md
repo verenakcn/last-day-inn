@@ -31,9 +31,9 @@ The "Why" lines are the designer's own words. Decisions with full reasons live i
 ## 2026-11-01 · Playtest agent limits
 - **Built:** one run per command (`--all` is opt-in), a 40-action cap, `--dry-run` with a fake model, API-call count in every report, reports that never overwrite, partial reports when a run fails.
 - **Learned:** Gemini's free tier allows 5 requests a minute and 20 a day per model; a full run needs about 15–27, so a free-tier run may not fit in one day.
-- **Why:** _(waiting for designer's words)_
+- **Why:** To keep API usage under control: no runaway runs or surprise costs, and `--dry-run` tests the pipeline for free.
 
 ## 2026-11-01 · Designer playtest fixes
 - **Built:** room text shows on arrival in (parentheses), then a one-line intro the first time you meet each character; ✓ marks actions taken this loop; Mira's Loop 1 line now sets up the pie: "You're new here. Try the pie tonight; it's the best thing about this place."
 - **Learned:** playing it ourselves caught what the tests couldn't: Mira's old line referred to a pie the player had never heard of, so the Loop 2 "still" line had nothing to contrast with.
-- **Why:** _(waiting for designer's words)_
+- **Why:** Playing it myself showed readability problems: the room and characters should come first, and Mira's pie line made no sense to a new player. The ✓ reminds players what they've already done so they don't waste actions; later we may hide repeated options or let them cost no action.
