@@ -92,7 +92,7 @@ def gemini_model():
         timeout=60000, retry_options=types.HttpRetryOptions(attempts=2)))
     # gemini-3.8-flash is listed but never answered with our free-tier key (2026-11-01).
     model = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash")
-    # Free tier allows 5 requests per minute: space calls out, and wait out a 429 if one still happens.
+    # Free tier allows 5 requests per minute: space calls out, and wait out a 429 or 503 if one happens.
     gap = float(os.environ.get("GEMINI_SECONDS_BETWEEN_CALLS", "13"))
     last = [0.0]
 
@@ -105,8 +105,9 @@ def gemini_model():
                     model=model, contents=to_gemini(messages),
                     config=types.GenerateContentConfig(system_instruction=system))
                 return "".join(p.text for p in response.candidates[0].content.parts if p.text)
-            except genai.errors.ClientError as e:
-                if e.code != 429 or attempt == 4:
+            except (genai.errors.ClientError, genai.errors.ServerError) as e:
+                # 429 = over the free-tier rate, 503 = Google overloaded: both are temporary.
+                if e.code not in (429, 503) or attempt == 4:
                     raise
                 time.sleep(60)
 
