@@ -52,3 +52,8 @@ The "Why" lines are the designer's own words. Decisions with full reasons live i
 - **Built:** first full run → read report → one world.json change → re-run → compare (commits `2f7f4e6` before, `5b09935` after). A second look at the clock now says "The little door won't open."
 - **Learned:** repeat door attempts in one loop went 2 → 1, and the player later wrote "since the door wouldn't open before"; the reveal can still be missed when the photo reaches Mira only in Loop 3. One run per side is a hint, not proof.
 - **Why:** _(waiting for designer's words)_
+
+## 2026-11-02 · Report-driven fix 2: the clock door as a clue (backfired)
+- **Built:** second clock look shows a child's scratched star (commits `6ba7971` before, `b4bc771` after); smarter waste counter (a repeat only counts if it showed the same text again).
+- **Learned:** a physical mark on a door reads as a mechanism to activate: clock looks 4 → 5, door/star notes 8 → 11. It did strengthen the girl → Mira link (1 → 3 notes), but no one acted on it. A clue should point at a person or a question, not at an object that looks interactive.
+- **Why:** _(waiting for designer's words)_
