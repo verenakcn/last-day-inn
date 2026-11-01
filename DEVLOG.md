@@ -34,7 +34,7 @@ The "Why" lines are the designer's own words. Decisions with full reasons live i
 - **Why:** To keep API usage under control: no runaway runs or surprise costs, and `--dry-run` tests the pipeline for free.
 
 ## 2026-11-01 · Designer playtest fixes
-- **Built:** room text shows on arrival in (parentheses), then a one-line intro the first time you meet each character; ✓ marks actions taken this loop; Mira's Loop 1 line now sets up the pie: "You're new here. Try the pie tonight; it's the best thing about this place."
+- **Built:** room text shows on arrival in (parentheses), then a one-line intro the first time you meet each character; ✓ marks actions taken this loop; Mira's Loop 1 line now sets up the pie: "You're new here. Try the pie tonight; it's the best thing about this place." "Examine Pie" now appears only in the Evening, when the pie is served.
 - **Learned:** playing it ourselves caught what the tests couldn't: Mira's old line referred to a pie the player had never heard of, so the Loop 2 "still" line had nothing to contrast with.
 - **Why:** Playing it myself showed readability problems: the room and characters should come first, and Mira's pie line made no sense to a new player. The ✓ reminds players what they've already done so they don't waste actions; later we may hide repeated options or let them cost no action.
 
