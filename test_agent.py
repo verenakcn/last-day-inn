@@ -2,7 +2,7 @@
 
 import unittest
 
-from agent import aggregate_md, facts, play, report_md
+from agent import aggregate_md, facts, play, report_md, to_gemini
 from engine import Game
 
 
@@ -64,6 +64,11 @@ class AgentRun(unittest.TestCase):
         self.assertIn("| curious | on | yes | yes | yes | 7 |", md)
         self.assertIn("| escape | off | yes | no |", md)
         self.assertIn("**Evidence no run found:** blue_ribbon, clock_inscription, closing_notice", md)
+
+    def test_gemini_message_format(self):
+        msgs = [{"role": "user", "content": "hi"}, {"role": "assistant", "content": "CHOICE: 1"}]
+        self.assertEqual(to_gemini(msgs), [{"role": "user", "parts": [{"text": "hi"}]},
+                                           {"role": "model", "parts": [{"text": "CHOICE: 1"}]}])
 
     def test_bad_reply_falls_back_to_first_action(self):
         game = Game()

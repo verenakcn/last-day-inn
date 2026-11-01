@@ -6,6 +6,9 @@
     python3 agent.py --persona escape --no-journal
     python3 agent.py --all                # both personas x journal on/off + aggregate report
 
+Gemini instead of Claude: pip install google-genai, put GEMINI_API_KEY=... in .env,
+then add --provider gemini to any command above.
+
 The report's facts (escaped, evidence found/used, trigger, anomaly, turns) are computed from the
 game log, not from the model. The model only plays and states hypotheses.
 """
@@ -62,6 +65,29 @@ def claude_model():
         if response.stop_reason == "refusal":
             raise RuntimeError("Model declined the request")
         return "".join(b.text for b in response.content if b.type == "text")
+
+    return ask
+
+
+def to_gemini(messages):
+    """Our user/assistant message list in Gemini's user/model format."""
+    return [{"role": "model" if m["role"] == "assistant" else "user", "parts": [{"text": m["content"]}]}
+            for m in messages]
+
+
+def gemini_model():
+    """Returns ask(system, messages) -> text, using Google's google-genai SDK.
+    Needs GEMINI_API_KEY in .env; GEMINI_MODEL overrides the model name."""
+    from google import genai
+    from google.genai import types
+    client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+    model = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
+
+    def ask(system, messages):
+        response = client.models.generate_content(
+            model=model, contents=to_gemini(messages),
+            config=types.GenerateContentConfig(system_instruction=system))
+        return response.text or ""
 
     return ask
 
@@ -200,9 +226,10 @@ def aggregate_md(results):
 
 
 def main():
-    """python3 agent.py [--persona curious|escape] [--no-journal] [--all]"""
+    """python3 agent.py [--provider claude|gemini] [--persona curious|escape] [--no-journal] [--all]"""
     load_env()
-    ask = claude_model()
+    provider = sys.argv[sys.argv.index("--provider") + 1] if "--provider" in sys.argv else "claude"
+    ask = gemini_model() if provider == "gemini" else claude_model()
     if "--all" in sys.argv:
         combos = [(p, j) for p in PERSONAS for j in (True, False)]
     else:
