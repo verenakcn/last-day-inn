@@ -79,6 +79,7 @@ class Loop1(unittest.TestCase):
         g, texts = play(["move:lobby", "examine:grandfather_clock", "examine:grandfather_clock"])
         self.assertIn("little door in the case", texts[1])
         self.assertIn("The little door won't open.", texts[2])
+        self.assertIn("a child's height", texts[2])
 
     def test_pie_only_offered_in_the_evening(self):
         g, _ = play(["move:lobby"])
