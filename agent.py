@@ -197,14 +197,16 @@ def facts(game, run):
     used = {e["action"].split(":")[1].split(">")[0] for e in actions if e["action"].startswith("present:")}
     resets = [e for e in events if e["type"] == "reset"]
     fallbacks = {n["fallback"]["text"] for n in game.w["npcs"].values()}
-    wasted, seen = [], set()
+    wasted, seen = [], {}
     for t in run["turns"]:
         key = (t["loop"], t["action"])
-        if t["result"].split("\n\n")[0] in fallbacks:
+        first = t["result"].split("\n\n")[0]  # the action's own text, before time passes or people arrive
+        if first in fallbacks:
             wasted.append("%s (no reaction written)" % t["action"])
-        elif key in seen and t["action"].startswith("examine:"):
-            wasted.append("%s (repeat in loop %d)" % (t["action"], t["loop"]))
-        seen.add(key)
+        elif t["action"].startswith("examine:") and seen.get(key) == first:
+            # Only a repeat that told the player nothing new (e.g. not the gate opening with the key).
+            wasted.append("%s (same text again in loop %d)" % (t["action"], t["loop"]))
+        seen[key] = first
     return {
         "escaped_loop_1": any(r["loop"] == 1 and r["escaped"] for r in resets),
         "evidence_found": sorted(found),

@@ -52,7 +52,15 @@ class AgentRun(unittest.TestCase):
         game = state["game"] = Game()
         run = play(game, ask)
         f = facts(game, run)
-        self.assertIn("examine:front_door (repeat in loop 1)", f["wasted_turns"])
+        self.assertIn("examine:front_door (same text again in loop 1)", f["wasted_turns"])
+
+    def test_repeat_that_shows_something_new_is_not_wasted(self):
+        state, ask = scripted(["move:lobby", "move:garden", "examine:back_gate", "examine:flowerpot",
+                               "examine:back_gate"])  # second gate look opens it with the key
+        game = state["game"] = Game()
+        f = facts(game, play(game, ask))
+        self.assertTrue(f["escaped_loop_1"])
+        self.assertFalse(any("back_gate" in w for w in f["wasted_turns"]))
 
     def test_aggregate_compares_runs(self):
         results = []
