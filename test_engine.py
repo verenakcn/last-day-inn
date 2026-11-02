@@ -117,6 +117,16 @@ class Loop1(unittest.TestCase):
         self.assertIn('You know: Clock inscription ("Mind the hours you wish away.")', obs)
         self.assertIn("present:clock_inscription>innkeeper", g.actions())
 
+    def test_sessions_started_together_get_separate_logs(self):
+        import os
+        import tempfile
+        with tempfile.TemporaryDirectory() as d:
+            a, b = Game(log_dir=d), Game(log_dir=d)  # same second
+            self.assertNotEqual(a.log_path, b.log_path)
+            a.act("move:lobby")
+            b.act("examine:window")
+            self.assertEqual(len(os.listdir(d)), 2)
+
     def test_note_cannot_be_dropped(self):
         self.assertFalse(any(a.startswith("drop") for a in Game().actions()))
 

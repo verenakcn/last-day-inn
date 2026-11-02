@@ -35,7 +35,17 @@ class Game:
         self.log_path = None
         if log_dir:
             os.makedirs(log_dir, exist_ok=True)
-            self.log_path = os.path.join(log_dir, time.strftime("session-%Y%m%d-%H%M%S.json"))
+            # Claim a unique file at once ("x" fails if taken), so two sessions started
+            # in the same second never write to the same log.
+            base, n = os.path.join(log_dir, time.strftime("session-%Y%m%d-%H%M%S")), 1
+            while True:
+                path = base + (".json" if n == 1 else "-%d.json" % n)
+                try:
+                    open(path, "x").close()
+                    break
+                except FileExistsError:
+                    n += 1
+            self.log_path = path
         self.opening = self.ui["morning_banner"] + "\n\n" + self._start_loop()
 
     # ---------- shared interface ----------
