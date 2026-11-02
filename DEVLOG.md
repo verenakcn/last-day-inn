@@ -66,4 +66,4 @@ The "Why" lines are the designer's own words. Decisions with full reasons live i
 ## 2026-11-02 · Report-driven fix 3: clock door removed
 - **Built:** the clock no longer mentions a little door ("the case tall enough to hide a child"); commits `536f675` before, `3673787` after, both personas. Also a "You know:" line for the inscription.
 - **Learned:** door talk fell 6 → 1 (curious) and 5 → 0 (escape), and the curious player reached the reveal in 12 moves; but the escape player still tried to open the clock after Mira said she hid in it. The clock pulls attention because it's the heart of the story, not only because of one line.
-- **Why:** _(waiting for designer's words)_
+- **Why:** The door misled players too much; removing it keeps the clock's story without promising something that never opens.
