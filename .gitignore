@@ -18,3 +18,6 @@ __pycache__/
 
 # Dry-run playtest reports (fake model, no API)
 reports/*dry-run*
+
+# Session handoff notes (local only)
+HANDOFF.md
