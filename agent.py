@@ -176,7 +176,8 @@ def _play(game, ask, system, messages, run, max_actions):
         run["turns"].append({"loop": loop_before, "action": acts[n - 1], "note": note.group(1) if note else reply,
                              "result": screen, "parsed": bool(match)})
         if game.loop != loop_before and not game.ended:
-            h = say(screen + "\n\nA new loop seems to have started. Before you continue, write your current "
+            # Neutral wording: the agent must not be told it is in a loop.
+            h = say(screen + "\n\nYou've just woken up again. Before you continue, write your current "
                     "theory of what is happening, in one or two sentences. Start with HYPOTHESIS:")
             run["hypotheses"].append({"after_loop": loop_before, "text": h.replace("HYPOTHESIS:", "").strip()})
             screen = ""

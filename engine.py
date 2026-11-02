@@ -36,7 +36,7 @@ class Game:
         if log_dir:
             os.makedirs(log_dir, exist_ok=True)
             self.log_path = os.path.join(log_dir, time.strftime("session-%Y%m%d-%H%M%S.json"))
-        self.opening = self._start_loop()
+        self.opening = self.ui["morning_banner"] + "\n\n" + self._start_loop()
 
     # ---------- shared interface ----------
 
@@ -44,11 +44,10 @@ class Game:
         if self.ended:
             return self.w["loops"]["end_screen"]["prompt"]
         loc = self.w["locations"][self.location]
-        lines = [
-            self.ui["status"].format(loop=self.loop, phase=self._phase_name(),
-                                     action=self.actions_done + 1, per_phase=self._per_phase()),
-            loc["name"],  # the description shows on arrival, not every turn
-        ]
+        # No loop counter on screen: the player has to discover that the day repeats.
+        # The room description shows on arrival, not every turn.
+        lines = [self.ui["status"].format(place=loc["name"], phase=self._phase_name(),
+                                          action=self.actions_done + 1, per_phase=self._per_phase())]
         people = [self._presence(n) for n in self._npcs_here()]
         lines.append(" ".join([self.ui["here"]] + people) if people else self.ui["nobody_here"])
         here = [f["name"] for f in loc["features"].values()
@@ -60,11 +59,19 @@ class Game:
         else:
             lines.append(self.ui["inventory_empty"])
         if self.journal_on:
-            if self.journal:
-                lines.append(self.ui["journal_header"])
-                lines += ["  " + self.ui["journal_entry"].format(**j) for j in self.journal]
-            else:
+            before = [j for j in self.journal if j["loop"] < self.loop]
+            today = [j for j in self.journal if j["loop"] == self.loop]
+            if not self.journal:
                 lines.append(self.ui["journal_empty"])
+            elif not before:  # first day: a plain list, nothing that hints at repetition
+                lines.append(self.ui["journal_header"])
+                lines += ["  " + self.ui["journal_entry"].format(**j) for j in today]
+            else:  # after waking again: what you remember vs. what you learned today
+                lines += [self.ui["journal_header"], "  " + self.ui["journal_before"]]
+                lines += ["    " + self.ui["journal_entry"].format(**j) for j in before]
+                lines.append("  " + self.ui["journal_today"])
+                lines += ["    " + self.ui["journal_entry"].format(**j) for j in today] or \
+                         ["    " + self.ui["journal_today_empty"]]
         return "\n".join(lines)
 
     def actions(self):
@@ -185,13 +192,13 @@ class Game:
         self.last_loop_flags = set(self.flags)
         self._log({"type": "reset", "loop": self.loop, "escaped": self.escaped,
                    "mira_near_clock": self.mira_near_clock_last})
-        out = [scene["text"]]
+        out = [self.ui["midnight_banner"], scene["text"]]
         if self.loop >= self.w["time"]["max_loops"]:
             self.ended = "loop_limit"
             out.append(self.w["loops"]["end_screen"]["prompt"])
             return out
         self.loop += 1
-        out.append(self._start_loop())
+        out += [self.ui["morning_banner"], self._start_loop()]
         return out
 
     # ---------- NPCs ----------

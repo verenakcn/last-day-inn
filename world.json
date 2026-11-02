@@ -9,7 +9,8 @@
 
   "ui": {
     "draft": true,
-    "status": "Loop {loop} · {phase} · action {action} of {per_phase}",
+    "status": "{place} · {phase} · action {action} of {per_phase}",
+    "_status_note": "No loop or day counter on screen: the player discovers the loop (CLAUDE.md 9a).",
     "here": "Here:",
     "nobody_here": "Nobody else is here.",
     "examine_list": "You could examine: {list}",
@@ -18,7 +19,12 @@
     "inventory_empty": "You carry nothing.",
     "journal_header": "Journal:",
     "journal_empty": "Journal: nothing confirmed yet.",
-    "journal_entry": "[Loop {loop}] {fact}",
+    "journal_entry": "{fact}",
+    "journal_before": "From before you woke:",
+    "journal_today": "Today:",
+    "journal_today_empty": "(nothing yet)",
+    "midnight_banner": "··················· MIDNIGHT ···················",
+    "morning_banner": "════════════════════════════════════════════\n                   MORNING\n════════════════════════════════════════════",
     "read_text": "It reads: \"{text}\"",
     "shows_text": "It shows {text}",
     "pause": "(A pause.)",

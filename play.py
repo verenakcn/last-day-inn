@@ -8,11 +8,14 @@ import sys
 
 from engine import Game
 
+LINE = "─" * 44
+
 
 def main():
     game = Game(journal="--no-journal" not in sys.argv, log_dir="logs")
     print("\n" + game.opening + "\n")
     while not game.ended:
+        print(LINE)
         print(game.observe())
         acts = game.actions()
         print()
@@ -24,7 +27,10 @@ def main():
         if not choice.isdigit() or not 1 <= int(choice) <= len(acts):
             print("Type a number from the list, or q to quit.\n")
             continue
-        print("\n" + game.act(acts[int(choice) - 1]) + "\n")
+        action = acts[int(choice) - 1]
+        label = game.describe_action(action).replace("✓ ", "")
+        print("\n▶ You: %s\n" % label)
+        print(game.act(action) + "\n")
     game.answer_end_prompt(input("> ").strip())
     print("\nThanks for playing. Session log: %s" % game.log_path)
 

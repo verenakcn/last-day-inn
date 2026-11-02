@@ -91,6 +91,24 @@ class Loop1(unittest.TestCase):
         self.assertIn("examine:pie", g.actions())
         self.assertIn("still warm", g.act("examine:pie"))
 
+    def test_player_never_sees_a_loop_counter(self):
+        g = Game()
+        seen = [g.opening, g.observe()]
+        for a in ESCAPE + ["move:lobby"]:
+            seen += [g.act(a), g.observe()] + [g.describe_action(x) for x in g.actions()]
+        text = "\n".join(seen)
+        self.assertNotRegex(text, r"\bLoop\b|\bDay \d")
+        self.assertIn("MIDNIGHT", text)
+        self.assertEqual(text.count("MORNING"), 2)  # first morning + waking again
+
+    def test_journal_splits_before_and_today_after_waking(self):
+        g, _ = play(ESCAPE)
+        obs = g.observe()
+        self.assertIn("From before you woke:", obs)
+        self.assertIn("The gate key was under the flowerpot.", obs)
+        self.assertIn("(nothing yet)", obs)
+        self.assertNotIn("From before", Game().observe())
+
     def test_note_cannot_be_dropped(self):
         self.assertFalse(any(a.startswith("drop") for a in Game().actions()))
 

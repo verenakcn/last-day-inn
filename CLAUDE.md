@@ -163,6 +163,7 @@ Resolved gaps in this brief. Full log with reasons: the "Dev Status" doc.
 - **Journal:** every evidence found and every listed reaction adds one brief factual line; it carries across loops, tagged by loop.
 - **Player:** an unnamed guest ("you") on a last stay before the inn closes. The player does not know who the girl in the photo is.
 - **Midnight:** the chime is loud in the Lobby, faint elsewhere. Past-you's motive for the note stays unexplained.
+- **No loop counter on screen:** the player never sees "Loop" or "Day" numbers; the loop is discovered. After waking again the journal splits into "From before you woke" and "Today". Loop numbers stay in logs and reports for the designer.
 - **Text:** Claude writes first drafts of all lines (marked as drafts in `world.json`); the designer reviews.
 
 ## 10. Out of scope for the MVP
