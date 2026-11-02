@@ -1,5 +1,7 @@
 # AI-Native Cozy Mystery Prototype
 
+> *The original design doc, written before the build (2026-11-01) and kept as written. Decisions made since are in [CLAUDE.md](../CLAUDE.md) §9a and [DEVLOG.md](../DEVLOG.md). Examples here were illustrations; in the build there is no Library or Dining Room, Mira's schedule is Lobby → Garden → Lobby → Garden, and her first pie line is "Try the pie tonight…". Of §11, the MVP builds the first step ("They remember") and ends at the reveal.*
+
 ## 1. Project Goal
 
 This is a small experimental game-design and learning project.
