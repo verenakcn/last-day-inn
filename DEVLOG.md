@@ -51,14 +51,14 @@ The "Why" lines are the designer's own words. Decisions with full reasons live i
 ## 2026-11-01 · M2.2 Report-driven fix: the clock's little door
 - **Built:** first full run → read report → one world.json change → re-run → compare (commits `2f7f4e6` before, `5b09935` after). A second look at the clock now says "The little door won't open."
 - **Learned:** repeat door attempts in one loop went 2 → 1, and the player later wrote "since the door wouldn't open before"; the reveal can still be missed when the photo reaches Mira only in Loop 3. One run per side is a hint, not proof.
-- **Why:** _(waiting for designer's words)_
+- **Why:** A door that never opens, with no explanation, feels like a false promise and discourages players.
 
 ## 2026-11-02 · Report-driven fix 2: the clock door as a clue (backfired)
 - **Built:** second clock look shows a child's scratched star (commits `6ba7971` before, `b4bc771` after); smarter waste counter (a repeat only counts if it showed the same text again).
 - **Learned:** a physical mark on a door reads as a mechanism to activate: clock looks 4 → 5, door/star notes 8 → 11. It did strengthen the girl → Mira link (1 → 3 notes), but no one acted on it. A clue should point at a person or a question, not at an object that looks interactive.
-- **Why:** _(waiting for designer's words)_
+- **Why:** A clue on a second look could make checking again feel fun and rewarded, but the star widened the misleading gap and backfired.
 
 ## 2026-11-02 · No loop counter on screen; clearer turn layout
 - **Built:** the status line and journal no longer show "Loop" numbers; the journal splits into "From before you woke" and "Today" after waking again; MIDNIGHT and MORNING banners mark the reset; `▶ You:` echo and separators between turns; the agent's reset prompt no longer says "a new loop".
 - **Learned:** showing "Loop 1" gave the mystery away, and our agent had been partly told about the loop, so earlier "it discovered the loop" results were weaker than they looked. Without any hint, both personas still inferred a time loop after the first reset.
-- **Why:** _(waiting for designer's words)_
+- **Why:** Hiding the loop keeps the mystery and lets players discover it on their second attempt, instead of being told everything from the beginning.
