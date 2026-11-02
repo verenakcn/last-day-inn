@@ -167,19 +167,21 @@ def _play(game, ask, system, messages, run, max_actions):
             break
         acts = game.actions()
         menu = "\n".join("%d. %s" % (i, game.describe_action(a)) for i, a in enumerate(acts, 1))
-        reply = say("%s\n\n%s\n\nActions:\n%s" % (screen, game.observe(), menu))
+        reply = say("%s\n\n%s\n\nActions:\n%s" % (screen, game.observe(), menu) if screen else
+                    "%s\n\nActions:\n%s" % (game.observe(), menu))
         match = re.search(r"CHOICE:\s*(\d+)", reply)
         n = int(match.group(1)) if match else 0
         if not 1 <= n <= len(acts):
             n = 1  # unparseable reply: take the first action and record it
         note = re.search(r"NOTE:\s*(.*)", reply)
         loop_before = game.loop
-        screen = game.act(acts[n - 1])
+        result = game.act(acts[n - 1])
+        screen = game.interlude  # what prints before the next screen, as in play.py
         run["turns"].append({"loop": loop_before, "action": acts[n - 1], "note": note.group(1) if note else reply,
-                             "result": screen, "parsed": bool(match)})
+                             "result": result, "parsed": bool(match)})
         if game.loop != loop_before and not game.ended:
             # Neutral wording: the agent must not be told it is in a loop.
-            h = say(screen + "\n\nYou've just woken up again. Before you continue, write your current "
+            h = say(screen + "\n\n" + game.observe() + "\n\nYou've just woken up again. Before you continue, write your current "
                     "theory of what is happening, in one or two sentences. Start with HYPOTHESIS:")
             run["hypotheses"].append({"after_loop": loop_before, "text": h.replace("HYPOTHESIS:", "").strip()})
             screen = ""

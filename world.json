@@ -9,23 +9,32 @@
 
   "ui": {
     "draft": true,
-    "status": "{place} · {phase} · action {action} of {per_phase}",
+    "status": "{phase} · {left}",
+    "actions_left": "{n} actions left",
+    "action_left_one": "1 action left",
+    "place": "**{name}**",
+    "section_line": "┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈",
     "_status_note": "No loop or day counter on screen: the player discovers the loop (CLAUDE.md 9a).",
     "here": "Here:",
     "nobody_here": "Nobody else is here.",
     "examine_list": "You could examine: {list}",
     "exits": "Exits: {list}",
+    "_examine_exits_note": "Not shown in the MVP: the menu already lists them (designer playtest, 2026-11-02). Kept for a later UI.",
+    "midnight_soon": "**The clock will strike twelve soon.**",
+    "strong": "**{text}**",
+    "_strong_note": "Marks a line as important; play.py shows it in bold, the agent sees the markdown.",
     "inventory": "You carry: {list}",
     "inventory_empty": "You carry nothing.",
     "you_know": "You know: {list}",
     "known_item": "{name} (\"{text}\")",
     "journal_header": "Journal:",
     "journal_empty": "Journal: nothing confirmed yet.",
-    "journal_entry": "{fact}",
+    "journal_entry": "· {fact}",
     "journal_before": "From before you woke:",
     "journal_today": "Today:",
     "journal_today_empty": "(nothing yet)",
-    "midnight_banner": "··················· MIDNIGHT ···················",
+    "midnight_banner": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n                  MIDNIGHT\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+    "night_break": "· · ·",
     "morning_banner": "════════════════════════════════════════════\n                   MORNING\n════════════════════════════════════════════",
     "read_text": "It reads: \"{text}\"",
     "shows_text": "It shows {text}",
@@ -35,7 +44,14 @@
     "done_mark": "✓ ",
     "action_move": "Go to {place}",
     "action_examine": "Examine {thing}",
-    "action_present": "Show {item} to {target}"
+    "action_present": "Show {item} to {target}",
+    "menu_prompt": "What do you do?",
+    "group_move": "Go",
+    "group_examine": "Look",
+    "group_present": "Show",
+    "short_move": "{place}",
+    "short_examine": "{thing}",
+    "short_present": "{item} → {target}"
   },
 
   "time": {
@@ -442,12 +458,13 @@
   "loops": {
     "wake": [
       { "conditions": { "loop": 1 }, "draft": true, "text": "You wake under a heavy quilt. Grey winter light, the smell of coffee from downstairs. On the floor inside the door lies an envelope with your name on it. You open it. One line: \"Leave before midnight.\"" },
-      { "conditions": { "loop_min": 2 }, "draft": true, "text": "You wake under the same heavy quilt. Grey winter light. The smell of coffee. The floor by the door is bare, but the envelope is still in your pocket." }
+      { "conditions": { "loop_min": 3 }, "draft": true, "text": "You wake under the same heavy quilt. Grey winter light. The smell of coffee. The floor by the door is bare, but the envelope is still in your pocket.", "thought": "Again? Something about this day won't let go." },
+      { "conditions": { "loop_min": 2 }, "draft": true, "text": "You wake under the same heavy quilt. Grey winter light. The smell of coffee. The floor by the door is bare, but the envelope is still in your pocket.", "thought": "Something isn't right. What happened last night, and why?" }
     ],
     "midnight_scenes": {
-      "escaped": { "intent": "While walking away, the clock's chime sounds as if right beside the player; the inn is ahead again.", "draft": true, "text": "You follow the lane into the snow. The inn's lights shrink behind you. Then, close enough to touch, a clock begins to chime. Twelve. You look up. The inn is ahead of you again, every window glowing." },
-      "in_lobby": { "draft": true, "text": "The grandfather clock strikes twelve. The sound fills the room, fills your chest, fills everything." },
-      "elsewhere": { "draft": true, "text": "Somewhere below, faint and far away, a clock strikes twelve. The edges of the room go soft." }
+      "escaped": { "intent": "While walking away, the clock's chime sounds as if right beside the player; the inn is ahead again.", "draft": true, "text": "You follow the lane into the snow. The inn's lights shrink behind you. Then, close enough to touch, a clock begins to chime. Twelve. You look up. The inn is ahead of you again, every window glowing.", "fade": "The snow tilts, the lights blur, and everything goes quiet." },
+      "in_lobby": { "draft": true, "lead_in": "The fire burns low, and you lose track of time.", "text": "The grandfather clock strikes twelve. The sound fills the room, fills your chest, fills everything.", "fade": "Your knees go soft. The last thing you hear is the pendulum." },
+      "elsewhere": { "draft": true, "lead_in": "You lose track of time. The inn goes quiet around you, one light at a time.", "text": "Somewhere in the inn, faint and far away, a clock strikes twelve. The world around you goes soft.", "fade": "Your eyes grow heavy. You don't remember lying down." }
     },
     "loop_1": {
       "target_duration_minutes": [2, 4],

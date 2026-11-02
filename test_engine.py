@@ -20,7 +20,10 @@ class Loop1(unittest.TestCase):
         g = Game()
         self.assertEqual(g.location, "guest_room")
         self.assertEqual(g.inventory, ["note"])
-        self.assertIn("Leave before midnight.", g.opening)
+        self.assertIn("MORNING", g.opening)
+        screen = g.observe()
+        self.assertTrue(screen.startswith("Morning · 2 actions left\n**GUEST ROOM**\n(A small room"))
+        self.assertLess(screen.index("Leave before midnight."), screen.index("Nobody else is here."))
 
     def test_shortest_escape_resets_to_loop_2(self):
         g, texts = play(ESCAPE)
@@ -51,7 +54,9 @@ class Loop1(unittest.TestCase):
 
     def test_room_text_then_intros_once_per_game(self):
         g, texts = play(["move:lobby"])
-        self.assertIn("(The heart of the inn", texts[0])
+        screen = g.observe()  # time, place, room text, then what happened
+        self.assertLess(screen.index("**LOBBY**"), screen.index("(The heart of the inn"))
+        self.assertLess(screen.index("(The heart of the inn"), screen.index("Mira: a fellow guest"))
         self.assertLess(texts[0].index("Mira: a fellow guest"), texts[0].index("You're new here. Try the pie tonight; it's the best thing about this place."))
         g.act("move:garden")
         g.act("move:lobby")
@@ -100,6 +105,32 @@ class Loop1(unittest.TestCase):
         self.assertNotRegex(text, r"\bLoop\b|\bDay \d")
         self.assertIn("MIDNIGHT", text)
         self.assertEqual(text.count("MORNING"), 2)  # first morning + waking again
+
+    def test_warning_before_the_last_action_of_the_night(self):
+        g, _ = play(["move:lobby", "move:guest_room"] * 3)  # 6 of 8 actions used
+        self.assertNotIn("strike twelve soon", g.observe())
+        g.act("move:lobby")
+        self.assertIn("**The clock will strike twelve soon.**", g.observe())
+
+    def test_midnight_fades_out_and_waking_again_asks_a_question(self):
+        g, texts = play(ESCAPE)
+        self.assertIn("**The snow tilts", texts[-1])  # fade line after the escape scene
+        self.assertIn("**Something isn't right.", texts[-1])
+        self.assertNotIn("Something isn't right", Game().opening)  # not on the first morning
+
+    def test_day_running_out_has_a_lead_in_and_day_3_wakes_differently(self):
+        g, texts = play(["move:lobby", "move:guest_room"] * 4)  # day 1 runs out in the Guest Room
+        self.assertIn("You lose track of time.", texts[-1])
+        self.assertIn("Somewhere in the inn", texts[-1])
+        self.assertIn("What happened last night", texts[-1])
+        texts = [g.act(a) for a in ["move:lobby", "move:guest_room"] * 4]  # day 2 runs out
+        self.assertIn("Again? Something about this day", texts[-1])
+
+    def test_screen_does_not_repeat_the_menu(self):
+        obs = Game().observe()
+        self.assertNotIn("You could examine", obs)
+        self.assertNotIn("Exits:", obs)
+        self.assertIn("You carry: Handwritten note", obs)
 
     def test_journal_splits_before_and_today_after_waking(self):
         g, _ = play(ESCAPE)

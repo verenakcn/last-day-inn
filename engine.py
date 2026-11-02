@@ -46,7 +46,9 @@ class Game:
                 except FileExistsError:
                     n += 1
             self.log_path = path
-        self.opening = self.ui["morning_banner"] + "\n\n" + self._start_loop()
+        # interlude: text shown before the next screen (banners, the old day's last result at midnight).
+        self.opening = self.interlude = self.ui["morning_banner"]
+        self._start_loop()
 
     # ---------- shared interface ----------
 
@@ -56,14 +58,19 @@ class Game:
         loc = self.w["locations"][self.location]
         # No loop counter on screen: the player has to discover that the day repeats.
         # The room description shows on arrival, not every turn.
-        lines = [self.ui["status"].format(place=loc["name"], phase=self._phase_name(),
-                                          action=self.actions_done + 1, per_phase=self._per_phase())]
+        # Screen order: when, where, what just happened, who is here, what you carry, what you know.
+        left = self._per_phase() - self.actions_done
+        lines = [self.ui["status"].format(phase=self._phase_name(), left=(
+            self.ui["action_left_one"] if left == 1 else self.ui["actions_left"].format(n=left)))]
+        lines.append(self.ui["place"].format(name=loc["name"].upper()))
+        if self.arrived:
+            lines.append(self._room_text())
+        if self.screen_text:
+            lines += ["", "\n\n".join(self.screen_text)]
         people = [self._presence(n) for n in self._npcs_here()]
-        lines.append(" ".join([self.ui["here"]] + people) if people else self.ui["nobody_here"])
-        here = [f["name"] for f in loc["features"].values()
-                if self._phase_id() in f.get("available_phases", [self._phase_id()])]
-        lines.append(self.ui["examine_list"].format(list=", ".join(here)))
-        lines.append(self.ui["exits"].format(list=", ".join(self.w["locations"][c]["name"] for c in loc["connections"])))
+        lines += ["", " ".join([self.ui["here"]] + people) if people else self.ui["nobody_here"]]
+        # Things to examine and exits are not listed: the action menu already shows them.
+        lines.append(self.ui["section_line"])  # the scene above, what you have below
         # Things you hold vs. things you only know (the inscription can't be carried, but can be shown).
         carried = [i for i in self.inventory if self._thing(i).get("portable", True)]
         known = [i for i in self.inventory if not self._thing(i).get("portable", True)]
@@ -75,6 +82,7 @@ class Game:
             lines.append(self.ui["you_know"].format(list=", ".join(
                 self.ui["known_item"].format(name=self._name(i), text=self._thing(i)["text"]["text"]) for i in known)))
         if self.journal_on:
+            lines.append("")
             before = [j for j in self.journal if j["loop"] < self.loop]
             today = [j for j in self.journal if j["loop"] == self.loop]
             if not self.journal:
@@ -88,6 +96,9 @@ class Game:
                 lines.append("  " + self.ui["journal_today"])
                 lines += ["    " + self.ui["journal_entry"].format(**j) for j in today] or \
                          ["    " + self.ui["journal_today_empty"]]
+        # Warn before the last action of the night, just above the choices, so midnight never comes as a sharp cut.
+        if self.phase == len(self.w["time"]["phases"]) - 1 and left == 1:
+            lines += ["", self.ui["midnight_soon"]]
         return "\n".join(lines)
 
     def actions(self):
@@ -104,16 +115,18 @@ class Game:
                 acts += ["present:%s>%s" % (item, t) for t in targets]
         return acts
 
-    def describe_action(self, action):
-        """Menu label; actions already taken this loop get a mark (cleared at each reset)."""
+    def describe_action(self, action, short=False):
+        """Menu label; actions already taken this loop get a mark (cleared at each reset).
+        short=True gives the label used under a group heading (Go / Look / Show)."""
         mark = self.ui["done_mark"] if action in self.done else ""
         verb, _, rest = action.partition(":")
+        key = "short_" if short else "action_"
         if verb == "move":
-            return mark + self.ui["action_move"].format(place=self.w["locations"][rest]["name"])
+            return mark + self.ui[key + "move"].format(place=self.w["locations"][rest]["name"])
         if verb == "examine":
-            return mark + self.ui["action_examine"].format(thing=self._feature(rest)["name"])
+            return mark + self.ui[key + "examine"].format(thing=self._feature(rest)["name"])
         item, _, target = rest.partition(">")
-        return mark + self.ui["action_present"].format(item=self._name(item), target=self._target_name(target))
+        return mark + self.ui[key + "present"].format(item=self._name(item), target=self._target_name(target))
 
     def act(self, action):
         if action not in self.actions():
@@ -121,22 +134,30 @@ class Game:
         before = self._snapshot()
         verb, _, rest = action.partition(":")
         self.done.add(action)
+        self.arrived = False
         if verb == "move":
             self.location = rest
-            out = [self.ui["move"].format(place=self.w["locations"][rest]["name"]), self._room_text()]
+            self.arrived = True  # the screen header names the place and shows its description
+            out = []
         elif verb == "examine":
             out = self._examine(rest)
         else:
             item, _, target = rest.partition(">")
             out = self._present(item, target)
 
-        if self.escaped:
-            out += self._midnight()
+        night = self._midnight() if self.escaped else self._spend_action()
+        extra = self._introductions() + self._check_meeting()
+        if self.ended:  # no next screen: everything prints at once
+            shown, self.interlude = out + night + extra, "\n\n".join(t for t in out + night + extra if t)
+        elif night:  # the old day's last result and midnight print before the new morning's screen
+            self.interlude = "\n\n".join(t for t in out + night if t)
+            self.screen_text += extra
+            shown = out + night + self.screen_text
         else:
-            out += self._spend_action()
-        out += self._introductions()
-        out += self._check_meeting()
-        text = "\n\n".join(t for t in out if t)
+            self.interlude = ""
+            self.screen_text = out + extra
+            shown = self.screen_text
+        text = "\n\n".join(t for t in shown if t)
         self._log({"type": "action", "action": action, "text": text, "before": before, "after": self._snapshot()})
         return text
 
@@ -164,7 +185,11 @@ class Game:
             self._add_fact(note["journal_fact"])
         wake = self._first_match(self.w["loops"]["wake"])
         self._log({"type": "loop_start", "loop": self.loop})
-        return wake["text"] + "\n\n" + self._room_text()
+        self.arrived = True
+        self.screen_text = [wake["text"]] + ([self._strong(wake["thought"])] if wake.get("thought") else [])
+
+    def _strong(self, text):
+        return self.ui["strong"].format(text=text)
 
     def _room_text(self):
         return self.ui["room_on_enter"].format(text=self.w["locations"][self.location]["description"]["text"])
@@ -208,14 +233,17 @@ class Game:
         self.last_loop_flags = set(self.flags)
         self._log({"type": "reset", "loop": self.loop, "escaped": self.escaped,
                    "mira_near_clock": self.mira_near_clock_last})
-        out = [self.ui["midnight_banner"], scene["text"]]
+        # The day running out gets a lead-in, so the last action doesn't cut straight to midnight.
+        out = [scene["lead_in"]] if scene.get("lead_in") else []
+        out += [self.ui["midnight_banner"], self._strong(scene["text"]), self._strong(scene["fade"]),
+                self.ui["night_break"]]
         if self.loop >= self.w["time"]["max_loops"]:
             self.ended = "loop_limit"
             out.append(self.w["loops"]["end_screen"]["prompt"])
             return out
         self.loop += 1
-        out += [self.ui["morning_banner"], self._start_loop()]
-        return out
+        self._start_loop()
+        return out + [self.ui["morning_banner"]]
 
     # ---------- NPCs ----------
 
