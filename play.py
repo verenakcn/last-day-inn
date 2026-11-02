@@ -11,6 +11,15 @@ from engine import Game
 LINE = "─" * 44
 
 
+def ask(prompt):
+    """input() that treats Ctrl+D / Ctrl+C (or the end of piped input) as quitting."""
+    try:
+        return input(prompt).strip()
+    except (EOFError, KeyboardInterrupt):
+        print("\nGoodbye.")
+        return None
+
+
 def main():
     game = Game(journal="--no-journal" not in sys.argv, log_dir="logs")
     print("\n" + game.opening + "\n")
@@ -21,8 +30,8 @@ def main():
         print()
         for i, a in enumerate(acts, 1):
             print("  %d. %s" % (i, game.describe_action(a)))
-        choice = input("\n> ").strip()
-        if choice in ("q", "quit"):
+        choice = ask("\n> ")
+        if choice is None or choice in ("q", "quit"):
             return
         if not choice.isdigit() or not 1 <= int(choice) <= len(acts):
             print("Type a number from the list, or q to quit.\n")
@@ -31,7 +40,10 @@ def main():
         label = game.describe_action(action).replace("✓ ", "")
         print("\n▶ You: %s\n" % label)
         print(game.act(action) + "\n")
-    game.answer_end_prompt(input("> ").strip())
+    answer = ask("> ")
+    if answer is None:
+        return
+    game.answer_end_prompt(answer)
     print("\nThanks for playing. Session log: %s" % game.log_path)
 
 
