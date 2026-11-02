@@ -1,15 +1,15 @@
 """Playtest agent v1: an LLM plays through the same observe/actions/act interface as a human.
 
-    pip install anthropic
-    echo "ANTHROPIC_API_KEY=..." > .env
-    python3 agent.py                      # one run: curious explorer, journal on
+    pip install google-genai
+    echo "GEMINI_API_KEY=..." >> .env
+    python3 agent.py                      # one run: curious explorer, journal on (Gemini)
     python3 agent.py --persona escape --no-journal
     python3 agent.py --dry-run            # fake model, no API calls: tests the pipeline for free
     python3 agent.py --all                # opt-in: both personas x journal on/off + aggregate report
     python3 agent.py --interview reports/<run>.json questions.txt   # ask that run's player questions
 
-Gemini instead of Claude: pip install google-genai, put GEMINI_API_KEY=... in .env,
-then add --provider gemini to any command above.
+Claude instead of Gemini: pip install anthropic, put ANTHROPIC_API_KEY=... in .env,
+then add --provider claude to any command above.
 
 Limits: one run per command unless --all; each run stops after MAX_ACTIONS actions.
 Every report records how many API calls the run made.
@@ -28,7 +28,8 @@ import time
 
 from engine import Game
 
-MODEL = "claude-opus-5-5"
+MODEL = "claude-opus-5-5"  # with --provider claude
+GEMINI_DEFAULT = "gemini-3.1-flash-lite"  # default provider
 MAX_ACTIONS = 40
 
 PERSONAS = {
@@ -91,8 +92,9 @@ def gemini_model():
     # 60 s per request, 2 tries: a stuck request fails loudly instead of hanging.
     client = genai.Client(api_key=os.environ["GEMINI_API_KEY"], http_options=types.HttpOptions(
         timeout=60000, retry_options=types.HttpRetryOptions(attempts=2)))
-    # gemini-3.8-flash is listed but never answered with our free-tier key (2026-11-01).
-    model = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash")
+    # Free tier: gemini-3.8-flash never answered and gemini-3.5-flash caps at 20 requests a day;
+    # gemini-3.1-flash-lite handled ~300 a day (2026-11-02).
+    model = os.environ.get("GEMINI_MODEL", GEMINI_DEFAULT)
     # Free tier allows 5 requests per minute: space calls out, and wait out a 429 or 503 if one happens.
     gap = float(os.environ.get("GEMINI_SECONDS_BETWEEN_CALLS", "13"))
     last = [0.0]
@@ -349,13 +351,15 @@ def save_interview(report_path, qa, model):
 
 
 def main():
-    """python3 agent.py [--provider claude|gemini] [--persona curious|escape] [--no-journal] [--all] [--dry-run]"""
+    """python3 agent.py [--provider gemini|claude] [--persona curious|escape] [--no-journal] [--all] [--dry-run]"""
     load_env()
-    provider = sys.argv[sys.argv.index("--provider") + 1] if "--provider" in sys.argv else "claude"
+    provider = sys.argv[sys.argv.index("--provider") + 1] if "--provider" in sys.argv else "gemini"
+    if provider not in ("gemini", "claude"):
+        sys.exit("--provider must be gemini or claude")
     if "--dry-run" in sys.argv:
         ask, model = fake_model(), "dry-run"
     elif provider == "gemini":
-        ask, model = gemini_model(), "gemini: " + os.environ.get("GEMINI_MODEL", "gemini-3.5-flash")
+        ask, model = gemini_model(), "gemini: " + os.environ.get("GEMINI_MODEL", GEMINI_DEFAULT)
     else:
         ask, model = claude_model(), "claude: " + MODEL
     if "--interview" in sys.argv:  # --interview reports/<run>.json questions.txt (one question per line)
