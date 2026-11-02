@@ -54,10 +54,16 @@ class Game:
                 if self._phase_id() in f.get("available_phases", [self._phase_id()])]
         lines.append(self.ui["examine_list"].format(list=", ".join(here)))
         lines.append(self.ui["exits"].format(list=", ".join(self.w["locations"][c]["name"] for c in loc["connections"])))
-        if self.inventory:
-            lines.append(self.ui["inventory"].format(list=", ".join(self._name(i) for i in self.inventory)))
+        # Things you hold vs. things you only know (the inscription can't be carried, but can be shown).
+        carried = [i for i in self.inventory if self._thing(i).get("portable", True)]
+        known = [i for i in self.inventory if not self._thing(i).get("portable", True)]
+        if carried:
+            lines.append(self.ui["inventory"].format(list=", ".join(self._name(i) for i in carried)))
         else:
             lines.append(self.ui["inventory_empty"])
+        if known:
+            lines.append(self.ui["you_know"].format(list=", ".join(
+                self.ui["known_item"].format(name=self._name(i), text=self._thing(i)["text"]["text"]) for i in known)))
         if self.journal_on:
             before = [j for j in self.journal if j["loop"] < self.loop]
             today = [j for j in self.journal if j["loop"] == self.loop]

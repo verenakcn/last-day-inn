@@ -17,6 +17,8 @@
     "exits": "Exits: {list}",
     "inventory": "You carry: {list}",
     "inventory_empty": "You carry nothing.",
+    "you_know": "You know: {list}",
+    "known_item": "{name} (\"{text}\")",
     "journal_header": "Journal:",
     "journal_empty": "Journal: nothing confirmed yet.",
     "journal_entry": "{fact}",

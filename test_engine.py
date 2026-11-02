@@ -109,6 +109,14 @@ class Loop1(unittest.TestCase):
         self.assertIn("(nothing yet)", obs)
         self.assertNotIn("From before", Game().observe())
 
+    def test_inscription_is_known_not_carried(self):
+        g, _ = play(["move:lobby", "examine:grandfather_clock"])
+        obs = g.observe()
+        self.assertIn("You carry: Handwritten note", obs)
+        self.assertNotIn("You carry: Handwritten note, Clock inscription", obs)
+        self.assertIn('You know: Clock inscription ("Mind the hours you wish away.")', obs)
+        self.assertIn("present:clock_inscription>innkeeper", g.actions())
+
     def test_note_cannot_be_dropped(self):
         self.assertFalse(any(a.startswith("drop") for a in Game().actions()))
 
