@@ -71,4 +71,4 @@ The "Why" lines are the designer's own words. Decisions with full reasons live i
 ## 2026-11-02 · M2.1 live: both personas × journal on/off + aggregate
 - **Built:** the first live `--all` run (commit `0a9ede4`) and its aggregate report; also unique session-log names (two sessions in the same second used to share a log).
 - **Learned:** all 4 players found the photo → Mira trigger, but the reveal showed in only 2: both misses happened on day 3, with no next morning left. Journal off didn't block the reveal. The blue ribbon was never found. Players' theories lean toward "grief" and "purgatory", a darker read than the cozy tone intends.
-- **Why:** _(waiting for designer's words)_
+- **Why:** To see whether the mystery works for both kinds of player, with and without the journal.
