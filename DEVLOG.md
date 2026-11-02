@@ -62,3 +62,8 @@ The "Why" lines are the designer's own words. Decisions with full reasons live i
 - **Built:** the status line and journal no longer show "Loop" numbers; the journal splits into "From before you woke" and "Today" after waking again; MIDNIGHT and MORNING banners mark the reset; `▶ You:` echo and separators between turns; the agent's reset prompt no longer says "a new loop".
 - **Learned:** showing "Loop 1" gave the mystery away, and our agent had been partly told about the loop, so earlier "it discovered the loop" results were weaker than they looked. Without any hint, both personas still inferred a time loop after the first reset.
 - **Why:** Hiding the loop keeps the mystery and lets players discover it on their second attempt, instead of being told everything from the beginning.
+
+## 2026-11-02 · Report-driven fix 3: clock door removed
+- **Built:** the clock no longer mentions a little door ("the case tall enough to hide a child"); commits `536f675` before, `3673787` after, both personas. Also a "You know:" line for the inscription.
+- **Learned:** door talk fell 6 → 1 (curious) and 5 → 0 (escape), and the curious player reached the reveal in 12 moves; but the escape player still tried to open the clock after Mira said she hid in it. The clock pulls attention because it's the heart of the story, not only because of one line.
+- **Why:** _(waiting for designer's words)_
