@@ -67,3 +67,8 @@ The "Why" lines are the designer's own words. Decisions with full reasons live i
 - **Built:** the clock no longer mentions a little door ("the case tall enough to hide a child"); commits `536f675` before, `3673787` after, both personas. Also a "You know:" line for the inscription.
 - **Learned:** door talk fell 6 → 1 (curious) and 5 → 0 (escape), and the curious player reached the reveal in 12 moves; but the escape player still tried to open the clock after Mira said she hid in it. The clock pulls attention because it's the heart of the story, not only because of one line.
 - **Why:** The door misled players too much; removing it keeps the clock's story without promising something that never opens.
+
+## 2026-11-02 · M2.1 live: both personas × journal on/off + aggregate
+- **Built:** the first live `--all` run (commit `0a9ede4`) and its aggregate report; also unique session-log names (two sessions in the same second used to share a log).
+- **Learned:** all 4 players found the photo → Mira trigger, but the reveal showed in only 2: both misses happened on day 3, with no next morning left. Journal off didn't block the reveal. The blue ribbon was never found. Players' theories lean toward "grief" and "purgatory", a darker read than the cozy tone intends.
+- **Why:** _(waiting for designer's words)_
