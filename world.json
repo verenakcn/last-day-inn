@@ -97,8 +97,8 @@
           "is_memory_anchor": true,
           "gives": "clock_inscription",
           "examine": [
-            { "conditions": { "has_not": "clock_inscription" }, "draft": true, "text": "Polished walnut and a slow brass pendulum. There's a little door in the case, just big enough for a child. Words are carved into the base." },
-            { "conditions": { "has": "clock_inscription" }, "draft": true, "text": "The little door won't open. Low on its edge, someone long ago scratched a tiny star, about a child's height." }
+            { "conditions": { "has_not": "clock_inscription" }, "draft": true, "text": "Polished walnut and a slow brass pendulum, the case tall enough to hide a child. Words are carved into the base." },
+            { "conditions": { "has": "clock_inscription" }, "draft": true, "text": "The pendulum swings, slow and steady, just as before." }
           ]
         },
         "reception_desk": {

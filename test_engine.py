@@ -75,11 +75,11 @@ class Loop1(unittest.TestCase):
         self.assertIn('It reads: "After many happy years, the inn closes its doors for good tomorrow.', notice)
         self.assertNotIn("Journal", g.observe())
 
-    def test_second_clock_look_closes_the_little_door(self):
+    def test_clock_promises_no_door(self):
         g, texts = play(["move:lobby", "examine:grandfather_clock", "examine:grandfather_clock"])
-        self.assertIn("little door in the case", texts[1])
-        self.assertIn("The little door won't open.", texts[2])
-        self.assertIn("a child's height", texts[2])
+        self.assertIn("tall enough to hide a child", texts[1])
+        self.assertIn("just as before", texts[2])
+        self.assertNotIn("door", texts[1] + texts[2])
 
     def test_pie_only_offered_in_the_evening(self):
         g, _ = play(["move:lobby"])
