@@ -1,0 +1,329 @@
+{
+  "facts": {
+    "escaped_loop_1": false,
+    "evidence_found": [
+      "clock_inscription",
+      "note",
+      "old_photo"
+    ],
+    "evidence_never_found": [
+      "blue_ribbon",
+      "closing_notice"
+    ],
+    "evidence_found_but_never_shown": [],
+    "memory_trigger_hit": true,
+    "anomaly_shown": true,
+    "loops_played": 3,
+    "total_turns": 17,
+    "wasted_turns": [
+      "examine:grandfather_clock (same text again in loop 1)"
+    ],
+    "unparsed_replies": 0,
+    "api_calls": 20,
+    "capped_at_max_actions": false,
+    "stopped_by_error": null
+  },
+  "run": {
+    "persona": "escape",
+    "journal": false,
+    "turns": [
+      {
+        "loop": 1,
+        "action": "move:lobby",
+        "note": "The note says to leave, so I should head toward the exit immediately.",
+        "result": "The innkeeper: a kind, tired man in a cardigan, who looks at his inn the way some people look at old friends.\n\nMira: a fellow guest in a bright scarf, who moves around the inn as if she knows every creaky board.\n\nMira looks up from her armchair and smiles.\n\"You're new here. Try the pie tonight; it's the best thing about this place.\"",
+        "parsed": true
+      },
+      {
+        "loop": 1,
+        "action": "examine:front_door",
+        "note": "I need to get out, so I'll check if the main exit is actually unlocked.",
+        "result": "Snow is banked halfway up the glass. Nobody is leaving this way until tomorrow.",
+        "parsed": true
+      },
+      {
+        "loop": 1,
+        "action": "present:note>innkeeper",
+        "note": "The front door is blocked, so I need to ask the innkeeper for an alternative way out.",
+        "result": "\"Ah, that! It was tucked inside the clock when I wound it this morning. Had your name on it, so I slipped it under your door.\" He nods at the grandfather clock.",
+        "parsed": true
+      },
+      {
+        "loop": 1,
+        "action": "examine:grandfather_clock",
+        "note": "The innkeeper put the note there, so there might be something else hidden in the clock.",
+        "result": "Polished walnut and a slow brass pendulum, the case tall enough to hide a child. Words are carved into the base.\n\nIt reads: \"Mind the hours you wish away.\"",
+        "parsed": true
+      },
+      {
+        "loop": 1,
+        "action": "examine:grandfather_clock",
+        "note": "If the front door is blocked and the note mentions midnight, the clock likely holds a secret key or passage mechanism.",
+        "result": "The pendulum swings, slow and steady, just as before.",
+        "parsed": true
+      },
+      {
+        "loop": 1,
+        "action": "present:clock_inscription>mira",
+        "note": "Since direct inspection failed, I will ask Mira about the cryptic inscription on the clock.",
+        "result": "\"I used to hide in there, you know. Right inside the case, with the pendulum going tick, tick above my head.\" She stops. \"When I was little.\"",
+        "parsed": true
+      },
+      {
+        "loop": 1,
+        "action": "examine:grandfather_clock",
+        "note": "Mira suggested the inside of the clock is a hiding spot, so I'll check inside it thoroughly now that I'm alone.",
+        "result": "The pendulum swings, slow and steady, just as before.",
+        "parsed": true
+      },
+      {
+        "loop": 1,
+        "action": "examine:reception_desk",
+        "note": "If the front door is blocked and the clock is the focus, I will examine the reception desk to see if there's a key or tool to open the clock's housing.",
+        "result": "A brass bell, the guest book, and a neatly printed notice. You take the notice.\n\nIt reads: \"After many happy years, the inn closes its doors for good tomorrow. Thank you for staying with us.\"\n\nThe fire burns low, and you lose track of time.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n                  MIDNIGHT\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n**The grandfather clock strikes twelve. The sound fills the room, fills your chest, fills everything.**\n\n**Your knees go soft. The last thing you hear is the pendulum.**\n\n· · ·\n\n════════════════════════════════════════════\n                   MORNING\n════════════════════════════════════════════\n\nYou wake under the same heavy quilt. Grey winter light. The smell of coffee. The floor by the door is bare, but the envelope is still in your pocket.\n\n**Something isn't right. What happened last night, and why?**",
+        "parsed": true
+      },
+      {
+        "loop": 2,
+        "action": "examine:drawer",
+        "note": "I will examine the bedside drawer to see if there is something new or helpful now that the loop has restarted.",
+        "result": "Under a folded spare blanket you find an old photograph, its corners soft with age.\n\nIt shows the innkeeper and a little girl with a blue ribbon, beside the clock.",
+        "parsed": true
+      },
+      {
+        "loop": 2,
+        "action": "move:lobby",
+        "note": "The girl in the photo looks like it could be Mira; I should head to the lobby to see if I can confront her or the innkeeper about this.",
+        "result": "",
+        "parsed": true
+      },
+      {
+        "loop": 2,
+        "action": "present:old_photo>innkeeper",
+        "note": "I'll show the innkeeper the photo to see if he recognizes the little girl and explains his connection to the clock.",
+        "result": "\"Where did you find this? That's me, believe it or not. And that's the little girl who lived here.\" He runs a thumb over the edge. \"I wonder what became of her.\"",
+        "parsed": true
+      },
+      {
+        "loop": 2,
+        "action": "move:garden",
+        "note": "The innkeeper doesn't remember who the girl is, so I'll try to find an exit through the garden to avoid the front door's loop.",
+        "result": "",
+        "parsed": true
+      },
+      {
+        "loop": 2,
+        "action": "examine:back_gate",
+        "note": "I need to get out, and the back gate is the most logical point of escape.",
+        "result": "An iron gate in the hedge, locked tight. Beyond it, a lane winds away from the inn.",
+        "parsed": true
+      },
+      {
+        "loop": 2,
+        "action": "examine:flowerpot",
+        "note": "Since the gate is locked, I'll search the terracotta flowerpots for a key that might open it.",
+        "result": "You tip the flowerpot. Underneath, pressed into the frozen soil, is a small iron key.\n\n\"You're new here. Try the pie tonight; it's the best thing about this place.\"",
+        "parsed": true
+      },
+      {
+        "loop": 2,
+        "action": "present:old_photo>mira",
+        "note": "Mira was here right when I found the key; I will show her the photo to see if she recognizes herself as the little girl.",
+        "result": "Mira goes very quiet. She looks at the photo for a long time. \"I think,\" she says softly, \"it's time I told him something.\"",
+        "parsed": true
+      },
+      {
+        "loop": 2,
+        "action": "examine:back_gate",
+        "note": "I have the key, and with midnight approaching, I need to use it on the gate immediately before the loop resets again.",
+        "result": "The key turns with a stiff click. The gate swings open onto a lane that winds away into the snow.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n                  MIDNIGHT\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n**You follow the lane into the snow. The inn's lights shrink behind you. Then, close enough to touch, a clock begins to chime. Twelve. You look up. The inn is ahead of you again, every window glowing.**\n\n**The snow tilts, the lights blur, and everything goes quiet.**\n\n· · ·\n\n════════════════════════════════════════════\n                   MORNING\n════════════════════════════════════════════\n\nYou wake under the same heavy quilt. Grey winter light. The smell of coffee. The floor by the door is bare, but the envelope is still in your pocket.\n\n**Again? Something about this day won't let go.**",
+        "parsed": true
+      },
+      {
+        "loop": 3,
+        "action": "move:lobby",
+        "note": "I need to get Mira and the innkeeper to confront each other, so I will head to the lobby.",
+        "result": "Mira looks up from her armchair and smiles.\n\"Morning…\"\n(A pause.)\n\"You still haven't tried the pie.\"\nWhat do you think is happening?",
+        "parsed": true
+      }
+    ],
+    "hypotheses": [
+      {
+        "after_loop": 1,
+        "text": "I am caught in a time loop triggered by the grandfather clock at midnight, preventing me from ever leaving the inn."
+      },
+      {
+        "after_loop": 2,
+        "text": "The inn is trapped in a temporal loop tied to the clock, and I cannot leave until I resolve the innkeeper and Mira's unfinished business. The gate is not the exit; the clock is."
+      }
+    ],
+    "final_answer": "The inn exists in a pocket of static time where the innkeeper and Mira are trapped as ghosts of their former selves, forever replaying the final day before the inn closed. I was caught in the loop because I was looking for a physical exit, but the \"midnight\" requirement implies I needed to break the cycle by having Mira confront the innkeeper about their shared history. By failing to facilitate that reconciliation, I remained bound to their eternal, repetitive morning.",
+    "api_calls": 20,
+    "capped": false,
+    "error": null,
+    "transcript": [
+      {
+        "role": "user",
+        "content": "════════════════════════════════════════════\n                   MORNING\n════════════════════════════════════════════\n\nMorning · 2 actions left\n**GUEST ROOM**\n(A small room under the eaves. The radiator ticks, the quilt is heavy, and the frosted window looks down on a snowy garden.)\n\nYou wake under a heavy quilt. Grey winter light, the smell of coffee from downstairs. On the floor inside the door lies an envelope with your name on it. You open it. One line: \"Leave before midnight.\"\n\nNobody else is here.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note\n\nActions:\n1. Go to Lobby\n2. Examine Door\n3. Examine Bedside drawer\n4. Examine Window"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: The note says to leave, so I should head toward the exit immediately.\n\nCHOICE: 1"
+      },
+      {
+        "role": "user",
+        "content": "Morning · 1 action left\n**LOBBY**\n(The heart of the inn: worn armchairs, a crackling fire, and a tall grandfather clock that ticks a little louder than it should.)\n\nThe innkeeper: a kind, tired man in a cardigan, who looks at his inn the way some people look at old friends.\n\nMira: a fellow guest in a bright scarf, who moves around the inn as if she knows every creaky board.\n\nMira looks up from her armchair and smiles.\n\"You're new here. Try the pie tonight; it's the best thing about this place.\"\n\nHere: The innkeeper is winding the grandfather clock, humming to himself. Mira is curled up in an armchair by the fire.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note\n\nActions:\n1. Go to Guest Room\n2. Go to Garden\n3. Examine Grandfather clock\n4. Examine Reception desk\n5. Examine Front door\n6. Show Handwritten note to Innkeeper\n7. Show Handwritten note to Mira"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: I need to get out, so I'll check if the main exit is actually unlocked.\n\nCHOICE: 5"
+      },
+      {
+        "role": "user",
+        "content": "Afternoon · 2 actions left\n**LOBBY**\n\nSnow is banked halfway up the glass. Nobody is leaving this way until tomorrow.\n\nHere: The innkeeper is behind the reception desk, polishing the bell.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note\n\nActions:\n1. Go to Guest Room\n2. Go to Garden\n3. Examine Grandfather clock\n4. Examine Reception desk\n5. ✓ Examine Front door\n6. Show Handwritten note to Innkeeper"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: The front door is blocked, so I need to ask the innkeeper for an alternative way out.\n\nCHOICE: 6"
+      },
+      {
+        "role": "user",
+        "content": "Afternoon · 1 action left\n**LOBBY**\n\n\"Ah, that! It was tucked inside the clock when I wound it this morning. Had your name on it, so I slipped it under your door.\" He nods at the grandfather clock.\n\nHere: The innkeeper is behind the reception desk, polishing the bell.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note\n\nActions:\n1. Go to Guest Room\n2. Go to Garden\n3. Examine Grandfather clock\n4. Examine Reception desk\n5. ✓ Examine Front door\n6. ✓ Show Handwritten note to Innkeeper"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: The innkeeper put the note there, so there might be something else hidden in the clock.\n\nCHOICE: 3"
+      },
+      {
+        "role": "user",
+        "content": "Evening · 2 actions left\n**LOBBY**\n\nPolished walnut and a slow brass pendulum, the case tall enough to hide a child. Words are carved into the base.\n\nIt reads: \"Mind the hours you wish away.\"\n\nHere: The innkeeper is cutting slices of pie by the fire. Mira sits by the fire with a cup of tea.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note\nYou know: Clock inscription (\"Mind the hours you wish away.\")\n\nActions:\n1. Go to Guest Room\n2. Go to Garden\n3. ✓ Examine Grandfather clock\n4. Examine Reception desk\n5. ✓ Examine Front door\n6. Examine Pie\n7. ✓ Show Handwritten note to Innkeeper\n8. Show Handwritten note to Mira\n9. Show Clock inscription to Innkeeper\n10. Show Clock inscription to Mira"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: If the front door is blocked and the note mentions midnight, the clock likely holds a secret key or passage mechanism.\n\nCHOICE: 3"
+      },
+      {
+        "role": "user",
+        "content": "Evening · 1 action left\n**LOBBY**\n\nThe pendulum swings, slow and steady, just as before.\n\nHere: The innkeeper is cutting slices of pie by the fire. Mira sits by the fire with a cup of tea.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note\nYou know: Clock inscription (\"Mind the hours you wish away.\")\n\nActions:\n1. Go to Guest Room\n2. Go to Garden\n3. ✓ Examine Grandfather clock\n4. Examine Reception desk\n5. ✓ Examine Front door\n6. Examine Pie\n7. ✓ Show Handwritten note to Innkeeper\n8. Show Handwritten note to Mira\n9. Show Clock inscription to Innkeeper\n10. Show Clock inscription to Mira"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: Since direct inspection failed, I will ask Mira about the cryptic inscription on the clock.\n\nCHOICE: 10"
+      },
+      {
+        "role": "user",
+        "content": "Night · 2 actions left\n**LOBBY**\n\n\"I used to hide in there, you know. Right inside the case, with the pendulum going tick, tick above my head.\" She stops. \"When I was little.\"\n\nNobody else is here.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note\nYou know: Clock inscription (\"Mind the hours you wish away.\")\n\nActions:\n1. Go to Guest Room\n2. Go to Garden\n3. ✓ Examine Grandfather clock\n4. Examine Reception desk\n5. ✓ Examine Front door"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: Mira suggested the inside of the clock is a hiding spot, so I'll check inside it thoroughly now that I'm alone.\n\nCHOICE: 3"
+      },
+      {
+        "role": "user",
+        "content": "Night · 1 action left\n**LOBBY**\n\nThe pendulum swings, slow and steady, just as before.\n\nNobody else is here.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note\nYou know: Clock inscription (\"Mind the hours you wish away.\")\n\n**The clock will strike twelve soon.**\n\nActions:\n1. Go to Guest Room\n2. Go to Garden\n3. ✓ Examine Grandfather clock\n4. Examine Reception desk\n5. ✓ Examine Front door"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: If the front door is blocked and the clock is the focus, I will examine the reception desk to see if there's a key or tool to open the clock's housing.\n\nCHOICE: 4"
+      },
+      {
+        "role": "user",
+        "content": "A brass bell, the guest book, and a neatly printed notice. You take the notice.\n\nIt reads: \"After many happy years, the inn closes its doors for good tomorrow. Thank you for staying with us.\"\n\nThe fire burns low, and you lose track of time.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n                  MIDNIGHT\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n**The grandfather clock strikes twelve. The sound fills the room, fills your chest, fills everything.**\n\n**Your knees go soft. The last thing you hear is the pendulum.**\n\n· · ·\n\n════════════════════════════════════════════\n                   MORNING\n════════════════════════════════════════════\n\nMorning · 2 actions left\n**GUEST ROOM**\n(A small room under the eaves. The radiator ticks, the quilt is heavy, and the frosted window looks down on a snowy garden.)\n\nYou wake under the same heavy quilt. Grey winter light. The smell of coffee. The floor by the door is bare, but the envelope is still in your pocket.\n\n**Something isn't right. What happened last night, and why?**\n\nNobody else is here.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note\n\nYou've just woken up again. Before you continue, write your current theory of what is happening, in one or two sentences. Start with HYPOTHESIS:"
+      },
+      {
+        "role": "assistant",
+        "content": "HYPOTHESIS: I am caught in a time loop triggered by the grandfather clock at midnight, preventing me from ever leaving the inn."
+      },
+      {
+        "role": "user",
+        "content": "Morning · 2 actions left\n**GUEST ROOM**\n(A small room under the eaves. The radiator ticks, the quilt is heavy, and the frosted window looks down on a snowy garden.)\n\nYou wake under the same heavy quilt. Grey winter light. The smell of coffee. The floor by the door is bare, but the envelope is still in your pocket.\n\n**Something isn't right. What happened last night, and why?**\n\nNobody else is here.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note\n\nActions:\n1. Go to Lobby\n2. Examine Door\n3. Examine Bedside drawer\n4. Examine Window"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: I will examine the bedside drawer to see if there is something new or helpful now that the loop has restarted.\n\nCHOICE: 3"
+      },
+      {
+        "role": "user",
+        "content": "Morning · 1 action left\n**GUEST ROOM**\n\nUnder a folded spare blanket you find an old photograph, its corners soft with age.\n\nIt shows the innkeeper and a little girl with a blue ribbon, beside the clock.\n\nNobody else is here.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note, Old photo\n\nActions:\n1. Go to Lobby\n2. Examine Door\n3. ✓ Examine Bedside drawer\n4. Examine Window"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: The girl in the photo looks like it could be Mira; I should head to the lobby to see if I can confront her or the innkeeper about this.\n\nCHOICE: 1"
+      },
+      {
+        "role": "user",
+        "content": "Afternoon · 2 actions left\n**LOBBY**\n(The heart of the inn: worn armchairs, a crackling fire, and a tall grandfather clock that ticks a little louder than it should.)\n\nHere: The innkeeper is behind the reception desk, polishing the bell.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note, Old photo\n\nActions:\n1. Go to Guest Room\n2. Go to Garden\n3. Examine Grandfather clock\n4. Examine Reception desk\n5. Examine Front door\n6. Show Handwritten note to Innkeeper\n7. Show Old photo to Innkeeper"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: I'll show the innkeeper the photo to see if he recognizes the little girl and explains his connection to the clock.\n\nCHOICE: 7"
+      },
+      {
+        "role": "user",
+        "content": "Afternoon · 1 action left\n**LOBBY**\n\n\"Where did you find this? That's me, believe it or not. And that's the little girl who lived here.\" He runs a thumb over the edge. \"I wonder what became of her.\"\n\nHere: The innkeeper is behind the reception desk, polishing the bell.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note, Old photo\n\nActions:\n1. Go to Guest Room\n2. Go to Garden\n3. Examine Grandfather clock\n4. Examine Reception desk\n5. Examine Front door\n6. Show Handwritten note to Innkeeper\n7. ✓ Show Old photo to Innkeeper"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: The innkeeper doesn't remember who the girl is, so I'll try to find an exit through the garden to avoid the front door's loop.\n\nCHOICE: 2"
+      },
+      {
+        "role": "user",
+        "content": "Evening · 2 actions left\n**GARDEN**\n(A walled garden asleep under snow: a hedge, a few stubborn bushes, terracotta flowerpots, and an iron back gate.)\n\nNobody else is here.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note, Old photo\n\nActions:\n1. ✓ Go to Lobby\n2. Examine Back gate\n3. Examine Bush\n4. Examine Flowerpot"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: I need to get out, and the back gate is the most logical point of escape.\n\nCHOICE: 2"
+      },
+      {
+        "role": "user",
+        "content": "Evening · 1 action left\n**GARDEN**\n\nAn iron gate in the hedge, locked tight. Beyond it, a lane winds away from the inn.\n\nNobody else is here.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note, Old photo\n\nActions:\n1. ✓ Go to Lobby\n2. ✓ Examine Back gate\n3. Examine Bush\n4. Examine Flowerpot"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: Since the gate is locked, I'll search the terracotta flowerpots for a key that might open it.\n\nCHOICE: 4"
+      },
+      {
+        "role": "user",
+        "content": "Night · 2 actions left\n**GARDEN**\n\nYou tip the flowerpot. Underneath, pressed into the frozen soil, is a small iron key.\n\n\"You're new here. Try the pie tonight; it's the best thing about this place.\"\n\nHere: Mira stands in the snowy garden, looking up at the lit windows.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note, Old photo, Gate key\n\nActions:\n1. ✓ Go to Lobby\n2. ✓ Examine Back gate\n3. Examine Bush\n4. ✓ Examine Flowerpot\n5. Show Handwritten note to Mira\n6. Show Old photo to Mira\n7. Show Gate key to Mira"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: Mira was here right when I found the key; I will show her the photo to see if she recognizes herself as the little girl.\n\nCHOICE: 6"
+      },
+      {
+        "role": "user",
+        "content": "Night · 1 action left\n**GARDEN**\n\nMira goes very quiet. She looks at the photo for a long time. \"I think,\" she says softly, \"it's time I told him something.\"\n\nNobody else is here.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note, Old photo, Gate key\n\n**The clock will strike twelve soon.**\n\nActions:\n1. ✓ Go to Lobby\n2. ✓ Examine Back gate\n3. Examine Bush\n4. ✓ Examine Flowerpot"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: I have the key, and with midnight approaching, I need to use it on the gate immediately before the loop resets again.\n\nCHOICE: 2"
+      },
+      {
+        "role": "user",
+        "content": "The key turns with a stiff click. The gate swings open onto a lane that winds away into the snow.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n                  MIDNIGHT\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n**You follow the lane into the snow. The inn's lights shrink behind you. Then, close enough to touch, a clock begins to chime. Twelve. You look up. The inn is ahead of you again, every window glowing.**\n\n**The snow tilts, the lights blur, and everything goes quiet.**\n\n· · ·\n\n════════════════════════════════════════════\n                   MORNING\n════════════════════════════════════════════\n\nMorning · 2 actions left\n**GUEST ROOM**\n(A small room under the eaves. The radiator ticks, the quilt is heavy, and the frosted window looks down on a snowy garden.)\n\nYou wake under the same heavy quilt. Grey winter light. The smell of coffee. The floor by the door is bare, but the envelope is still in your pocket.\n\n**Again? Something about this day won't let go.**\n\nNobody else is here.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note\n\nYou've just woken up again. Before you continue, write your current theory of what is happening, in one or two sentences. Start with HYPOTHESIS:"
+      },
+      {
+        "role": "assistant",
+        "content": "HYPOTHESIS: The inn is trapped in a temporal loop tied to the clock, and I cannot leave until I resolve the innkeeper and Mira's unfinished business. The gate is not the exit; the clock is."
+      },
+      {
+        "role": "user",
+        "content": "Morning · 2 actions left\n**GUEST ROOM**\n(A small room under the eaves. The radiator ticks, the quilt is heavy, and the frosted window looks down on a snowy garden.)\n\nYou wake under the same heavy quilt. Grey winter light. The smell of coffee. The floor by the door is bare, but the envelope is still in your pocket.\n\n**Again? Something about this day won't let go.**\n\nNobody else is here.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note\n\nActions:\n1. Go to Lobby\n2. Examine Door\n3. Examine Bedside drawer\n4. Examine Window"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: I need to get Mira and the innkeeper to confront each other, so I will head to the lobby.\n\nCHOICE: 1"
+      },
+      {
+        "role": "user",
+        "content": "Mira looks up from her armchair and smiles.\n\"Morning…\"\n(A pause.)\n\"You still haven't tried the pie.\"\nWhat do you think is happening?\n\nThe game is over. It asks you: What do you think is happening? Answer in two or three sentences."
+      },
+      {
+        "role": "assistant",
+        "content": "The inn exists in a pocket of static time where the innkeeper and Mira are trapped as ghosts of their former selves, forever replaying the final day before the inn closed. I was caught in the loop because I was looking for a physical exit, but the \"midnight\" requirement implies I needed to break the cycle by having Mira confront the innkeeper about their shared history. By failing to facilitate that reconciliation, I remained bound to their eternal, repetitive morning."
+      }
+    ],
+    "ended": "anomaly_seen",
+    "model": "gemini: gemini-3.1-flash-lite"
+  }
+}

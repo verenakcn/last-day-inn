@@ -1,0 +1,374 @@
+{
+  "facts": {
+    "escaped_loop_1": false,
+    "evidence_found": [
+      "clock_inscription",
+      "closing_notice",
+      "note",
+      "old_photo"
+    ],
+    "evidence_never_found": [
+      "blue_ribbon"
+    ],
+    "evidence_found_but_never_shown": [
+      "clock_inscription"
+    ],
+    "memory_trigger_hit": true,
+    "anomaly_shown": true,
+    "loops_played": 3,
+    "total_turns": 20,
+    "wasted_turns": [],
+    "unparsed_replies": 0,
+    "api_calls": 23,
+    "capped_at_max_actions": false,
+    "stopped_by_error": null
+  },
+  "run": {
+    "persona": "curious",
+    "journal": true,
+    "turns": [
+      {
+        "loop": 1,
+        "action": "examine:drawer",
+        "note": "A cryptic threat has been left for me, so I should investigate the immediate surroundings before heading downstairs.",
+        "result": "Under a folded spare blanket you find an old photograph, its corners soft with age.\n\nIt shows the innkeeper and a little girl with a blue ribbon, beside the clock.",
+        "parsed": true
+      },
+      {
+        "loop": 1,
+        "action": "examine:window",
+        "note": "I should check the window to see if there's anything unusual in the snowy garden before I go downstairs.",
+        "result": "Snow blankets the garden below. You can make out a back gate in the hedge. It's a long drop, though. The stairs would be wiser.",
+        "parsed": true
+      },
+      {
+        "loop": 1,
+        "action": "move:lobby",
+        "note": "Since I've searched the room, it's time to head downstairs and see who else is in the inn.",
+        "result": "The innkeeper: a kind, tired man in a cardigan, who looks at his inn the way some people look at old friends.",
+        "parsed": true
+      },
+      {
+        "loop": 1,
+        "action": "present:old_photo>innkeeper",
+        "note": "I need to see how the innkeeper reacts to the photograph, as it depicts him and a child right next to the clock I'm standing beside.",
+        "result": "\"Where did you find this? That's me, believe it or not. And that's the little girl who lived here.\" He runs a thumb over the edge. \"I wonder what became of her.\"\n\nMira: a fellow guest in a bright scarf, who moves around the inn as if she knows every creaky board.\n\nMira looks up from her armchair and smiles.\n\"You're new here. Try the pie tonight; it's the best thing about this place.\"",
+        "parsed": true
+      },
+      {
+        "loop": 1,
+        "action": "present:note>mira",
+        "note": "Mira seems at home here, so I'll show her the threatening note to see if she recognizes the warning or knows anything about it.",
+        "result": "Mira reads the line twice. \"Midnight…\" She laughs, a little uncertain. \"Funny. For a second that felt familiar.\"",
+        "parsed": true
+      },
+      {
+        "loop": 1,
+        "action": "examine:grandfather_clock",
+        "note": "The grandfather clock is a focal point of the photograph and looks suspicious, so I want to examine it closely.",
+        "result": "Polished walnut and a slow brass pendulum, the case tall enough to hide a child. Words are carved into the base.\n\nIt reads: \"Mind the hours you wish away.\"",
+        "parsed": true
+      },
+      {
+        "loop": 1,
+        "action": "examine:grandfather_clock",
+        "note": "The inscription is cryptic, but I see a clear way to see if there's anything hidden inside the clock case.",
+        "result": "The pendulum swings, slow and steady, just as before.",
+        "parsed": true
+      },
+      {
+        "loop": 1,
+        "action": "examine:front_door",
+        "note": "Since the clock is about to strike midnight and the note specifically warned me to leave by then, I should head for the front door to see if I can actually get out.",
+        "result": "Snow is banked halfway up the glass. Nobody is leaving this way until tomorrow.\n\nThe fire burns low, and you lose track of time.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n                  MIDNIGHT\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n**The grandfather clock strikes twelve. The sound fills the room, fills your chest, fills everything.**\n\n**Your knees go soft. The last thing you hear is the pendulum.**\n\n· · ·\n\n════════════════════════════════════════════\n                   MORNING\n════════════════════════════════════════════\n\nYou wake under the same heavy quilt. Grey winter light. The smell of coffee. The floor by the door is bare, but the envelope is still in your pocket.\n\n**Something isn't right. What happened last night, and why?**",
+        "parsed": true
+      },
+      {
+        "loop": 2,
+        "action": "move:lobby",
+        "note": "The drawer is empty, meaning the photograph was likely reset along with the day, but I need to confirm if anything else has changed.",
+        "result": "Mira looks up from her armchair and smiles.\n\"You're new here. Try the pie tonight; it's the best thing about this place.\"",
+        "parsed": true
+      },
+      {
+        "loop": 2,
+        "action": "present:note>innkeeper",
+        "note": "Since the innkeeper is currently winding the clock, I want to interrupt him and ask about the inscription to see if I can break the loop.",
+        "result": "He squints at the envelope. \"Your name, but I've never seen it before. Did someone leave it for you?\"",
+        "parsed": true
+      },
+      {
+        "loop": 2,
+        "action": "move:guest_room",
+        "note": "I need to find that photograph again, as it seems to be the key to understanding the innkeeper's connection to the girl and the clock's power.",
+        "result": "",
+        "parsed": true
+      },
+      {
+        "loop": 2,
+        "action": "examine:drawer",
+        "note": "I'll check the bedside drawer once more to see if the photograph reappears now that I am further into the day.",
+        "result": "Under a folded spare blanket you find an old photograph, its corners soft with age.\n\nIt shows the innkeeper and a little girl with a blue ribbon, beside the clock.",
+        "parsed": true
+      },
+      {
+        "loop": 2,
+        "action": "move:lobby",
+        "note": "With the photograph recovered, I will return to the lobby to confront Mira about the note and the photo, as she seemed to recognize the warning before.",
+        "result": "",
+        "parsed": true
+      },
+      {
+        "loop": 2,
+        "action": "present:old_photo>mira",
+        "note": "I'll show Mira the photograph this time; since the note felt familiar to her, perhaps the photo will trigger a stronger realization.",
+        "result": "Mira goes very quiet. She looks at the photo for a long time. \"I think,\" she says softly, \"it's time I told him something.\"",
+        "parsed": true
+      },
+      {
+        "loop": 2,
+        "action": "examine:reception_desk",
+        "note": "Mira is finally ready to confess something to the innkeeper, so I will facilitate that by bringing the innkeeper over to her.",
+        "result": "A brass bell, the guest book, and a neatly printed notice. You take the notice.\n\nIt reads: \"After many happy years, the inn closes its doors for good tomorrow. Thank you for staying with us.\"",
+        "parsed": true
+      },
+      {
+        "loop": 2,
+        "action": "present:closing_notice>mira",
+        "note": "I will show Mira the closing notice to see if it triggers any more memories about why the inn might be stuck in a cycle.",
+        "result": "Mira taps the notice and smiles. \"Tomorrow might surprise you.\"\n\nThe fire burns low, and you lose track of time.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n                  MIDNIGHT\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n**The grandfather clock strikes twelve. The sound fills the room, fills your chest, fills everything.**\n\n**Your knees go soft. The last thing you hear is the pendulum.**\n\n· · ·\n\n════════════════════════════════════════════\n                   MORNING\n════════════════════════════════════════════\n\nYou wake under the same heavy quilt. Grey winter light. The smell of coffee. The floor by the door is bare, but the envelope is still in your pocket.\n\n**Again? Something about this day won't let go.**",
+        "parsed": true
+      },
+      {
+        "loop": 3,
+        "action": "examine:drawer",
+        "note": "I need to get the photograph again, as it seems to be the catalyst for Mira's confession and potentially breaking the loop.",
+        "result": "Under a folded spare blanket you find an old photograph, its corners soft with age.\n\nIt shows the innkeeper and a little girl with a blue ribbon, beside the clock.",
+        "parsed": true
+      },
+      {
+        "loop": 3,
+        "action": "move:lobby",
+        "note": "I will head to the lobby and show both the photo and the note to both individuals simultaneously to force a confrontation about the truth.",
+        "result": "",
+        "parsed": true
+      },
+      {
+        "loop": 3,
+        "action": "present:old_photo>innkeeper",
+        "note": "Mira isn't in the lobby today, so I must speak with the innkeeper directly and present both the note and the photo to see if I can shake his denial.",
+        "result": "\"Where did you find this? That's me, believe it or not. And that's the little girl who lived here.\" He runs a thumb over the edge. \"I wonder what became of her.\"",
+        "parsed": true
+      },
+      {
+        "loop": 3,
+        "action": "examine:grandfather_clock",
+        "note": "Since Mira isn't here, I will try to open the grandfather clock myself now that I have the photo and the inscription, hoping to reveal whatever is hidden inside.",
+        "result": "Polished walnut and a slow brass pendulum, the case tall enough to hide a child. Words are carved into the base.\n\nIt reads: \"Mind the hours you wish away.\"\n\nMira looks up from her armchair and smiles.\n\"Morning…\"\n(A pause.)\n\"You still haven't tried the pie.\"\nWhat do you think is happening?",
+        "parsed": true
+      }
+    ],
+    "hypotheses": [
+      {
+        "after_loop": 1,
+        "text": "The inn is caught in a temporal loop triggered by the grandfather clock at midnight, which consumes those who fail to leave before the hour strikes. I suspect the innkeeper and perhaps Mira are trapped here indefinitely, or are somehow the cause of this cycle.\n\nNOTE: Since I've woken up exactly where I started, I should check the bedside drawer again to see if the photograph has reappeared.\nCHOICE: 3"
+      },
+      {
+        "after_loop": 2,
+        "text": "The innkeeper is keeping the inn locked in a time loop to avoid the final closing day, and the little girl in the photo may be the source of this stagnation. I suspect I need to confront both of them together about the closing notice to break the cycle.\n\nNOTE: Since the cycle continues, I need to try a different approach and see if there is something specifically within the clock that I haven't triggered.\nCHOICE: 1"
+      }
+    ],
+    "final_answer": "HYPOTHESIS: The inn is a purgatory maintained by the innkeeper to preserve the memory of the girl, trapping guests in a cycle of \"wished-away\" time whenever the clock strikes twelve. Mira is likely a manifestation or a previous guest who has become part of the inn's static, eternal loop. The \"closing\" is an impossibility because the innkeeper refuses to let go of the past.",
+    "api_calls": 23,
+    "capped": false,
+    "error": null,
+    "transcript": [
+      {
+        "role": "user",
+        "content": "════════════════════════════════════════════\n                   MORNING\n════════════════════════════════════════════\n\nMorning · 2 actions left\n**GUEST ROOM**\n(A small room under the eaves. The radiator ticks, the quilt is heavy, and the frosted window looks down on a snowy garden.)\n\nYou wake under a heavy quilt. Grey winter light, the smell of coffee from downstairs. On the floor inside the door lies an envelope with your name on it. You open it. One line: \"Leave before midnight.\"\n\nNobody else is here.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note\n\nJournal:\n  · A note in an envelope with your name on it says: \"Leave before midnight.\"\n\nActions:\n1. Go to Lobby\n2. Examine Door\n3. Examine Bedside drawer\n4. Examine Window"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: A cryptic threat has been left for me, so I should investigate the immediate surroundings before heading downstairs.\nCHOICE: 3"
+      },
+      {
+        "role": "user",
+        "content": "Morning · 1 action left\n**GUEST ROOM**\n\nUnder a folded spare blanket you find an old photograph, its corners soft with age.\n\nIt shows the innkeeper and a little girl with a blue ribbon, beside the clock.\n\nNobody else is here.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note, Old photo\n\nJournal:\n  · A note in an envelope with your name on it says: \"Leave before midnight.\"\n  · The old photo shows the innkeeper and a little girl with a blue ribbon, beside the clock.\n\nActions:\n1. Go to Lobby\n2. Examine Door\n3. ✓ Examine Bedside drawer\n4. Examine Window"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: I should check the window to see if there's anything unusual in the snowy garden before I go downstairs.\nCHOICE: 4"
+      },
+      {
+        "role": "user",
+        "content": "Afternoon · 2 actions left\n**GUEST ROOM**\n\nSnow blankets the garden below. You can make out a back gate in the hedge. It's a long drop, though. The stairs would be wiser.\n\nNobody else is here.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note, Old photo\n\nJournal:\n  · A note in an envelope with your name on it says: \"Leave before midnight.\"\n  · The old photo shows the innkeeper and a little girl with a blue ribbon, beside the clock.\n\nActions:\n1. Go to Lobby\n2. Examine Door\n3. ✓ Examine Bedside drawer\n4. ✓ Examine Window"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: Since I've searched the room, it's time to head downstairs and see who else is in the inn.\nCHOICE: 1"
+      },
+      {
+        "role": "user",
+        "content": "Afternoon · 1 action left\n**LOBBY**\n(The heart of the inn: worn armchairs, a crackling fire, and a tall grandfather clock that ticks a little louder than it should.)\n\nThe innkeeper: a kind, tired man in a cardigan, who looks at his inn the way some people look at old friends.\n\nHere: The innkeeper is behind the reception desk, polishing the bell.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note, Old photo\n\nJournal:\n  · A note in an envelope with your name on it says: \"Leave before midnight.\"\n  · The old photo shows the innkeeper and a little girl with a blue ribbon, beside the clock.\n\nActions:\n1. Go to Guest Room\n2. Go to Garden\n3. Examine Grandfather clock\n4. Examine Reception desk\n5. Examine Front door\n6. Show Handwritten note to Innkeeper\n7. Show Old photo to Innkeeper"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: I need to see how the innkeeper reacts to the photograph, as it depicts him and a child right next to the clock I'm standing beside.\nCHOICE: 7"
+      },
+      {
+        "role": "user",
+        "content": "Evening · 2 actions left\n**LOBBY**\n\n\"Where did you find this? That's me, believe it or not. And that's the little girl who lived here.\" He runs a thumb over the edge. \"I wonder what became of her.\"\n\nMira: a fellow guest in a bright scarf, who moves around the inn as if she knows every creaky board.\n\nMira looks up from her armchair and smiles.\n\"You're new here. Try the pie tonight; it's the best thing about this place.\"\n\nHere: The innkeeper is cutting slices of pie by the fire. Mira sits by the fire with a cup of tea.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note, Old photo\n\nJournal:\n  · A note in an envelope with your name on it says: \"Leave before midnight.\"\n  · The old photo shows the innkeeper and a little girl with a blue ribbon, beside the clock.\n  · The innkeeper doesn't know what became of the girl in the photo.\n\nActions:\n1. Go to Guest Room\n2. Go to Garden\n3. Examine Grandfather clock\n4. Examine Reception desk\n5. Examine Front door\n6. Examine Pie\n7. Show Handwritten note to Innkeeper\n8. Show Handwritten note to Mira\n9. ✓ Show Old photo to Innkeeper\n10. Show Old photo to Mira"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: Mira seems at home here, so I'll show her the threatening note to see if she recognizes the warning or knows anything about it.\nCHOICE: 8"
+      },
+      {
+        "role": "user",
+        "content": "Evening · 1 action left\n**LOBBY**\n\nMira reads the line twice. \"Midnight…\" She laughs, a little uncertain. \"Funny. For a second that felt familiar.\"\n\nHere: The innkeeper is cutting slices of pie by the fire. Mira sits by the fire with a cup of tea.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note, Old photo\n\nJournal:\n  · A note in an envelope with your name on it says: \"Leave before midnight.\"\n  · The old photo shows the innkeeper and a little girl with a blue ribbon, beside the clock.\n  · The innkeeper doesn't know what became of the girl in the photo.\n  · Mira said the note felt familiar.\n\nActions:\n1. Go to Guest Room\n2. Go to Garden\n3. Examine Grandfather clock\n4. Examine Reception desk\n5. Examine Front door\n6. Examine Pie\n7. Show Handwritten note to Innkeeper\n8. ✓ Show Handwritten note to Mira\n9. ✓ Show Old photo to Innkeeper\n10. Show Old photo to Mira"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: The grandfather clock is a focal point of the photograph and looks suspicious, so I want to examine it closely.\nCHOICE: 3"
+      },
+      {
+        "role": "user",
+        "content": "Night · 2 actions left\n**LOBBY**\n\nPolished walnut and a slow brass pendulum, the case tall enough to hide a child. Words are carved into the base.\n\nIt reads: \"Mind the hours you wish away.\"\n\nNobody else is here.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note, Old photo\nYou know: Clock inscription (\"Mind the hours you wish away.\")\n\nJournal:\n  · A note in an envelope with your name on it says: \"Leave before midnight.\"\n  · The old photo shows the innkeeper and a little girl with a blue ribbon, beside the clock.\n  · The innkeeper doesn't know what became of the girl in the photo.\n  · Mira said the note felt familiar.\n  · The clock's base reads: \"Mind the hours you wish away.\"\n\nActions:\n1. Go to Guest Room\n2. Go to Garden\n3. ✓ Examine Grandfather clock\n4. Examine Reception desk\n5. Examine Front door"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: The inscription is cryptic, but I see a clear way to see if there's anything hidden inside the clock case.\nCHOICE: 3"
+      },
+      {
+        "role": "user",
+        "content": "Night · 1 action left\n**LOBBY**\n\nThe pendulum swings, slow and steady, just as before.\n\nNobody else is here.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note, Old photo\nYou know: Clock inscription (\"Mind the hours you wish away.\")\n\nJournal:\n  · A note in an envelope with your name on it says: \"Leave before midnight.\"\n  · The old photo shows the innkeeper and a little girl with a blue ribbon, beside the clock.\n  · The innkeeper doesn't know what became of the girl in the photo.\n  · Mira said the note felt familiar.\n  · The clock's base reads: \"Mind the hours you wish away.\"\n\n**The clock will strike twelve soon.**\n\nActions:\n1. Go to Guest Room\n2. Go to Garden\n3. ✓ Examine Grandfather clock\n4. Examine Reception desk\n5. Examine Front door"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: Since the clock is about to strike midnight and the note specifically warned me to leave by then, I should head for the front door to see if I can actually get out.\nCHOICE: 5"
+      },
+      {
+        "role": "user",
+        "content": "Snow is banked halfway up the glass. Nobody is leaving this way until tomorrow.\n\nThe fire burns low, and you lose track of time.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n                  MIDNIGHT\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n**The grandfather clock strikes twelve. The sound fills the room, fills your chest, fills everything.**\n\n**Your knees go soft. The last thing you hear is the pendulum.**\n\n· · ·\n\n════════════════════════════════════════════\n                   MORNING\n════════════════════════════════════════════\n\nMorning · 2 actions left\n**GUEST ROOM**\n(A small room under the eaves. The radiator ticks, the quilt is heavy, and the frosted window looks down on a snowy garden.)\n\nYou wake under the same heavy quilt. Grey winter light. The smell of coffee. The floor by the door is bare, but the envelope is still in your pocket.\n\n**Something isn't right. What happened last night, and why?**\n\nNobody else is here.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note\n\nJournal:\n  From before you woke:\n    · A note in an envelope with your name on it says: \"Leave before midnight.\"\n    · The old photo shows the innkeeper and a little girl with a blue ribbon, beside the clock.\n    · The innkeeper doesn't know what became of the girl in the photo.\n    · Mira said the note felt familiar.\n    · The clock's base reads: \"Mind the hours you wish away.\"\n  Today:\n    (nothing yet)\n\nYou've just woken up again. Before you continue, write your current theory of what is happening, in one or two sentences. Start with HYPOTHESIS:"
+      },
+      {
+        "role": "assistant",
+        "content": "HYPOTHESIS: The inn is caught in a temporal loop triggered by the grandfather clock at midnight, which consumes those who fail to leave before the hour strikes. I suspect the innkeeper and perhaps Mira are trapped here indefinitely, or are somehow the cause of this cycle.\n\nNOTE: Since I've woken up exactly where I started, I should check the bedside drawer again to see if the photograph has reappeared.\nCHOICE: 3"
+      },
+      {
+        "role": "user",
+        "content": "Morning · 2 actions left\n**GUEST ROOM**\n(A small room under the eaves. The radiator ticks, the quilt is heavy, and the frosted window looks down on a snowy garden.)\n\nYou wake under the same heavy quilt. Grey winter light. The smell of coffee. The floor by the door is bare, but the envelope is still in your pocket.\n\n**Something isn't right. What happened last night, and why?**\n\nNobody else is here.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note\n\nJournal:\n  From before you woke:\n    · A note in an envelope with your name on it says: \"Leave before midnight.\"\n    · The old photo shows the innkeeper and a little girl with a blue ribbon, beside the clock.\n    · The innkeeper doesn't know what became of the girl in the photo.\n    · Mira said the note felt familiar.\n    · The clock's base reads: \"Mind the hours you wish away.\"\n  Today:\n    (nothing yet)\n\nActions:\n1. Go to Lobby\n2. Examine Door\n3. Examine Bedside drawer\n4. Examine Window"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: The drawer is empty, meaning the photograph was likely reset along with the day, but I need to confirm if anything else has changed.\nCHOICE: 1"
+      },
+      {
+        "role": "user",
+        "content": "Morning · 1 action left\n**LOBBY**\n(The heart of the inn: worn armchairs, a crackling fire, and a tall grandfather clock that ticks a little louder than it should.)\n\nMira looks up from her armchair and smiles.\n\"You're new here. Try the pie tonight; it's the best thing about this place.\"\n\nHere: The innkeeper is winding the grandfather clock, humming to himself. Mira is curled up in an armchair by the fire.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note\n\nJournal:\n  From before you woke:\n    · A note in an envelope with your name on it says: \"Leave before midnight.\"\n    · The old photo shows the innkeeper and a little girl with a blue ribbon, beside the clock.\n    · The innkeeper doesn't know what became of the girl in the photo.\n    · Mira said the note felt familiar.\n    · The clock's base reads: \"Mind the hours you wish away.\"\n  Today:\n    (nothing yet)\n\nActions:\n1. Go to Guest Room\n2. Go to Garden\n3. Examine Grandfather clock\n4. Examine Reception desk\n5. Examine Front door\n6. Show Handwritten note to Innkeeper\n7. Show Handwritten note to Mira"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: Since the innkeeper is currently winding the clock, I want to interrupt him and ask about the inscription to see if I can break the loop.\nCHOICE: 6"
+      },
+      {
+        "role": "user",
+        "content": "Afternoon · 2 actions left\n**LOBBY**\n\nHe squints at the envelope. \"Your name, but I've never seen it before. Did someone leave it for you?\"\n\nHere: The innkeeper is behind the reception desk, polishing the bell.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note\n\nJournal:\n  From before you woke:\n    · A note in an envelope with your name on it says: \"Leave before midnight.\"\n    · The old photo shows the innkeeper and a little girl with a blue ribbon, beside the clock.\n    · The innkeeper doesn't know what became of the girl in the photo.\n    · Mira said the note felt familiar.\n    · The clock's base reads: \"Mind the hours you wish away.\"\n  Today:\n    · The innkeeper says he has never seen the note.\n\nActions:\n1. Go to Guest Room\n2. Go to Garden\n3. Examine Grandfather clock\n4. Examine Reception desk\n5. Examine Front door\n6. ✓ Show Handwritten note to Innkeeper"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: I need to find that photograph again, as it seems to be the key to understanding the innkeeper's connection to the girl and the clock's power.\nCHOICE: 1"
+      },
+      {
+        "role": "user",
+        "content": "Afternoon · 1 action left\n**GUEST ROOM**\n(A small room under the eaves. The radiator ticks, the quilt is heavy, and the frosted window looks down on a snowy garden.)\n\nNobody else is here.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note\n\nJournal:\n  From before you woke:\n    · A note in an envelope with your name on it says: \"Leave before midnight.\"\n    · The old photo shows the innkeeper and a little girl with a blue ribbon, beside the clock.\n    · The innkeeper doesn't know what became of the girl in the photo.\n    · Mira said the note felt familiar.\n    · The clock's base reads: \"Mind the hours you wish away.\"\n  Today:\n    · The innkeeper says he has never seen the note.\n\nActions:\n1. ✓ Go to Lobby\n2. Examine Door\n3. Examine Bedside drawer\n4. Examine Window"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: I'll check the bedside drawer once more to see if the photograph reappears now that I am further into the day.\nCHOICE: 3"
+      },
+      {
+        "role": "user",
+        "content": "Evening · 2 actions left\n**GUEST ROOM**\n\nUnder a folded spare blanket you find an old photograph, its corners soft with age.\n\nIt shows the innkeeper and a little girl with a blue ribbon, beside the clock.\n\nNobody else is here.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note, Old photo\n\nJournal:\n  From before you woke:\n    · A note in an envelope with your name on it says: \"Leave before midnight.\"\n    · The old photo shows the innkeeper and a little girl with a blue ribbon, beside the clock.\n    · The innkeeper doesn't know what became of the girl in the photo.\n    · Mira said the note felt familiar.\n    · The clock's base reads: \"Mind the hours you wish away.\"\n  Today:\n    · The innkeeper says he has never seen the note.\n\nActions:\n1. ✓ Go to Lobby\n2. Examine Door\n3. ✓ Examine Bedside drawer\n4. Examine Window"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: With the photograph recovered, I will return to the lobby to confront Mira about the note and the photo, as she seemed to recognize the warning before.\nCHOICE: 1"
+      },
+      {
+        "role": "user",
+        "content": "Evening · 1 action left\n**LOBBY**\n(The heart of the inn: worn armchairs, a crackling fire, and a tall grandfather clock that ticks a little louder than it should.)\n\nHere: The innkeeper is cutting slices of pie by the fire. Mira sits by the fire with a cup of tea.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note, Old photo\n\nJournal:\n  From before you woke:\n    · A note in an envelope with your name on it says: \"Leave before midnight.\"\n    · The old photo shows the innkeeper and a little girl with a blue ribbon, beside the clock.\n    · The innkeeper doesn't know what became of the girl in the photo.\n    · Mira said the note felt familiar.\n    · The clock's base reads: \"Mind the hours you wish away.\"\n  Today:\n    · The innkeeper says he has never seen the note.\n\nActions:\n1. ✓ Go to Guest Room\n2. Go to Garden\n3. Examine Grandfather clock\n4. Examine Reception desk\n5. Examine Front door\n6. Examine Pie\n7. ✓ Show Handwritten note to Innkeeper\n8. Show Handwritten note to Mira\n9. Show Old photo to Innkeeper\n10. Show Old photo to Mira"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: I'll show Mira the photograph this time; since the note felt familiar to her, perhaps the photo will trigger a stronger realization.\nCHOICE: 10"
+      },
+      {
+        "role": "user",
+        "content": "Night · 2 actions left\n**LOBBY**\n\nMira goes very quiet. She looks at the photo for a long time. \"I think,\" she says softly, \"it's time I told him something.\"\n\nHere: Mira sits beside the grandfather clock, waiting for someone who doesn't come.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note, Old photo\n\nJournal:\n  From before you woke:\n    · A note in an envelope with your name on it says: \"Leave before midnight.\"\n    · The old photo shows the innkeeper and a little girl with a blue ribbon, beside the clock.\n    · The innkeeper doesn't know what became of the girl in the photo.\n    · Mira said the note felt familiar.\n    · The clock's base reads: \"Mind the hours you wish away.\"\n  Today:\n    · The innkeeper says he has never seen the note.\n    · Mira wants to tell the innkeeper something.\n\nActions:\n1. ✓ Go to Guest Room\n2. Go to Garden\n3. Examine Grandfather clock\n4. Examine Reception desk\n5. Examine Front door\n6. Show Handwritten note to Mira\n7. ✓ Show Old photo to Mira"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: Mira is finally ready to confess something to the innkeeper, so I will facilitate that by bringing the innkeeper over to her.\nCHOICE: 4"
+      },
+      {
+        "role": "user",
+        "content": "Night · 1 action left\n**LOBBY**\n\nA brass bell, the guest book, and a neatly printed notice. You take the notice.\n\nIt reads: \"After many happy years, the inn closes its doors for good tomorrow. Thank you for staying with us.\"\n\nHere: Mira sits beside the grandfather clock, waiting for someone who doesn't come.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note, Old photo, Closing notice\n\nJournal:\n  From before you woke:\n    · A note in an envelope with your name on it says: \"Leave before midnight.\"\n    · The old photo shows the innkeeper and a little girl with a blue ribbon, beside the clock.\n    · The innkeeper doesn't know what became of the girl in the photo.\n    · Mira said the note felt familiar.\n    · The clock's base reads: \"Mind the hours you wish away.\"\n  Today:\n    · The innkeeper says he has never seen the note.\n    · Mira wants to tell the innkeeper something.\n    · The inn closes for good tomorrow.\n\n**The clock will strike twelve soon.**\n\nActions:\n1. ✓ Go to Guest Room\n2. Go to Garden\n3. Examine Grandfather clock\n4. ✓ Examine Reception desk\n5. Examine Front door\n6. Show Handwritten note to Mira\n7. ✓ Show Old photo to Mira\n8. Show Closing notice to Mira"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: I will show Mira the closing notice to see if it triggers any more memories about why the inn might be stuck in a cycle.\nCHOICE: 8"
+      },
+      {
+        "role": "user",
+        "content": "Mira taps the notice and smiles. \"Tomorrow might surprise you.\"\n\nThe fire burns low, and you lose track of time.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n                  MIDNIGHT\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n**The grandfather clock strikes twelve. The sound fills the room, fills your chest, fills everything.**\n\n**Your knees go soft. The last thing you hear is the pendulum.**\n\n· · ·\n\n════════════════════════════════════════════\n                   MORNING\n════════════════════════════════════════════\n\nMorning · 2 actions left\n**GUEST ROOM**\n(A small room under the eaves. The radiator ticks, the quilt is heavy, and the frosted window looks down on a snowy garden.)\n\nYou wake under the same heavy quilt. Grey winter light. The smell of coffee. The floor by the door is bare, but the envelope is still in your pocket.\n\n**Again? Something about this day won't let go.**\n\nNobody else is here.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note\n\nJournal:\n  From before you woke:\n    · A note in an envelope with your name on it says: \"Leave before midnight.\"\n    · The old photo shows the innkeeper and a little girl with a blue ribbon, beside the clock.\n    · The innkeeper doesn't know what became of the girl in the photo.\n    · Mira said the note felt familiar.\n    · The clock's base reads: \"Mind the hours you wish away.\"\n    · The innkeeper says he has never seen the note.\n    · Mira wants to tell the innkeeper something.\n    · The inn closes for good tomorrow.\n    · Mira says tomorrow might surprise you.\n  Today:\n    (nothing yet)\n\nYou've just woken up again. Before you continue, write your current theory of what is happening, in one or two sentences. Start with HYPOTHESIS:"
+      },
+      {
+        "role": "assistant",
+        "content": "HYPOTHESIS: The innkeeper is keeping the inn locked in a time loop to avoid the final closing day, and the little girl in the photo may be the source of this stagnation. I suspect I need to confront both of them together about the closing notice to break the cycle.\n\nNOTE: Since the cycle continues, I need to try a different approach and see if there is something specifically within the clock that I haven't triggered.\nCHOICE: 1"
+      },
+      {
+        "role": "user",
+        "content": "Morning · 2 actions left\n**GUEST ROOM**\n(A small room under the eaves. The radiator ticks, the quilt is heavy, and the frosted window looks down on a snowy garden.)\n\nYou wake under the same heavy quilt. Grey winter light. The smell of coffee. The floor by the door is bare, but the envelope is still in your pocket.\n\n**Again? Something about this day won't let go.**\n\nNobody else is here.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note\n\nJournal:\n  From before you woke:\n    · A note in an envelope with your name on it says: \"Leave before midnight.\"\n    · The old photo shows the innkeeper and a little girl with a blue ribbon, beside the clock.\n    · The innkeeper doesn't know what became of the girl in the photo.\n    · Mira said the note felt familiar.\n    · The clock's base reads: \"Mind the hours you wish away.\"\n    · The innkeeper says he has never seen the note.\n    · Mira wants to tell the innkeeper something.\n    · The inn closes for good tomorrow.\n    · Mira says tomorrow might surprise you.\n  Today:\n    (nothing yet)\n\nActions:\n1. Go to Lobby\n2. Examine Door\n3. Examine Bedside drawer\n4. Examine Window"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: I need to get the photograph again, as it seems to be the catalyst for Mira's confession and potentially breaking the loop.\nCHOICE: 3"
+      },
+      {
+        "role": "user",
+        "content": "Morning · 1 action left\n**GUEST ROOM**\n\nUnder a folded spare blanket you find an old photograph, its corners soft with age.\n\nIt shows the innkeeper and a little girl with a blue ribbon, beside the clock.\n\nNobody else is here.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note, Old photo\n\nJournal:\n  From before you woke:\n    · A note in an envelope with your name on it says: \"Leave before midnight.\"\n    · The old photo shows the innkeeper and a little girl with a blue ribbon, beside the clock.\n    · The innkeeper doesn't know what became of the girl in the photo.\n    · Mira said the note felt familiar.\n    · The clock's base reads: \"Mind the hours you wish away.\"\n    · The innkeeper says he has never seen the note.\n    · Mira wants to tell the innkeeper something.\n    · The inn closes for good tomorrow.\n    · Mira says tomorrow might surprise you.\n  Today:\n    (nothing yet)\n\nActions:\n1. Go to Lobby\n2. Examine Door\n3. ✓ Examine Bedside drawer\n4. Examine Window"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: I will head to the lobby and show both the photo and the note to both individuals simultaneously to force a confrontation about the truth.\nCHOICE: 1"
+      },
+      {
+        "role": "user",
+        "content": "Afternoon · 2 actions left\n**LOBBY**\n(The heart of the inn: worn armchairs, a crackling fire, and a tall grandfather clock that ticks a little louder than it should.)\n\nHere: The innkeeper is behind the reception desk, polishing the bell.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note, Old photo\n\nJournal:\n  From before you woke:\n    · A note in an envelope with your name on it says: \"Leave before midnight.\"\n    · The old photo shows the innkeeper and a little girl with a blue ribbon, beside the clock.\n    · The innkeeper doesn't know what became of the girl in the photo.\n    · Mira said the note felt familiar.\n    · The clock's base reads: \"Mind the hours you wish away.\"\n    · The innkeeper says he has never seen the note.\n    · Mira wants to tell the innkeeper something.\n    · The inn closes for good tomorrow.\n    · Mira says tomorrow might surprise you.\n  Today:\n    (nothing yet)\n\nActions:\n1. Go to Guest Room\n2. Go to Garden\n3. Examine Grandfather clock\n4. Examine Reception desk\n5. Examine Front door\n6. Show Handwritten note to Innkeeper\n7. Show Old photo to Innkeeper"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: Mira isn't in the lobby today, so I must speak with the innkeeper directly and present both the note and the photo to see if I can shake his denial.\nCHOICE: 7"
+      },
+      {
+        "role": "user",
+        "content": "Afternoon · 1 action left\n**LOBBY**\n\n\"Where did you find this? That's me, believe it or not. And that's the little girl who lived here.\" He runs a thumb over the edge. \"I wonder what became of her.\"\n\nHere: The innkeeper is behind the reception desk, polishing the bell.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note, Old photo\n\nJournal:\n  From before you woke:\n    · A note in an envelope with your name on it says: \"Leave before midnight.\"\n    · The old photo shows the innkeeper and a little girl with a blue ribbon, beside the clock.\n    · The innkeeper doesn't know what became of the girl in the photo.\n    · Mira said the note felt familiar.\n    · The clock's base reads: \"Mind the hours you wish away.\"\n    · The innkeeper says he has never seen the note.\n    · Mira wants to tell the innkeeper something.\n    · The inn closes for good tomorrow.\n    · Mira says tomorrow might surprise you.\n  Today:\n    (nothing yet)\n\nActions:\n1. Go to Guest Room\n2. Go to Garden\n3. Examine Grandfather clock\n4. Examine Reception desk\n5. Examine Front door\n6. Show Handwritten note to Innkeeper\n7. ✓ Show Old photo to Innkeeper"
+      },
+      {
+        "role": "assistant",
+        "content": "NOTE: Since Mira isn't here, I will try to open the grandfather clock myself now that I have the photo and the inscription, hoping to reveal whatever is hidden inside.\nCHOICE: 3"
+      },
+      {
+        "role": "user",
+        "content": "Polished walnut and a slow brass pendulum, the case tall enough to hide a child. Words are carved into the base.\n\nIt reads: \"Mind the hours you wish away.\"\n\nMira looks up from her armchair and smiles.\n\"Morning…\"\n(A pause.)\n\"You still haven't tried the pie.\"\nWhat do you think is happening?\n\nThe game is over. It asks you: What do you think is happening? Answer in two or three sentences."
+      },
+      {
+        "role": "assistant",
+        "content": "HYPOTHESIS: The inn is a purgatory maintained by the innkeeper to preserve the memory of the girl, trapping guests in a cycle of \"wished-away\" time whenever the clock strikes twelve. Mira is likely a manifestation or a previous guest who has become part of the inn's static, eternal loop. The \"closing\" is an impossibility because the innkeeper refuses to let go of the past."
+      }
+    ],
+    "ended": "anomaly_seen",
+    "model": "gemini: gemini-3.1-flash-lite"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "facts": {
+    "escaped_loop_1": false,
+    "evidence_found": [
+      "note"
+    ],
+    "evidence_never_found": [
+      "blue_ribbon",
+      "clock_inscription",
+      "closing_notice",
+      "old_photo"
+    ],
+    "evidence_found_but_never_shown": [
+      "note"
+    ],
+    "memory_trigger_hit": false,
+    "anomaly_shown": false,
+    "loops_played": 1,
+    "total_turns": 0,
+    "wasted_turns": [],
+    "unparsed_replies": 0,
+    "api_calls": 1,
+    "capped_at_max_actions": false,
+    "stopped_by_error": "ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+  },
+  "run": {
+    "persona": "curious",
+    "journal": false,
+    "turns": [],
+    "hypotheses": [],
+    "final_answer": null,
+    "api_calls": 1,
+    "capped": false,
+    "error": "ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+    "transcript": [
+      {
+        "role": "user",
+        "content": "════════════════════════════════════════════\n                   MORNING\n════════════════════════════════════════════\n\nMorning · 2 actions left\n**GUEST ROOM**\n(A small room under the eaves. The radiator ticks, the quilt is heavy, and the frosted window looks down on a snowy garden.)\n\nYou wake under a heavy quilt. Grey winter light, the smell of coffee from downstairs. On the floor inside the door lies an envelope with your name on it. You open it. One line: \"Leave before midnight.\"\n\nNobody else is here.\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nYou carry: Handwritten note\n\nActions:\n1. Go to Lobby\n2. Examine Door\n3. Examine Bedside drawer\n4. Examine Window"
+      }
+    ],
+    "ended": null,
+    "model": "gemini: gemini-3.1-flash-lite"
+  }
+}
