@@ -145,10 +145,16 @@ class Game:
             item, _, target = rest.partition(">")
             out = self._present(item, target)
 
+        here_before = self._npcs_here()
         night = self._midnight() if self.escaped else self._spend_action()
+        if not night:  # time moved on and someone walked away: say so, so they don't just vanish
+            out += [self.w["npcs"][n]["leaves"]["text"] for n in here_before if n not in self._npcs_here()]
         extra = self._introductions() + self._check_meeting()
-        if self.ended:  # no next screen: everything prints at once
-            shown, self.interlude = out + night + extra, "\n\n".join(t for t in out + night + extra if t)
+        if self.ended:  # no next screen: everything prints at once, with the place for the reveal
+            where = [self.ui["place"].format(name=self.w["locations"][self.location]["name"].upper())
+                     + ("\n" + self._room_text() if self.arrived else "")] if self.ended == "anomaly_seen" else []
+            shown = out + night + where + extra
+            self.interlude = "\n\n".join(t for t in shown if t)
         elif night:  # the old day's last result and midnight print before the new morning's screen
             self.interlude = "\n\n".join(t for t in out + night if t)
             self.screen_text += extra
@@ -288,7 +294,7 @@ class Game:
         if entry.get("is_anomaly"):
             self.ended = "anomaly_seen"
             self._log({"type": "anomaly_seen", "loop": self.loop})
-            out.append(self.w["loops"]["end_screen"]["prompt"])
+            return ["\n".join(out), self.w["loops"]["end_screen"]["prompt"]]
         return ["\n".join(out)]
 
     # ---------- examine and present ----------

@@ -126,6 +126,17 @@ class Loop1(unittest.TestCase):
         texts = [g.act(a) for a in ["move:lobby", "move:guest_room"] * 4]  # day 2 runs out
         self.assertIn("Again? Something about this day", texts[-1])
 
+    def test_someone_walking_away_gets_a_line(self):
+        g, texts = play(["examine:drawer", "move:lobby", "move:garden", "present:old_photo>mira"])  # -> Evening
+        self.assertIn("Mira slips away", texts[-1])
+        self.assertIn("Nobody else is here.", g.observe())
+
+    def test_reveal_shows_the_place_then_the_end_question(self):
+        g, texts = play(PHOTO_THEN_ESCAPE[:4] + ["move:lobby"] + ["examine:grandfather_clock"] * 3 + ["move:lobby"])
+        self.assertEqual(g.ended, "anomaly_seen")
+        self.assertLess(g.interlude.index("**LOBBY**"), g.interlude.index("You still haven't tried the pie."))
+        self.assertIn('pie."\n\nWhat do you think is happening?', g.interlude)
+
     def test_screen_does_not_repeat_the_menu(self):
         obs = Game().observe()
         self.assertNotIn("You could examine", obs)
