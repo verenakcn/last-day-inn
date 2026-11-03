@@ -11,35 +11,34 @@ Set Padding 24
 Set TypingSpeed 70ms
 Set Theme "Catppuccin Mocha"
 
+# Hidden: launch, open the drawer (old photo), go through the Lobby to the Garden
 Hide
 Type "clear" Enter
+Type "python3 play.py" Enter
+Sleep 1s
+Type "3" Enter
+Type "1" Enter
+Type "2" Enter
+Sleep 1s
 Show
 
-Type "python3 play.py" Sleep 400ms Enter
-Sleep 3.5s
+# First frame: the Garden, Mira's pie line, the photo in the journal
+Sleep 2.2s
 
-# Morning: open the drawer (old photo), go to the Lobby
-Type "3" Enter
-Sleep 2.5s
-Type "1" Enter
-Sleep 1.5s
-
-# Afternoon: go to the Garden, show Mira the photo
-Type "2" Enter
-Sleep 1.5s
+# Show Mira the photo
 Type "6" Enter
-Sleep 4s
+Sleep 3.5s
 
 # Evening and Night: back to the Lobby and wait by the clock
 Type "1" Enter
-Sleep 1.2s
+Sleep 1s
 Type "3" Enter
-Sleep 1.2s
+Sleep 1s
 Type "3" Enter
-Sleep 2.5s
+Sleep 1.8s
 Type "3" Enter
-Sleep 7s
+Sleep 4.2s
 
 # Next morning: go down to the Lobby
 Type "1" Enter
-Sleep 7s
+Sleep 4.5s

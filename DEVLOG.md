@@ -82,3 +82,6 @@ The "Why" lines are the designer's own words. Decisions with full reasons live i
 - **Built:** a one-line exit when a character walks away as time moves on ("Mira slips away, her scarf trailing behind her."; "The innkeeper says goodnight and heads up to bed."), and the reveal now shows the place and room before Mira's line, with a break before the end question. Plus `docs/reveal.tape`, a scripted vhs recording of the reveal path.
 - **Learned:** recording the reveal showed two glitches no test or report had flagged: Mira spoke, then "Nobody else is here." in the same screen, and the reveal had no place header. An agent had noticed the first one earlier ("Everyone has suddenly vanished") but nobody acted on its note.
 - **Why:** A character who vanishes mid-conversation feels like a bug, not a mystery, so people should leave with a line. The reveal is the most important moment in the game, so players need to know where they are when Mira remembers.
+
+## 2026-11-03 · Correction: door-note recount
+- **Correction:** a recount from the reports found that the door-note numbers in the fix 2 and fix 3 entries also counted "front door" mentions. Counting only notes about the clock's door or the star, fix 2 went 4 → 9 and fix 3 went 2 → 0 (curious) and 4 → 0 (escape); the direction of each result holds.

@@ -1,7 +1,7 @@
 """Playtest agent v1: an LLM plays through the same observe/actions/act interface as a human.
 
     pip install google-genai
-    echo "GEMINI_API_KEY=..." >> .env
+    # then create .env with one line, GEMINI_API_KEY=your-key (an editor, not echo: keeps the key out of shell history)
     python3 agent.py                      # one run: curious explorer, journal on (Gemini)
     python3 agent.py --persona escape --no-journal
     python3 agent.py --dry-run            # fake model, no API calls: tests the pipeline for free
@@ -67,7 +67,7 @@ def claude_model():
             max_tokens=16000,
             system=system,
             messages=messages,
-            # Server-side fallback if a request is declined (see README note).
+            # Server-side fallback if a request is declined.
             extra_headers={"anthropic-beta": "server-side-fallback-2026-07-01"},
             extra_body={"fallbacks": "default"},
         )
