@@ -81,4 +81,4 @@ The "Why" lines are the designer's own words. Decisions with full reasons live i
 ## 2026-11-02 · Screen fixes found while recording the GIF
 - **Built:** a one-line exit when a character walks away as time moves on ("Mira slips away, her scarf trailing behind her."; "The innkeeper says goodnight and heads up to bed."), and the reveal now shows the place and room before Mira's line, with a break before the end question. Plus `docs/reveal.tape`, a scripted vhs recording of the reveal path.
 - **Learned:** recording the reveal showed two glitches no test or report had flagged: Mira spoke, then "Nobody else is here." in the same screen, and the reveal had no place header. An agent had noticed the first one earlier ("Everyone has suddenly vanished") but nobody acted on its note.
-- **Why:** _(waiting for designer's words)_
+- **Why:** A character who vanishes mid-conversation feels like a bug, not a mystery, so people should leave with a line. The reveal is the most important moment in the game, so players need to know where they are when Mira remembers.
