@@ -5,7 +5,7 @@ The "Why" lines are the designer's own words. Decisions with full reasons live i
 
 ## 2026-11-01 · Setup
 - **Built:** git repo with `.gitignore` (excludes `.env` and session logs), connected to the private GitHub repo `last-day-inn`.
-- **Learned:** pushing needs a fine-grained token with Contents read/write; a token pasted at the shell prompt counts as leaked.
+- **Learned:** pushing needs a fine-grained token with Contents read/write, kept out of chat, the shell and the repo.
 - **Why:** Least access: the token only reaches this test project, so if it leaks, nothing else is exposed.
 
 ## 2026-11-01 · M1.1 world.json from the brief
@@ -49,12 +49,12 @@ The "Why" lines are the designer's own words. Decisions with full reasons live i
 - **Why:** Making players check the journal for key details adds friction to solving the mystery. Showing an item's content when you pick it up gives immediate feedback and helps players piece the story together.
 
 ## 2026-11-01 · M2.2 Report-driven fix: the clock's little door
-- **Built:** first full run → read report → one world.json change → re-run → compare (commits `2f7f4e6` before, `5b09935` after). A second look at the clock now says "The little door won't open."
+- **Built:** first full run → read report → one world.json change → re-run → compare (commits `c41857d` before, `6a654af` after). A second look at the clock now says "The little door won't open."
 - **Learned:** repeat door attempts in one loop went 2 → 1, and the player later wrote "since the door wouldn't open before"; the reveal can still be missed when the photo reaches Mira only in Loop 3. One run per side is a hint, not proof.
 - **Why:** A door that never opens, with no explanation, feels like a false promise and discourages players.
 
 ## 2026-11-02 · Report-driven fix 2: the clock door as a clue (backfired)
-- **Built:** second clock look shows a child's scratched star (commits `6ba7971` before, `b4bc771` after); smarter waste counter (a repeat only counts if it showed the same text again).
+- **Built:** second clock look shows a child's scratched star (commits `9a0014c` before, `4ab5681` after); smarter waste counter (a repeat only counts if it showed the same text again).
 - **Learned:** a physical mark on a door reads as a mechanism to activate: clock looks 4 → 5, door/star notes 8 → 11. It did strengthen the girl → Mira link (1 → 3 notes), but no one acted on it. A clue should point at a person or a question, not at an object that looks interactive.
 - **Why:** A clue on a second look could make checking again feel fun and rewarded, but the star widened the misleading gap and backfired.
 
@@ -64,12 +64,12 @@ The "Why" lines are the designer's own words. Decisions with full reasons live i
 - **Why:** Hiding the loop keeps the mystery and lets players discover it on their second attempt, instead of being told everything from the beginning.
 
 ## 2026-11-02 · Report-driven fix 3: clock door removed
-- **Built:** the clock no longer mentions a little door ("the case tall enough to hide a child"); commits `536f675` before, `3673787` after, both personas. Also a "You know:" line for the inscription.
+- **Built:** the clock no longer mentions a little door ("the case tall enough to hide a child"); commits `f937d34` before, `e1bc6d1` after, both personas. Also a "You know:" line for the inscription.
 - **Learned:** door talk fell 6 → 1 (curious) and 5 → 0 (escape), and the curious player reached the reveal in 12 moves; but the escape player still tried to open the clock after Mira said she hid in it. The clock pulls attention because it's the heart of the story, not only because of one line.
 - **Why:** The door misled players too much; removing it keeps the clock's story without promising something that never opens.
 
 ## 2026-11-02 · M2.1 live: both personas × journal on/off + aggregate
-- **Built:** the first live `--all` run (commit `0a9ede4`) and its aggregate report; also unique session-log names (two sessions in the same second used to share a log).
+- **Built:** the first live `--all` run (commit `97a3281`) and its aggregate report; also unique session-log names (two sessions in the same second used to share a log).
 - **Learned:** all 4 players found the photo → Mira trigger, but the reveal showed in only 2: both misses happened on day 3, with no next morning left. Journal off didn't block the reveal. The blue ribbon was never found. Players' theories lean toward "grief" and "purgatory", a darker read than the cozy tone intends.
 - **Why:** To see whether the mystery works for both kinds of player, with and without the journal.
 
