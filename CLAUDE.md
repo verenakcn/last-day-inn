@@ -190,3 +190,5 @@ Unity or any graphics. Art. Free-text input. Player-facing AI. More than 3 loops
 **Hypothesis:** the combinations of Evidence × Character × World State × Player History outgrow what hand-authored branching can cover. AI can generate a sensible reaction for each combination within designer-defined constraints, without ever changing the ground truth in `world.json`.
 
 **Measure:** compare the rule-based and AI versions on how often players judge NPC reactions as sensible and useful, and how many hypotheses players actively test. The playtest agent also checks AI output against `world.json` for leaked or invented facts.
+
+**First step (planned 2026-11-02, starts after the README):** one character, Mira, reacts through an LLM within designer-set constraints; `world.json` stays the truth.
