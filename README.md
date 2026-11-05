@@ -88,8 +88,13 @@ Characters should react sensibly to any clue, situation and history. Hand-writin
 - 5 clues × 2 characters × 4 time slots × 3 days = 120 combinations.
 - 105 are reachable, because a character must be in the room and the innkeeper is away at night: 5 clues × 7 character-time slots a day × 3 days.
 - All 105 share 11 written reactions and 2 fallback lines. Only one reaction changes with the day, and none changes with what the player did before.
+- Count what the player showed a character on earlier days, and every new day adds more cases. Written reactions have to grow with every case; a model working from the same rules doesn't.
 
-The plan: `world.json` stays the truth, and the playtest agent flags invented facts. The test is rule-based vs AI: are reactions sensible and useful, and do players test more theories? The first step is Mira reacting through an LLM under these rules.
+The plan: `world.json` stays the truth, and the playtest agent flags invented facts. The test is rule-based vs AI: are reactions sensible and useful, and do players test more theories?
+
+Two steps, both with Mira:
+1. **She reacts.** When you show her something, an LLM writes her reply from what she knows. She can hint but never explain. The engine replaces any line that breaks her rules with a written one.
+2. **She remembers.** If she was by the clock at midnight, the next morning she still says her pie line, then adds a fragment of what you showed her the day before. The same situation always gets the same line, so repeated lines still give the loop away.
 
 ## Run it
 

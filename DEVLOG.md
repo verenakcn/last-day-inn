@@ -85,3 +85,8 @@ The "Why" lines are the designer's own words. Decisions with full reasons live i
 
 ## 2026-11-03 · Correction: door-note recount
 - **Correction:** a recount from the reports found that the door-note numbers in the fix 2 and fix 3 entries also counted "front door" mentions. Counting only notes about the clock's door or the star, fix 2 went 4 → 9 and fix 3 went 2 → 0 (curious) and 4 → 0 (escape); the direction of each result holds.
+
+## 2026-11-04 · Next-phase plan: Mira reacts, then remembers
+- **Built:** a revised AI plan in the README and CLAUDE.md §11: step 1, Mira reacts to shown items through an LLM under `world.json` rules; step 2, if she was by the clock at midnight, she adds a fragment of what you showed her to her pie line. A "Tell Mira" action was considered and parked.
+- **Learned:** 105 reachable situations can still be written by hand, so "AI is required" doesn't hold in a game this small; what grows past hand-writing is player history across days. Generated lines must stay the same for the same situation, or they hide the repeated lines that reveal the loop.
+- **Why:** I want players to feel the world remembers them, not that an AI is clever, so Mira remembering what you showed her makes the memory rule something you discover through your own actions. I'd rather make a claim I can measure than a big one: hand-written lines grow with every case, and the model doesn't. Doing it in two steps gives me enough lines to test and fix in step 1 before trusting the model with the reveal in step 2.

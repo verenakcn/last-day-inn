@@ -191,4 +191,11 @@ Unity or any graphics. Art. Free-text input. Player-facing AI. More than 3 loops
 
 **Measure:** compare the rule-based and AI versions on how often players judge NPC reactions as sensible and useful, and how many hypotheses players actively test. The playtest agent also checks AI output against `world.json` for leaked or invented facts.
 
-**First step (planned 2026-11-02, starts after the README):** one character, Mira, reacts through an LLM within designer-set constraints; `world.json` stays the truth.
+**Plan (planned 2026-11-02, revised 2026-11-04):** two steps, Mira only. `world.json` stays the truth.
+- **Step 1, she reacts:** Show → Mira replies through an LLM limited by `world.json`: her knowledge, what she must not reveal, and a list of allowed hint ids. The engine checks the hint id and banned words, and uses the written reaction if the check fails. The playtest agent reports leaks and invented facts.
+- **Step 2, she remembers:** if Mira was in the Lobby at midnight, her next-morning line keeps the pie line and adds a generated fragment of what the player showed her the day before, taken from the Present log. No new action.
+- **Same state, same line:** generated lines are cached by state plus what she remembers, so repetition still signals the loop.
+- **Fair comparison:** the rule-based version joins one written line per remembered item.
+- **Claim:** scale, not impossibility. Written reactions grow with every case; the model works from the same rules.
+- **Order unchanged:** human playtests for the rule-based baseline come first (Milestone 3).
+- **Parked:** "Tell Mira" (choosing journal facts to share). It adds menu load and has a weak in-story reason.
