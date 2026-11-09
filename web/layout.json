@@ -1,0 +1,36 @@
+{
+  "_note": "Presentation only: where characters stand and where their speech box opens. Story, rules and text live in world.json. Units are the 1600x900 design frame (art is 2560x1440, so multiply by 1.6). The art guides in docs/art-guides/ are drawn from this file. Characters stand in the foreground on the floor (feet below the panel top, so the panel hides their legs on desktop), sized so their eyes sit at the room's eye level. Garden spot is provisional until the Garden is painted. \"flip\": true mirrors the figure for that spot only (Mira faces right in the Garden, toward the gate).",
+  "design_size": [1600, 900],
+  "panel_height": 300,
+  "figure_width": 200,
+  "speech_box": { "width": 300, "gap": 12, "top": 170 },
+  "overlay_zones": {
+    "_note": "Interface over the painting: keep these areas low in detail.",
+    "time_and_place": [24, 24, 460, 104],
+    "journal": [1430, 24, 1576, 80]
+  },
+  "rooms": {
+    "lobby": {
+      "spots": {
+        "innkeeper": { "center_x": 505, "feet_y": 850, "height": 610, "speech": "left" },
+        "mira": { "center_x": 860, "feet_y": 845, "height": 590, "speech": "right" }
+      },
+      "props": {
+        "_note": "Scene objects: the pie shows when world.json makes it available (the Evening); the bell and guest book show all day. bottom_y is where the object rests.",
+        "pie": { "image": "scene_pie.png", "center_x": 700, "bottom_y": 498, "width": 90 },
+        "desk_items": { "image": "scene_desk_items.png", "center_x": 1020, "bottom_y": 498, "width": 130 }
+      }
+    },
+    "garden": {
+      "spots": {
+        "mira": { "center_x": 640, "feet_y": 845, "height": 590, "speech": "right", "flip": true }
+      },
+      "props": {
+        "_note": "The ribbon shows until the player picks it up (world.json: the bush feature, has_not blue_ribbon).",
+        "ribbon": { "image": "scene_ribbon.png", "center_x": 190, "bottom_y": 395, "width": 100 }
+      }
+    },
+    "guest_room": { "spots": {} }
+  },
+  "reveal_pause_ms": 1500
+}

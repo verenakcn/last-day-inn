@@ -1,5 +1,6 @@
 """Run with: python3 -m unittest -v"""
 
+import re
 import unittest
 
 from engine import Game
@@ -45,7 +46,7 @@ class Loop1(unittest.TestCase):
     def test_mira_narration_fits_the_room(self):
         _, texts = play(["examine:window", "move:lobby", "move:garden"])  # first meet her in the Garden
         self.assertIn("You're new here. Try the pie tonight; it's the best thing about this place.", texts[-1])
-        self.assertNotIn("armchair", texts[-1])
+        self.assertNotIn("desk", texts[-1])  # her Lobby narration must not show in the Garden
 
     def test_no_show_to_place_options(self):
         g, _ = play(["examine:drawer", "move:lobby", "move:garden"])
@@ -204,6 +205,39 @@ class Engine(unittest.TestCase):
 
     def test_journal_off_hides_journal(self):
         self.assertNotIn("Journal", Game(journal=False).observe())
+
+
+class DisplayText(unittest.TestCase):
+    """The web UI's speech and narration must not drift from the text the terminal shows."""
+
+    @staticmethod
+    def words(text):
+        return set(re.findall(r"\w+(?:'\w+)?", text.lower()))
+
+    def entries(self):
+        w = Game().w
+        found = [e for e in w["reactions"] if "display" in e]
+        found += [n["fallback"] for n in w["npcs"].values()]
+        found += [a for n in w["npcs"].values() for a in n.get("ambient", [])]
+        return found
+
+    def test_every_spoken_line_has_display_fields(self):
+        entries = self.entries()
+        self.assertEqual(len(entries), 15)
+        for e in entries:
+            self.assertTrue(e["display"]["speech"], e["text"])
+
+    def test_display_matches_text(self):
+        for e in self.entries():
+            text = e["text"]
+            speech, narration = e["display"]["speech"], e["display"]["narration"]
+            if e.get("locked_text"):
+                self.assertEqual(speech, text)
+                self.assertEqual(narration, e["narration"]["text"])
+                continue
+            spoken = " ".join(re.findall(r'"([^"]*)"', text))
+            self.assertEqual(self.words(speech), self.words(spoken), text)
+            self.assertLessEqual(self.words(narration), self.words(text) | {"it"}, text)  # "it" joins a split line
 
 
 if __name__ == "__main__":

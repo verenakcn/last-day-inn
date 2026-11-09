@@ -4,6 +4,7 @@
     "schema_version": "0.2.0",
     "source": "CLAUDE.md (brief + §9a settled decisions). docs/design-doc.md is NOT a source.",
     "text_convention": "\"draft\": true = Claude's first-pass wording, for designer review. \"locked_text\": true = quoted verbatim from the brief; don't change without updating CLAUDE.md. Intent fields are locked (brief §5).",
+    "display_convention": "\"display\" splits a spoken line for the web UI: speech goes in the speech box (no quote marks), narration in the story area. \"text\" stays the version for the terminal and the playtest agent. Change both together; test_engine.py checks that they match.",
     "template_vars": "{item} = display name of the presented thing, {place} = display name of the feature or location."
   },
 
@@ -108,7 +109,7 @@
     "lobby": {
       "name": "Lobby",
       "connections": ["guest_room", "garden"],
-      "description": { "draft": true, "text": "The heart of the inn: worn armchairs, a crackling fire, and a tall grandfather clock that ticks a little louder than it should." },
+      "description": { "draft": true, "text": "The heart of the inn: a worn rug, a wooden desk, a window full of snow, and a tall grandfather clock that ticks a little louder than it should." },
       "features": {
         "grandfather_clock": {
           "name": "Grandfather clock",
@@ -123,7 +124,7 @@
           "name": "Reception desk",
           "gives": "closing_notice",
           "examine": [
-            { "conditions": { "has_not": "closing_notice" }, "draft": true, "text": "A brass bell, the guest book, and a neatly printed notice. You take the notice." },
+            { "conditions": { "has_not": "closing_notice" }, "draft": true, "text": "A brass bell, the guest book, and a notice pinned to the front of the desk, with a small stack of copies beside the bell. You take one." },
             { "conditions": { "has": "closing_notice" }, "draft": true, "text": "The bell and the guest book. The bell gleams; someone polishes it every day." }
           ]
         },
@@ -261,7 +262,7 @@
       },
       "schedule_triggers": [],
       "near_clock_at_midnight": false,
-      "fallback": { "draft": true, "text": "He turns it over, smiles kindly, and hands it back. \"Can't say I know what to make of that, I'm afraid.\"" }
+      "fallback": { "draft": true, "text": "He turns it over, smiles kindly, and hands it back. \"Can't say I know what to make of that, I'm afraid.\"", "display": { "speech": "Can't say I know what to make of that, I'm afraid.", "narration": "He turns it over, smiles kindly, and hands it back." } }
     },
 
     "mira": {
@@ -276,7 +277,7 @@
       "senses": ["Déjà vu she cannot explain: she senses the loop but barely recalls anything."],
       "does_not_know": ["The loop (she only senses it)."],
       "schedule": {
-        "morning":   { "location": "lobby",  "presence": { "draft": true, "text": "Mira is curled up in an armchair by the fire." } },
+        "morning":   { "location": "lobby",  "presence": { "draft": true, "text": "Mira leans on the reception desk, watching the snow." } },
         "afternoon": { "location": "garden", "presence": { "draft": true, "text": "Mira is wandering the garden, brushing snow off the hedge." } },
         "evening":   { "location": "lobby",  "presence": { "draft": true, "text": "Mira sits by the fire with a cup of tea." } },
         "night":     { "location": "garden", "presence": { "draft": true, "text": "Mira stands in the snowy garden, looking up at the lit windows." } }
@@ -292,7 +293,7 @@
       ],
       "first_meeting_line": {
         "note": "Her first line in each loop, the first time the player meets her (normally the Lobby, Morning).",
-        "default": { "lines": ["You're new here. Try the pie tonight; it's the best thing about this place."], "locked_text": true, "narration": { "conditions": { "location": "lobby" }, "draft": true, "text": "Mira looks up from her armchair and smiles." } }
+        "default": { "lines": ["You're new here. Try the pie tonight; it's the best thing about this place."], "locked_text": true, "narration": { "conditions": { "location": "lobby" }, "draft": true, "text": "Mira turns from the desk and smiles." } }
       },
       "ambient": [
         {
@@ -303,6 +304,7 @@
           "intent": "Mira mentions the key is under the flowerpot (another hint that she knows the inn too well).",
           "draft": true,
           "text": "Mira glances over. \"Locked? The key's under the flowerpot. Always has been.\" She blinks, as if surprised she knew that.",
+          "display": { "speech": "Locked? The key's under the flowerpot. Always has been.", "narration": "Mira glances over. She blinks, as if surprised she knew that." },
           "journal_fact": "Mira knew the gate key was under the flowerpot."
         },
         {
@@ -313,10 +315,11 @@
           "intent": "A vague myth about the clock. Must not state the rule (pillar 2).",
           "draft": true,
           "text": "\"There was a story about this clock, when I was small,\" Mira says. \"Something about being careful what you tell it.\" She shrugs. \"I don't remember the rest.\"",
+          "display": { "speech": "There was a story about this clock, when I was small. Something about being careful what you tell it. I don't remember the rest.", "narration": "She shrugs." },
           "journal_fact": "Mira remembers a story about being careful what you tell the clock."
         }
       ],
-      "fallback": { "draft": true, "text": "Mira tilts her head. \"Hm. Should that mean something to me?\"" }
+      "fallback": { "draft": true, "text": "Mira tilts her head. \"Hm. Should that mean something to me?\"", "display": { "speech": "Hm. Should that mean something to me?", "narration": "Mira tilts her head." } }
     }
   },
 
@@ -327,6 +330,7 @@
       "intent": "Found it in the clock this morning while winding it. Points at the clock.",
       "draft": true,
       "text": "\"Ah, that! It was tucked inside the clock when I wound it this morning. Had your name on it, so I slipped it under your door.\" He nods at the grandfather clock.",
+      "display": { "speech": "Ah, that! It was tucked inside the clock when I wound it this morning. Had your name on it, so I slipped it under your door.", "narration": "He nods at the grandfather clock." },
       "journal_fact": "The innkeeper found the note in the clock.",
       "effects": []
     },
@@ -336,6 +340,7 @@
       "intent": "He has never seen it (the player carried it through midnight, so it wasn't in the clock). Decision Q5.",
       "draft": true,
       "text": "He squints at the envelope. \"Your name, but I've never seen it before. Did someone leave it for you?\"",
+      "display": { "speech": "Your name, but I've never seen it before. Did someone leave it for you?", "narration": "He squints at the envelope." },
       "journal_fact": "The innkeeper says he has never seen the note.",
       "effects": []
     },
@@ -345,6 +350,7 @@
       "intent": "Puzzled; mild déjà vu about midnight.",
       "draft": true,
       "text": "Mira reads the line twice. \"Midnight…\" She laughs, a little uncertain. \"Funny. For a second that felt familiar.\"",
+      "display": { "speech": "Midnight… Funny. For a second that felt familiar.", "narration": "Mira reads the line twice. She laughs, a little uncertain." },
       "journal_fact": "Mira said the note felt familiar.",
       "effects": []
     },
@@ -354,6 +360,7 @@
       "intent": "Sad; wishes today would never end. (Hint of the wish.)",
       "draft": true,
       "text": "He sighs. \"All these years. Sometimes I think, if today could just… not end.\" He shakes his head. \"Listen to me.\"",
+      "display": { "speech": "All these years. Sometimes I think, if today could just… not end. Listen to me.", "narration": "He sighs. He shakes his head." },
       "journal_fact": "The innkeeper wishes today would never end.",
       "effects": []
     },
@@ -362,6 +369,7 @@
       "evidence": "closing_notice", "target": "mira", "conditions": {},
       "intent": "Mystery.",
       "text": "Tomorrow might surprise you.",
+      "display": { "speech": "Tomorrow might surprise you.", "narration": "Mira taps the notice and smiles." },
       "locked_text": true,
       "narration": { "draft": true, "text": "Mira taps the notice and smiles." },
       "journal_fact": "Mira says tomorrow might surprise you.",
@@ -373,6 +381,7 @@
       "intent": "Reminds him of a little girl who stayed here long ago.",
       "draft": true,
       "text": "\"Blue ribbon… There was a little girl here once, long ago. Wore one just like it, every single day.\" He smiles at nothing for a moment.",
+      "display": { "speech": "Blue ribbon… There was a little girl here once, long ago. Wore one just like it, every single day.", "narration": "He smiles at nothing for a moment." },
       "journal_fact": "A little girl with a blue ribbon once lived at the inn.",
       "effects": []
     },
@@ -382,6 +391,7 @@
       "intent": "Hesitates, changes the subject.",
       "draft": true,
       "text": "Mira's hand drifts toward it, then stops. She looks away. \"Is it me, or is the snow getting heavier?\"",
+      "display": { "speech": "Is it me, or is the snow getting heavier?", "narration": "Mira's hand drifts toward it, then stops. She looks away." },
       "journal_fact": "Mira changed the subject when shown the ribbon.",
       "effects": []
     },
@@ -391,6 +401,7 @@
       "intent": "Nostalgic about the girl; does not connect her to Mira.",
       "draft": true,
       "text": "\"Where did you find this? That's me, believe it or not. And that's the little girl who lived here.\" He runs a thumb over the edge. \"I wonder what became of her.\"",
+      "display": { "speech": "Where did you find this? That's me, believe it or not. And that's the little girl who lived here. I wonder what became of her.", "narration": "He runs a thumb over the edge." },
       "journal_fact": "The innkeeper doesn't know what became of the girl in the photo.",
       "effects": []
     },
@@ -400,6 +411,7 @@
       "intent": "TRIGGER: goes quiet, decides it is time to tell him.",
       "draft": true,
       "text": "Mira goes very quiet. She looks at the photo for a long time. \"I think,\" she says softly, \"it's time I told him something.\"",
+      "display": { "speech": "I think it's time I told him something.", "narration": "Mira goes very quiet. She looks at the photo for a long time. She says it softly." },
       "journal_fact": "Mira wants to tell the innkeeper something.",
       "effects": [{ "type": "fire_schedule_trigger", "npc": "mira", "trigger": "mira_waits_for_innkeeper" }]
     },
@@ -409,6 +421,7 @@
       "intent": "Deflects; admits he \"said something silly to that clock last night\".",
       "draft": true,
       "text": "He chuckles, a little pink. \"Oh, that old thing. I said something silly to that clock last night. Don't tell anyone.\"",
+      "display": { "speech": "Oh, that old thing. I said something silly to that clock last night. Don't tell anyone.", "narration": "He chuckles, a little pink." },
       "locked_fragment": "said something silly to that clock last night",
       "journal_fact": "The innkeeper said something to the clock last night.",
       "effects": []
@@ -419,6 +432,7 @@
       "intent": "Says she used to hide inside its case as a child.",
       "draft": true,
       "text": "\"I used to hide in there, you know. Right inside the case, with the pendulum going tick, tick above my head.\" She stops. \"When I was little.\"",
+      "display": { "speech": "I used to hide in there, you know. Right inside the case, with the pendulum going tick, tick above my head. When I was little.", "narration": "She stops." },
       "journal_fact": "Mira used to hide inside the clock's case as a child.",
       "effects": []
     }

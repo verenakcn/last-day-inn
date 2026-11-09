@@ -1,0 +1,43 @@
+/* The Last Day Inn design tokens. See docs/ui-handoff.md. */
+:root {
+  /* Colour */
+  --paper: #FBF4E6;
+  --ink: #1E2A47;
+  --teal: #14656B;
+  --coral: #AE3F2C;
+  --rust: #7A3515;
+  --panel: #F2E7D2;
+  --wash: #FBE3D3;
+  --ink-soft: #47506B;
+  --teal-deep: #0E4D52;
+  --teal-tint: #D8EAE6;
+  --brass: #C98F1E; /* clock details, never text */
+  --clock-mark-used: #D9CDB8;
+
+  /* Type */
+  --font-story: "Literata", Georgia, serif;
+  --font-ui: "Figtree", "Segoe UI", system-ui, sans-serif;
+  --font-journal: "Patrick Hand", "Segoe Print", cursive;
+
+  /* Spacing */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+
+  /* Shape */
+  --radius: 4px;
+  --facet: 16px;
+  --facet-small: 12px;
+  --line: rgba(30, 42, 71, 0.25);
+
+  /* Scene light, used with mix-blend-mode: multiply */
+  --light-morning: rgba(255, 214, 150, 0.22);
+  --light-afternoon: rgba(255, 255, 255, 0);
+  --light-evening: rgba(232, 140, 64, 0.35);
+  --light-night: rgba(40, 56, 110, 0.45);
+}

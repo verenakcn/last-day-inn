@@ -181,9 +181,11 @@ Resolved gaps in this brief and changes from playtests. Full log with reasons: t
 - **Personas (§8):** curious and escape are built; the optional hypothesis tester is not.
 - **Files:** `world.json` (all story and rules), `engine.py` (the referee), `play.py` (terminal CLI), `agent.py` (playtest agent), `test_engine.py` / `test_agent.py`, `reports/` (each run as Markdown + JSON, never overwritten; dry runs ignored), `logs/` (session logs, git-ignored), `DEVLOG.md` (built / learned / why per step).
 
-## 10. Out of scope for the MVP
+## 10. UI
 
-Unity or any graphics. Art. Free-text input. Player-facing AI. More than 3 loops. A full ending. Public web demo.
+UI work follows docs/ui-handoff.md. This brief and world.json win on story, rules and text.
+
+Still out of scope: Unity. Free-text input (except the end-screen answer). Player-facing AI (until §11). More than 3 loops. A full ending. Public web demo.
 
 ## 11. Next phase: AI experiment
 
