@@ -40,4 +40,5 @@
   --light-afternoon: rgba(255, 255, 255, 0);
   --light-evening: rgba(232, 140, 64, 0.35);
   --light-night: rgba(40, 56, 110, 0.45);
+  --light-night-figure: rgba(40, 56, 110, 0.30); /* characters and objects on the painted night Lobby */
 }

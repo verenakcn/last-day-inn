@@ -240,5 +240,55 @@ class DisplayText(unittest.TestCase):
             self.assertLessEqual(self.words(narration), self.words(text) | {"it"}, text)  # "it" joins a split line
 
 
+class WebState(unittest.TestCase):
+    """state() and last_turn give the web UI the same game as observe(), in separate fields."""
+
+    def test_start_screen(self):
+        s = Game().state()
+        self.assertEqual((s["phase"], s["actions_left"], s["place"]), ("morning", 2, "Guest Room"))
+        self.assertEqual([c["id"] for c in s["carried"]], ["note"])
+        self.assertEqual(s["carried"][0]["content"], "Leave before midnight.")
+        self.assertEqual(s["story"][0]["type"], "narration")
+        self.assertNotIn("loop", s)  # never show day or loop numbers
+
+    def test_speech_goes_to_the_speaker(self):
+        g, _ = play(["move:lobby", "present:note>innkeeper"])
+        speech = [b for b in g.last_turn["result"] if b["type"] == "speech"]
+        self.assertEqual(speech[0]["speaker"], "innkeeper")
+        self.assertNotIn('"', speech[0]["text"])
+
+    def test_time_moving_on_keeps_the_leaving_line_apart(self):
+        g, _ = play(["move:lobby", "examine:grandfather_clock"])
+        t = g.last_turn
+        self.assertTrue(t["time_moved"])
+        self.assertIn("Mira slips away", t["leaves"][0]["text"])
+        self.assertEqual(g.state()["phase"], "afternoon")
+
+    def test_midnight_turn(self):
+        g, _ = play(["examine:window"] * 8)
+        t = g.last_turn
+        self.assertEqual(t["midnight"]["scene"], "elsewhere")
+        self.assertTrue(t["midnight"]["lead_in"])
+        s = g.state()
+        self.assertEqual([b["type"] for b in s["story"]], ["narration", "thought"])  # the wake-up thought
+
+    def test_show_groups_targets_under_each_item(self):
+        g, _ = play(["move:lobby"])
+        show = {e["item"]: [t["id"] for t in e["targets"]] for e in g.state()["actions"]["show"]}
+        self.assertEqual(show, {"note": ["innkeeper", "mira"]})
+
+    def test_reveal_is_marked(self):
+        g, _ = play(PHOTO_THEN_ESCAPE + ["move:lobby"])
+        self.assertEqual(g.ended, "anomaly_seen")
+        speech = [b for b in g.last_turn["after"] if b["type"] == "speech"][0]
+        self.assertTrue(speech["reveal"])
+        self.assertIn("(pause)", speech["lines"])
+
+    def test_state_after_the_last_midnight(self):
+        g, _ = play(["examine:window"] * 24)
+        self.assertEqual(g.ended, "loop_limit")
+        self.assertEqual(g.state()["actions"], {"go": [], "look": [], "show": []})
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -52,7 +52,26 @@
     "group_present": "Show",
     "short_move": "{place}",
     "short_examine": "{thing}",
-    "short_present": "{item} → {target}"
+    "short_present": "{item} → {target}",
+    "_web_note": "Labels used only by the web UI (web/).",
+    "web_begin": "Begin",
+    "web_journal_toggle": "Keep a journal",
+    "web_continue": "Continue",
+    "web_cancel": "Cancel",
+    "web_no_actions": "No actions left",
+    "web_show_to": "Show {item} to…",
+    "web_journal": "Journal",
+    "web_journal_new": "New note",
+    "web_journal_close": "Close",
+    "web_send": "Send",
+    "web_answer_placeholder": "Write what you think…",
+    "web_answer_empty": "Write a few words first.",
+    "web_new_item": "New",
+    "web_item_close": "Keep it",
+    "web_close": "Close",
+    "web_bag": "Your things",
+    "web_thanks": "Thank you for playing.",
+    "web_play_again": "Play again"
   },
 
   "time": {
@@ -351,7 +370,7 @@
       "draft": true,
       "text": "Mira reads the line twice. \"Midnight…\" She laughs, a little uncertain. \"Funny. For a second that felt familiar.\"",
       "display": { "speech": "Midnight… Funny. For a second that felt familiar.", "narration": "Mira reads the line twice. She laughs, a little uncertain." },
-      "journal_fact": "Mira said the note felt familiar.",
+      "journal_fact": "Mira said midnight felt familiar, just for a second.",
       "effects": []
     },
     {
@@ -479,7 +498,7 @@
     ],
     "midnight_scenes": {
       "escaped": { "intent": "While walking away, the clock's chime sounds as if right beside the player; the inn is ahead again.", "draft": true, "text": "You follow the lane into the snow. The inn's lights shrink behind you. Then, close enough to touch, a clock begins to chime. Twelve. You look up. The inn is ahead of you again, every window glowing.", "fade": "The snow tilts, the lights blur, and everything goes quiet." },
-      "in_lobby": { "draft": true, "lead_in": "The fire burns low, and you lose track of time.", "text": "The grandfather clock strikes twelve. The sound fills the room, fills your chest, fills everything.", "fade": "Your knees go soft. The last thing you hear is the pendulum." },
+      "in_lobby": { "draft": true, "lead_in": "The lamps burn low, and you lose track of time.", "text": "The grandfather clock strikes twelve. The sound fills the room, fills your chest, fills everything.", "fade": "Your knees go soft. The last thing you hear is the pendulum." },
       "elsewhere": { "draft": true, "lead_in": "You lose track of time. The inn goes quiet around you, one light at a time.", "text": "Somewhere in the inn, faint and far away, a clock strikes twelve. The world around you goes soft.", "fade": "Your eyes grow heavy. You don't remember lying down." }
     },
     "loop_1": {

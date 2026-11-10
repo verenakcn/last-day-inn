@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Last Day Inn</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="stage">
+    <div id="scene">
+      <img id="room" alt="">
+      <div id="props"></div>
+      <div id="room-light"></div>
+      <div id="figures"></div>
+      <div id="speech"></div>
+      <div id="dim" hidden></div>
+
+      <div id="hud">
+        <svg id="clock" viewBox="0 0 64 64" aria-hidden="true"></svg>
+        <div>
+          <div id="time" class="small"></div>
+          <div id="place"></div>
+        </div>
+      </div>
+      <button id="bag-btn" class="chip"></button>
+      <aside id="bag" class="dropdown" hidden></aside>
+      <button id="journal-btn" class="chip" hidden></button>
+      <aside id="journal" class="dropdown" hidden></aside>
+
+      <div id="showcase" hidden>
+        <img id="showcase-img" alt="">
+        <div id="showcase-name" class="label"></div>
+        <div id="showcase-text"></div>
+        <button id="showcase-close" class="primary" hidden></button>
+      </div>
+    </div>
+
+    <div id="panel">
+      <div id="story-col">
+        <div id="story" aria-live="polite"></div>
+        <div id="you-know" hidden></div>
+      </div>
+      <div id="action-col">
+        <div id="warning" hidden></div>
+        <div id="menu"></div>
+        <div id="continue-row" hidden>
+          <span id="no-actions" class="small"></span>
+          <button id="continue" class="primary"></button>
+        </div>
+      </div>
+    </div>
+
+    <div id="overlay" hidden></div>
+  </div>
+  <script src="game.js"></script>
+</body>
+</html>

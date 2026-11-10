@@ -102,8 +102,9 @@ Python 3.9+. Playing and testing need no packages.
 
 ```bash
 git clone https://github.com/verenakcn/last-day-inn.git && cd last-day-inn
-python3 play.py                 # play (add --no-journal for journal off)
-python3 -m unittest             # 40 tests, no API calls
+python3 play.py                 # play in the terminal (add --no-journal for journal off)
+python3 serve.py                # play in a browser at http://localhost:8000
+python3 -m unittest             # 49 tests, no API calls
 python3 agent.py --dry-run      # AI playtester with a fake model, 0 API calls
 ```
 

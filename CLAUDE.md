@@ -179,7 +179,7 @@ Resolved gaps in this brief and changes from playtests. Full log with reasons: t
 - **"Seedable" (§7):** the engine takes a seed and is fully deterministic; nothing random uses the seed yet. The AI player is not deterministic, so compare runs as samples.
 - **Aggregate report (§8):** shows a comparison table, the evidence no run found, and how many runs saw the reveal. Whether the mystery is too easy or too hard is judged by the designer from that table (reveal rate, moves to reveal); there is no automatic flag.
 - **Personas (§8):** curious and escape are built; the optional hypothesis tester is not.
-- **Files:** `world.json` (all story and rules), `engine.py` (the referee), `play.py` (terminal CLI), `agent.py` (playtest agent), `test_engine.py` / `test_agent.py`, `reports/` (each run as Markdown + JSON, never overwritten; dry runs ignored), `logs/` (session logs, git-ignored), `DEVLOG.md` (built / learned / why per step).
+- **Files:** `world.json` (all story and rules), `engine.py` (the referee), `play.py` (terminal CLI), `serve.py` + `web/` (browser version: a local server and the page; `engine.state()` gives it the screen as fields), `agent.py` (playtest agent), `test_engine.py` / `test_agent.py`, `reports/` (each run as Markdown + JSON, never overwritten; dry runs ignored), `logs/` (session logs, git-ignored), `DEVLOG.md` (built / learned / why per step).
 
 ## 10. UI
 
